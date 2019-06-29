@@ -1,6 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import Location from "./views/Location.vue";
+import Nature from "./views/Nature.vue";
+import History from "./views/History.vue";
+import Society from "./views/Society.vue";
+import ChinaMap from "./components/ChinaMap.vue";
+import ZheJiangMap from "./components/ZheJiangMap.vue";
+import BaiduMap from "./components/BaiduMap.vue";
 
 Vue.use(Router);
 
@@ -10,17 +17,50 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      redirect: "/home"
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      path: "/home",
+      component: Home,
+      name: "home"
+    },
+    {
+      path: "/location",
+      component: Location,
+      name: "location",
+      redirect: "/location/chinamap",
+      children: [
+        {
+          path: "chinamap",
+          component: ChinaMap,
+          name: "chinamap"
+        },
+        {
+          path: "zhejiangmap",
+          component: ZheJiangMap,
+          name: "zhejiangmap"
+        },
+        {
+          path: "baidumap",
+          component: BaiduMap,
+          name: "baidumap"
+        }
+      ]
+    },
+    {
+      path: "/nature",
+      component: Nature,
+      name: "nature"
+    },
+    {
+      path: "/history",
+      component: History,
+      name: "history"
+    },
+    {
+      path: "/society",
+      component: Society,
+      name: "society"
     }
   ]
 });
