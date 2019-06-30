@@ -1,10 +1,9 @@
 <template>
-  <div id="echarts" ref="echarts"></div>
+  <echarts :option="option" :height="650"></echarts>
 </template>
 
 <script>
-// 导入百度地图
-import 'echarts/extension/bmap/bmap'
+import echarts from "./Echarts"
 
 export default {
   data() {
@@ -12,7 +11,7 @@ export default {
       option: {
         bmap: {
           // 地图中心位置
-          center: [120.76, 30.77],
+          center: [122.4, 30],
           // 放大级别,
           zoom: 7,
           // 是否支持鼠标滚轮
@@ -25,7 +24,7 @@ export default {
             // 坐标系类型，百度地图
             coordinateSystem: 'bmap',
             // 数据：value: [经度，纬度，值]
-            data: [{ value: [120.76, 30.77, 100] }],
+            data: [{ value: [122.4, 30, 100] }],
             // 标记大小
             symbolSize: 10,
             // 何时显示特效，绘制完成后显示特效。
@@ -50,21 +49,8 @@ export default {
       }
     }
   },
-  mounted() {
-    // 初始化 echarts
-    var myChart = this.$echarts.init(this.$refs.echarts)
-    // 配置属性
-    myChart.setOption(this.option, true)
-    window.addEventListener('resize', () => {
-      // 页面监听，自适应图表
-      myChart.resize()
-    })
+  components: {
+    echarts
   }
 }
 </script>
-
-<style lang="stylus">
-#echarts
-  width 100%
-  height 650px
-</style>

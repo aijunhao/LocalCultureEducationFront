@@ -1,10 +1,9 @@
 <template>
-  <div id="echarts" ref="echarts"></div>
+  <echarts :option="option" :height="650"></echarts>
 </template>
 
 <script>
-// 导入 echarts 浙江地图
-import '../../node_modules/echarts/map/js/province/zhejiang'
+import echarts from "./Echarts"
 
 export default {
   data() {
@@ -53,7 +52,7 @@ export default {
             //此为加载的数据
             data: [
               {
-                name: '嘉兴市',
+                name: '舟山市',
                 selected: true,
                 value: 10
               }
@@ -63,21 +62,8 @@ export default {
       }
     }
   },
-  mounted() {
-    // 初始化 echarts
-    var myChart = this.$echarts.init(this.$refs.echarts)
-    // 配置属性
-    myChart.setOption(this.option, true)
-    window.addEventListener('resize', () => {
-      // 页面监听，自适应图表
-      myChart.resize()
-    })
+  components: {
+    echarts
   }
 }
 </script>
-
-<style lang="stylus">
-#echarts
-  width 100%
-  height 650px
-</style>

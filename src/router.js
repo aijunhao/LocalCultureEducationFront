@@ -8,6 +8,8 @@ import Society from "./views/Society.vue";
 import ChinaMap from "./components/ChinaMap.vue";
 import ZheJiangMap from "./components/ZheJiangMap.vue";
 import BaiduMap from "./components/BaiduMap.vue";
+import Buddhism from "./views/Buddhism.vue";
+import Fishery from "./views/Fishery.vue";
 
 Vue.use(Router);
 
@@ -60,7 +62,20 @@ export default new Router({
     {
       path: "/society",
       component: Society,
-      name: "society"
+      name: "society",
+      redirect: "/society/buddhism",
+      children: [
+        {
+          path: "buddhism",
+          component: Buddhism,
+          name: "buddhism"
+        },
+        {
+          path: "fishery",
+          component: Fishery,
+          name: "fishery"
+        }
+      ]
     }
   ]
 });
