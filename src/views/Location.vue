@@ -14,25 +14,21 @@
 
       <!-- 描述 -->
       <div class="location-show-description">
-        <p>{{ description.title }}</p>
-        <p>{{ description.content[radio] }}</p>
+        <p>{{ initMessage.mapDescription.title }}</p>
+        <p>{{ initMessage.mapDescription.content[radio] }}</p>
       </div>
     </div>
 
     <!-- 地质地貌 -->
     <div class="location-geology">
-      <div>
-        <p>普陀山风景名胜区地质属古华夏褶皱带浙东沿海地带，形成于1亿5千万年前侏罗——白垩纪，燕山运动晚期的侵入花岗构成岩石基础。其地貌因受第三纪新构造运动地壳间歇上升及第四纪冰期、间冰期海蚀作用影响，可分为山地、海蚀海积阶地、海积地、海蚀地区类。</p>
-        <div class="space-between">
-          <echarts :height="500" :option="option" :width="500"></echarts>
-          <div>
-            <div>
-              <p>山地</p>
-            </div>
-            <div>
-              <p>海蚀地</p>
-            </div>
-          </div>
+      <div class="space-between">
+        <echarts :height="350" :index="1" :option="option" :width="450"></echarts>
+        <div class="location-geology-main">
+          <p>{{ geologyOverView }}</p>
+          <p v-text="geologyAreaSelected.name">面积占比名称</p>
+          <p v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
+          <p v-text="geologyLineSelected.name">海岸线占比名称</p>
+          <p v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
         </div>
       </div>
     </div>
@@ -41,20 +37,21 @@
 
 <script>
 import echarts from '../components/Echarts'
+import config from '../config'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   data() {
     return {
       // 选择按钮
       radio: 0,
-      // 地图描述
-      description: {
-        title: '普陀山风景区',
-        content: [
-          '普陀山，国家5A级旅游景区，国家首批重点风景名胜区，全国文明风景旅游区示范点，全国保护旅游消费者权益示范单位，ISO14000国家示范区，全球优秀生态旅游景区，中国佛教四大名山之一。',
-          '普陀山位于浙江杭州湾以东莲花洋，钱塘江口、舟山群岛东南部海域，景区包括普陀山、洛迦山、朱家尖，总面积41.95平方公里，其中普陀山本岛12.5平方公里，最高峰佛顶山海拔292米。普陀山既有悠久的佛教文化，又有丰富的海岛风光，古人称之为"海天佛国"、"南海圣境"、"人间第一清静境"。',
-          '普陀山位于杭州湾南缘、舟山群岛东部海域，处北纬29°58′3~30°02′3，东经122°21′6~122°24′9。西南距沈家门渔港6.5公里，南距朱家尖岛2.5公里，东濒瀚海。行政区由普陀山、洛迦山、南山、小山洞、豁沙山、小洛迦山等小岛组成，隶舟山市普陀区'
-        ]
+      // 初始化数据
+      initMessage: {
+        // 地图描述
+        mapDescription: {
+          title: '',
+          content: ['']
+        }
       },
       // 地质地貌 echarts 参数
       option: {
@@ -88,7 +85,7 @@ export default {
               }
             },
             data: [
-              { value: 22, name: '海积地' },
+              { value: 22, name: '海积地', selected: true },
               { value: 14, name: '砾石滩' },
               { value: 20, name: '泥滩' },
               { value: 44, name: '海蚀地' }
@@ -98,7 +95,7 @@ export default {
             name: '所占面积',
             type: 'pie',
             selectedMode: 'single',
-            radius: ['50%', '70%'],
+            radius: ['55%', '80%'],
             label: {
               normal: {
                 position: 'inner'
@@ -112,7 +109,7 @@ export default {
             data: [
               { value: 2, name: '山地' },
               { value: 90, name: '海蚀海积阶地' },
-              { value: 8, name: '其他' }
+              { value: 8, name: '其他', selected: true }
             ]
           }
         ]
@@ -120,6 +117,36 @@ export default {
     }
   },
   methods: {
+    /**
+     * 获取 location 初始化信息
+     */
+    locationInit() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_LOCATION_INIT
+      })
+        .then(data => {
+          this.initMessage = data.data
+          // 将 geology 存储到 vuex 中
+          this.$store.commit('SET_GEOLOGY', data.data.geology)
+          // 初始化选中项
+          this.$store.commit('SELECT_ECHARTS', {
+            index: 1,
+            name: '海积地',
+            componentIndex: 0
+          })
+          // 初始化选中项
+          this.$store.commit('SELECT_ECHARTS', {
+            index: 1,
+            name: '其他',
+            componentIndex: 1
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
     /**
      * 路由跳转
      */
@@ -135,6 +162,17 @@ export default {
   },
   components: {
     echarts
+  },
+  created() {
+    // 获取信息
+    this.locationInit()
+  },
+  computed: {
+    ...mapState({
+      geologyOverView: state => state.geology.overview,
+      geologyAreaSelected: state => state.geologyAreaSelected,
+      geologyLineSelected: state => state.geologyLineSelected
+    })
   }
 }
 </script>
@@ -195,8 +233,14 @@ export default {
         min-width 600px
 
     .location-geology
-      margin 20px
-      padding 20px
+      padding 50px 15%
+
+      .location-geology-main
+        width 100%
+        margin-left 5%
+        background #fff
+        padding 10px
+        border-radius 5px
 
 // mobile
 @media screen and (max-width: 960px)

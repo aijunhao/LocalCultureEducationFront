@@ -16,11 +16,27 @@ export default {
     var myChart = this.$echarts.init(this.$refs.echarts)
     // 配置属性
     myChart.setOption(this.option, true)
+    // 点击事件
+    myChart.on('click', (params) => {
+      // 提交 mutation 更新 vuex 中的选中项
+      this.$store.commit('SELECT_ECHARTS', {
+        // 图序号
+        index: this.index,
+        // 选中项名称
+        name: params.name,
+        // 第几个组件
+        componentIndex: params.componentIndex
+      })
+    })
     window.addEventListener('resize', () => {
       // 页面监听，自适应图表
       myChart.resize()
     })
   },
-  props: ['option', 'height', 'width']
+  /**
+   * option: 参数
+   * index: 图表点击事件序号
+   */
+  props: ['option', 'height', 'width', 'index']
 }
 </script>
