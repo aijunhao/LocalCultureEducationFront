@@ -21,15 +21,15 @@
 
     <!-- 地质地貌 -->
     <div class="location-geology">
-      <div class="space-between">
-        <echarts :height="350" :index="1" :option="option" :width="450"></echarts>
-        <div class="location-geology-main">
-          <p>{{ geologyOverView }}</p>
-          <p v-text="geologyAreaSelected.name">面积占比名称</p>
-          <p v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
-          <p v-text="geologyLineSelected.name">海岸线占比名称</p>
-          <p v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
-        </div>
+      <div class="location-geology-echarts">
+        <echarts :height="350" :index="1" :option="option" :width="350"></echarts>
+      </div>
+      <div class="location-geology-main">
+        <p>{{ geologyOverView }}</p>
+        <p v-text="geologyAreaSelected.name">面积占比名称</p>
+        <p v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
+        <p v-text="geologyLineSelected.name">海岸线占比名称</p>
+        <p v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@ export default {
             name: '海岸线比例',
             type: 'pie',
             selectedMode: 'single',
-            radius: [0, '40%'],
+            radius: [0, '30%'],
             label: {
               normal: {
                 position: 'inner'
@@ -95,7 +95,7 @@ export default {
             name: '所占面积',
             type: 'pie',
             selectedMode: 'single',
-            radius: ['55%', '80%'],
+            radius: ['40%', '60%'],
             label: {
               normal: {
                 position: 'inner'
@@ -205,6 +205,19 @@ export default {
       right 10px
       z-index 50
 
+  .location-geology
+    padding 50px 0
+
+    .location-geology-echarts
+      display flex
+      justify-content center
+
+    .location-geology-main
+      width 100%
+      background #fff
+      padding 10px
+      border-radius 5px
+
 // pc
 @media screen and (min-width: 960px)
   #location
@@ -234,9 +247,11 @@ export default {
 
     .location-geology
       padding 50px 15%
+      display flex
+      display -webkit-flex
+      justify-content space-between
 
       .location-geology-main
-        width 100%
         margin-left 5%
         background #fff
         padding 10px
@@ -245,6 +260,5 @@ export default {
 // mobile
 @media screen and (max-width: 960px)
   #location
-    .location-show-description
-      margin 5px
+    padding 10px
 </style>
