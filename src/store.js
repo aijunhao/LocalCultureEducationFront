@@ -10,7 +10,12 @@ export default new Vuex.Store({
     // 地质信息
     geology: {
       overview: "",
-      detail: []
+      detail: [
+        {
+          name: "",
+          content: ""
+        }
+      ]
     },
     // 地质信息选中项
     geologyAreaSelected: {
@@ -18,6 +23,21 @@ export default new Vuex.Store({
       content: ""
     },
     geologyLineSelected: {
+      name: "",
+      content: ""
+    },
+    // 植被信息
+    plant: {
+      overview: "",
+      detail: [
+        {
+          name: "",
+          content: ""
+        }
+      ]
+    },
+    // 植被信息选中项
+    plantSelected: {
       name: "",
       content: ""
     }
@@ -37,6 +57,10 @@ export default new Vuex.Store({
             item => item.name === params.name
           );
         }
+      } else if (params.index === 2) {
+        state.plantSelected = state.plant.detail.find(
+          item => item.name === params.name
+        );
       }
     },
     /**
@@ -44,6 +68,12 @@ export default new Vuex.Store({
      */
     SET_GEOLOGY: (state, value) => {
       state.geology = value;
+    },
+    /**
+     * 设置 geology 地质信息
+     */
+    SET_PLANT: (state, value) => {
+      state.plant = value;
     }
   },
   actions: {}

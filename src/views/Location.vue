@@ -20,16 +20,28 @@
     </div>
 
     <!-- 地质地貌 -->
-    <div class="location-geology">
-      <div class="location-geology-echarts">
-        <echarts :height="350" :index="1" :option="option" :width="350"></echarts>
+    <div class="location-content">
+      <div class="location-content-echarts">
+        <echarts :height="350" :index="1" :option="geologyOption" :width="350"></echarts>
       </div>
-      <div class="location-geology-main">
+      <div class="location-content-main">
         <p>{{ geologyOverView }}</p>
-        <p v-text="geologyAreaSelected.name">面积占比名称</p>
+        <p class="location-content-main-title" v-text="geologyAreaSelected.name">面积占比名称</p>
         <p v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
-        <p v-text="geologyLineSelected.name">海岸线占比名称</p>
+        <p class="location-content-main-title" v-text="geologyLineSelected.name">海岸线占比名称</p>
         <p v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
+      </div>
+    </div>
+
+    <!-- 植被信息 -->
+    <div class="location-content">
+      <div class="location-content-main">
+        <p>{{ plantOverView }}</p>
+        <p class="location-content-main-title" v-text="plantSelected.name">植物类别</p>
+        <p v-text="plantSelected.content">点击左侧图表可在此处查看详细信息</p>
+      </div>
+      <div class="location-content-echarts">
+        <echarts :height="350" :index="2" :option="plantOption" :width="450"></echarts>
       </div>
     </div>
   </div>
@@ -54,7 +66,7 @@ export default {
         }
       },
       // 地质地貌 echarts 参数
-      option: {
+      geologyOption: {
         title: {
           text: '地质地貌统计图',
           left: 'center'
@@ -113,6 +125,60 @@ export default {
             ]
           }
         ]
+      },
+      // 植被信息 echarts 参数
+      plantOption: {
+        title: {
+          text: '植被统计图',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} 亩'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          data: [
+            '针叶林',
+            '阔叶林',
+            '竹林',
+            '灌丛',
+            '草丛',
+            '盐生植被',
+            '沙生植被',
+            '沼生水生植被',
+            '木本栽培植被',
+            '草本栽培植被'
+          ]
+        },
+        series: [
+          {
+            name: '海岸线比例',
+            type: 'pie',
+            selectedMode: 'single',
+            radius: [0, '60%'],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            },
+            data: [
+              { value: 9816, name: '针叶林', selected: true },
+              { value: 1011, name: '阔叶林' },
+              { value: 180, name: '竹林' },
+              { value: 429, name: '灌丛' },
+              { value: 429, name: '草丛' },
+              { value: 13.5, name: '盐生植被' },
+              { value: 133.5, name: '沙生植被' },
+              { value: 67.5, name: '沼生水生植被' },
+              { value: 169.5, name: '木本栽培植被' },
+              { value: 723, name: '草本栽培植被' }
+            ]
+          }
+        ]
       }
     }
   },
@@ -127,26 +193,39 @@ export default {
       })
         .then(data => {
           this.initMessage = data.data
-          // 将 geology 存储到 vuex 中
-          this.$store.commit('SET_GEOLOGY', data.data.geology)
-          // 初始化选中项
-          this.$store.commit('SELECT_ECHARTS', {
-            index: 1,
-            name: '海积地',
-            componentIndex: 0
-          })
-          // 初始化选中项
-          this.$store.commit('SELECT_ECHARTS', {
-            index: 1,
-            name: '其他',
-            componentIndex: 1
-          })
+          this.dataCommit(data.data)
         })
         .catch(err => {
           console.log(err)
         })
     },
-
+    /**
+     * 将数据存到 vuex 中
+     */
+    dataCommit(data) {
+      // 将 geology 存储到 vuex 中
+      this.$store.commit('SET_GEOLOGY', data.geology)
+      // 初始化 geology 选中项
+      this.$store.commit('SELECT_ECHARTS', {
+        index: 1,
+        name: '海积地',
+        componentIndex: 0
+      })
+      // 初始化 geology 选中项
+      this.$store.commit('SELECT_ECHARTS', {
+        index: 1,
+        name: '其他',
+        componentIndex: 1
+      })
+      // 将 geology 存储到 vuex 中
+      this.$store.commit('SET_PLANT', data.plant)
+      // 初始化 plant 选中项
+      this.$store.commit('SELECT_ECHARTS', {
+        index: 2,
+        name: '针叶林',
+        componentIndex: 1
+      })
+    },
     /**
      * 路由跳转
      */
@@ -171,7 +250,9 @@ export default {
     ...mapState({
       geologyOverView: state => state.geology.overview,
       geologyAreaSelected: state => state.geologyAreaSelected,
-      geologyLineSelected: state => state.geologyLineSelected
+      geologyLineSelected: state => state.geologyLineSelected,
+      plantOverView: state => state.plant.overview,
+      plantSelected: state => state.plantSelected
     })
   }
 }
@@ -205,18 +286,22 @@ export default {
       right 10px
       z-index 50
 
-  .location-geology
+  .location-content
     padding 50px 0
 
-    .location-geology-echarts
+    .location-content-echarts
       display flex
       justify-content center
+      margin 0 20px
 
-    .location-geology-main
+    .location-content-main
       width 100%
       background #fff
-      padding 10px
+      padding 20px
       border-radius 5px
+
+      .location-content-main-title
+        font-weight 600
 
 // pc
 @media screen and (min-width: 960px)
@@ -230,9 +315,6 @@ export default {
       margin 0 15px
 
       .location-show-description
-        background #fff
-        border-radius 5px
-        padding 20px
         width 20%
         min-width 300px
 
@@ -245,16 +327,13 @@ export default {
         width 80%
         min-width 600px
 
-    .location-geology
+    .location-content
       padding 50px 15%
       display flex
       display -webkit-flex
       justify-content space-between
 
-      .location-geology-main
-        margin-left 5%
-        background #fff
-        padding 10px
+      .location-content-main
         border-radius 5px
 
 // mobile
