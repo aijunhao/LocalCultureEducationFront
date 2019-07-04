@@ -3,12 +3,13 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Location from "./views/Location.vue";
 import Nature from "./views/Nature.vue";
-import History from "./views/History.vue";
-import Society from "./views/Society.vue";
+import ImageInfo from "./views/ImageInfo.vue";
 import ChinaMap from "./components/ChinaMap.vue";
 import ZheJiangMap from "./components/ZheJiangMap.vue";
 import BaiduMap from "./components/BaiduMap.vue";
 import Buddhism from "./views/Buddhism.vue";
+import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
+import History from "./views/Buddhism/History.vue";
 import Fishery from "./views/Fishery.vue";
 
 Vue.use(Router);
@@ -55,27 +56,33 @@ export default new Router({
       name: "nature"
     },
     {
-      path: "/history",
-      component: History,
-      name: "history"
+      path: "/imageinfo",
+      component: ImageInfo,
+      name: "imageinfo",
+      props: true
     },
     {
-      path: "/society",
-      component: Society,
-      name: "society",
-      redirect: "/society/buddhism",
+      path: "/buddhism",
+      component: Buddhism,
+      name: "buddhism",
+      redirect: "/buddhism/buddhismhome",
       children: [
         {
-          path: "buddhism",
-          component: Buddhism,
-          name: "buddhism"
+          path: "buddhismhome",
+          component: BuddhismHome,
+          name: "buddhismhome"
         },
         {
-          path: "fishery",
-          component: Fishery,
-          name: "fishery"
+          path: "history",
+          component: History,
+          name: "history"
         }
       ]
+    },
+    {
+      path: "/fishery",
+      component: Fishery,
+      name: "fishery"
     }
   ]
 });

@@ -3,14 +3,19 @@
     <!-- 头部 -->
     <div class="app-header">
       <!-- logo -->
-      <img alt="putuoshan.png" class="app-logo" src="./assets/putuoshan.png" />
+      <img
+        @click="$router.push('/home')"
+        alt="putuoshan.png"
+        class="app-logo"
+        src="./assets/putuoshan.png"
+      />
       <!-- 菜单 -->
       <ul class="app-menu">
         <router-link tag="li" to="/home">首页</router-link>
         <router-link tag="li" to="/location">地理环境</router-link>
-        <router-link tag="li" to="/society">人文社会</router-link>
+        <router-link tag="li" to="/buddhism">海天佛国</router-link>
+        <router-link tag="li" to="/fishery">渔舟唱晚</router-link>
         <router-link tag="li" to="/nature">自然风景</router-link>
-        <router-link tag="li" to="/history">历史背景</router-link>
       </ul>
     </div>
 
@@ -64,16 +69,11 @@
     justify-content space-between
     align-items center
     width 100%
-    top 10px
+    padding 5px 0
+    background rgba(255, 255, 255, 0.5)
     // 设置浮动在固定位置，层级在上
     position fixed
     z-index 100
-
-    // 备用颜色
-    // background #fff
-    .app-logo
-      width 200px
-      margin-left 50px
 
     .app-menu
       list-style none
@@ -104,14 +104,11 @@
       text-align center
 
     ul
-      display flex
       padding 0
-      margin 0 15%
       list-style none
 
       li
-        width 25%
-        padding 0 20px
+        padding 0 15px
         font-size 0.8rem
 
         p:first-child
@@ -121,4 +118,53 @@
         .footer-subtitle
           font-weight 600
           font-size 1rem
+
+@media screen and (min-width: 960px)
+  #app
+    .app-header
+      .app-logo
+        width 200px
+        margin-left 50px
+
+    .footer
+      ul
+        display flex
+        margin 0 15%
+
+        li
+          width 25%
+
+@media screen and (max-width: 960px) and (min-width: 450px)
+  #app
+    .app-header
+      .app-logo
+        width 150px
+        margin-left 50px
+
+    .footer
+      ul
+        display flex
+        margin 0
+
+        li
+          width 25%
+
+@media screen and (max-width: 450px)
+  #app
+    .app-header
+      .app-logo
+        width 100px
+        margin-left 20px
+
+    .footer
+      >p:last-child
+        margin-bottom 0
+        font-size 0.8rem
+
+      ul
+        margin 0 auto
+
+        li
+          text-align center
+          border-bottom 1px solid #fff
 </style>

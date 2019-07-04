@@ -116,7 +116,7 @@ export default {
     /**
      * 获取初始化页面数据
      */
-    homeInit() {
+    initHome() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_HOME_INIT
@@ -145,7 +145,7 @@ export default {
   },
   created() {
     // 获取初始化页面数据
-    this.homeInit()
+    this.initHome()
   },
   mounted() {
     // 当页面渲染完成时，重载轮播图大小

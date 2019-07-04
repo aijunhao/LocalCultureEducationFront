@@ -186,7 +186,7 @@ export default {
     /**
      * 获取 location 初始化信息
      */
-    locationInit() {
+    initLocation() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_LOCATION_INIT
@@ -244,7 +244,7 @@ export default {
   },
   created() {
     // 获取信息
-    this.locationInit()
+    this.initLocation()
   },
   computed: {
     ...mapState({
@@ -260,7 +260,7 @@ export default {
 
 <style lang="stylus">
 #location
-  margin-top 100px
+  padding-top 100px
 
   .space-between
     display flex
@@ -306,7 +306,6 @@ export default {
 // pc
 @media screen and (min-width: 960px)
   #location
-    margin-top 100px
 
     .location-show
       display flex
@@ -339,5 +338,5 @@ export default {
 // mobile
 @media screen and (max-width: 960px)
   #location
-    padding 10px
+    padding 100px 10px
 </style>

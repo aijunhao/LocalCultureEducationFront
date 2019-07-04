@@ -3,9 +3,9 @@
  */
 
 // 云地址
-// const BASE_URL = "http://120.79.254.54:3004";
+const BASE_URL = "http://120.79.254.54:3004";
 // 本地测试
-const BASE_URL = "http://localhost:3004";
+// const BASE_URL = "http://localhost:3004";
 
 export default {
   // 更路径
@@ -17,5 +17,7 @@ export default {
   // 获取地图位置描述信息
   EXECUTE_GET_LOCATION_INIT: `${BASE_URL}/location/`,
   // 获取 home 初始化数据
-  EXECUTE_GET_HOME_INIT: `${BASE_URL}/`
+  EXECUTE_GET_HOME_INIT: `${BASE_URL}/`,
+  // 获取 nature 初始化数据
+  EXECUTE_GET_NATURE_INIT: `${BASE_URL}/nature`
 };
