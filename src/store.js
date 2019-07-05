@@ -40,7 +40,9 @@ export default new Vuex.Store({
     plantSelected: {
       name: "",
       content: ""
-    }
+    },
+    // 图片选中项
+    imageInfoId: ""
   },
   mutations: {
     /**
@@ -74,7 +76,19 @@ export default new Vuex.Store({
      */
     SET_PLANT: (state, value) => {
       state.plant = value;
+    },
+    /**
+     * 图片详情存储
+     */
+    IMAGEINFOID_STORE: (state, value) => {
+      state.imageInfoId = parseInt(value);
     }
   },
-  actions: {}
+  actions: {
+    imageInfoId({ commit }, value) {
+      // sessionSotre 存储
+      sessionStorage.setItem("imageInfoId", value);
+      commit("IMAGEINFOID_STORE", value);
+    }
+  }
 });

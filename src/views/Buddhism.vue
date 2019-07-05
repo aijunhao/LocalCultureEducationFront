@@ -2,14 +2,14 @@
 <template>
   <div id="buddhism">
     <ul class="buddhism-list">
-      <router-link tag="li" to="/buddhism/buddhismhome">海天佛国</router-link>
-      <router-link tag="li" to="/buddhism/buddhismhome">
+      <li @click="$router.push({name: 'buddhismhome'})">海天佛国</li>
+      <li>
         <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">普陀山全山寺院 VR 全景</a>
-      </router-link>
-      <router-link tag="li" to="/buddhism/history">山水寺院</router-link>
-      <router-link tag="li" to="/buddhism/buddhismhome">佛国历史</router-link>
-      <router-link tag="li" to="/buddhism/buddhismhome">佛国馆藏</router-link>
-      <router-link tag="li" to="/buddhism/buddhismhome">历代高僧</router-link>
+      </li>
+      <li @click="$router.push({name: 'buddhismhome'})">山水寺院</li>
+      <li @click="$router.push({name: 'buddhismhome'})">佛国历史</li>
+      <li @click="$router.push({name: 'buddhismhome'})">佛国馆藏</li>
+      <li @click="$router.push({name: 'buddhismhome'})">历代高僧</li>
     </ul>
     <div class="buddhism-main">
       <router-view></router-view>
@@ -19,7 +19,7 @@
 
 <style lang="stylus">
 #buddhism
-  padding-top 100px
+  padding- @clickp 100px
 
   .buddhism-main
     padding 15px

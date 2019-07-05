@@ -1,12 +1,7 @@
 <template>
   <div id="nature">
     <ul id="nature_list">
-      <router-link
-        :key="i"
-        :to="{ name: 'imageinfo', params: {imgObj: item}}"
-        tag="li"
-        v-for="(item, i) in initMessage.nature"
-      >
+      <li :key="i" @click="chooseImage(item.id)" v-for="(item, i) in initMessage">
         <el-image :src="item.img" fit="fill"></el-image>
         <div class="nature-list-description">
           <p class="nature-list-description-content">{{ item.content }}</p>
@@ -21,7 +16,7 @@
             </span>
           </div>
         </div>
-      </router-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -32,17 +27,16 @@ import config from '../config.js'
 export default {
   data() {
     return {
-      initMessage: {
-        nature: [
-          {
-            title: '',
-            content: '',
-            commentNumber: 0,
-            lookedNumber: 0,
-            img: ''
-          }
-        ]
-      }
+      initMessage: [
+        {
+          id: '',
+          title: '',
+          content: '',
+          commentNumber: 0,
+          lookedNumber: 0,
+          img: ''
+        }
+      ]
     }
   },
   methods: {
@@ -55,12 +49,21 @@ export default {
         url: config.EXECUTE_GET_NATURE_INIT
       })
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           this.initMessage = data.data
         })
         .catch(err => {
           console.log(err)
         })
+    },
+    /**
+     * 图片点击
+     */
+    chooseImage(id) {
+      // 将图片 id 传给 vuex 进行 vuex 存储和 sessionStore 存储
+      this.$store.dispatch('imageInfoId', id)
+      // 路由跳转
+      this.$router.push({ name: 'imageinfo' })
     }
   },
   created() {
@@ -83,7 +86,6 @@ export default {
     overflow hidden
     background #fff
     position relative
-    
 
     .el-image
       width 100%

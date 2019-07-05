@@ -2,17 +2,17 @@
   <div id="imageinfo">
     <!-- 图片对象显示 -->
     <div class="imageinfo-show">
-      <p v-text="imgObj.title"></p>
-      <el-image :src="imgObj.img" fit="contain"></el-image>
-      <p v-text="imgObj.content"></p>
+      <p v-text="imageInfo.title"></p>
+      <el-image :src="imageInfo.img" fit="contain"></el-image>
+      <p v-text="imageInfo.content"></p>
       <div class="imageinfo-show-icon">
         <span>
           <i class="el-icon-view"></i>
-          {{ imgObj.lookedNumber }}
+          {{ imageInfo.lookedNumber }}
         </span>
         <span>
           <i class="el-icon-chat-dot-round"></i>
-          {{ imgObj.commentNumber }}
+          {{ imageInfo.commentNumber }}
         </span>
       </div>
     </div>
@@ -22,22 +22,57 @@
 
     <!-- 评论 -->
     <div class="imageinfo-comment">
-      <comment></comment>
+      <comment :id="imageInfoId"></comment>
     </div>
   </div>
 </template>
 
 <script>
-import comment from "../components/Comment"
+import comment from '../components/Comment'
+import config from '../config'
+import { mapState } from 'vuex'
 
 export default {
   data() {
-    return {}
+    return {
+      imageInfo: {}
+    }
   },
   components: {
     comment
   },
-  props: ['imgObj']
+  created() {
+    this.initInfo()
+  },
+  methods: {
+    /**
+     * 获取图片详情信息
+     */
+    initInfo() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_IMAGE_INFO + `/${this.imageInfoId}`
+      })
+        .then(data => {
+          console.log(data.data)
+          this.imageInfo = data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+  },
+  computed: {
+    ...mapState({
+      imageInfoId: state => {
+        // 判断是否为空
+        if (state.imageInfoId === "") {
+          state.imageInfoId = parseInt(sessionStorage.getItem('imageInfoId'))
+        }
+        return parseInt(state.imageInfoId)
+      }
+    })
+  }
 }
 </script>
 
@@ -45,12 +80,15 @@ export default {
 #imageinfo
   .el-divider__text
     background #f2f2f2
+    font-size 0.8rem
 
   .imageinfo-show
     width 100%
 
     .el-image
       width 100%
+      min-height 250px
+      background #fff
 
     p:first-child
       text-align center
@@ -68,11 +106,11 @@ export default {
 // pc
 @media screen and (min-width: 960px)
   #imageinfo
-    padding 100px 15%
+    padding 100px 15% 0
 
 // mobile
 @media screen and (max-width: 960px)
   #imageinfo
-    padding 100px 10px
+    padding 100px 10px 0 
 </style>
 
