@@ -9,6 +9,7 @@ import ZheJiangMap from "./components/ZheJiangMap.vue";
 import BaiduMap from "./components/BaiduMap.vue";
 import Buddhism from "./views/Buddhism.vue";
 import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
+import Building from "./views/Buddhism/Building.vue";
 import History from "./views/Buddhism/History.vue";
 import Fishery from "./views/Fishery.vue";
 
@@ -76,6 +77,11 @@ export default new Router({
           path: "history",
           component: History,
           name: "history"
+        },
+        {
+          path: "building",
+          component: Building,
+          name: "building"
         }
       ]
     },

@@ -24,8 +24,9 @@
 
     <!-- 选项 -->
     <div class="comments-sort-type">
-      <el-button @click="sortType = 1" round>最新评论</el-button>
-      <el-button @click="sortType = 2" round>热门评论</el-button>
+      <el-button @click="setSortType(0)" round>所有评论</el-button>
+      <el-button @click="setSortType(1)" round>最新评论</el-button>
+      <el-button @click="setSortType(2)" round>热门评论</el-button>
     </div>
 
     <el-divider>
@@ -49,6 +50,17 @@
 
     <!-- 评论见底 -->
     <p class="comments-end-tip">{{ tipText }}</p>
+
+    <!-- 分页 -->
+    <el-pagination
+      :background="true"
+      :current-page.sync="pages"
+      :hide-on-single-page="hideSinglePage"
+      :page-size="10"
+      :total="commentNumber"
+      @current-change="getComments()"
+      layout="prev, pager, next"
+    ></el-pagination>
   </div>
 </template>
 
@@ -56,16 +68,27 @@
 import config from '../config.js'
 
 export default {
-  props: ['id'],
+  props: ['id', 'commentNumber'],
   data() {
     return {
       pages: 1,
       comments: [],
       myComment: '',
-      sortType: 1
+      sortType: 1,
+      hideSinglePage: true
     }
   },
   methods: {
+    /**
+     * 修改排序方式
+     */
+    setSortType(index) {
+      this.sortType = index
+      // 重置页码
+      this.pages = 1
+      // 重新加载数据
+      this.getComments()
+    },
     /**
      * 获取评论数据
      */
@@ -117,11 +140,12 @@ export default {
           }
         })
           .then(data => {
-            console.log(data)
             if (data.status === 200) {
               this.$message('评论成功')
               // 重新加载数据
               this.getComments()
+              // 自定义事件，给父组件发信息，刷新父组件页面
+              this.$emit('reinit')
             } else {
               this.$message.error('服务器繁忙，请稍后再试。')
             }
@@ -153,6 +177,11 @@ export default {
 
 <style lang="stylus">
 #comments
+  // 分页居中
+  .el-pagination
+    display flex
+    justify-content center
+
   .comments-publish
     border-radius 5px
     border 1px solid #000

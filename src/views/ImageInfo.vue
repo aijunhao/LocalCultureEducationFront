@@ -3,7 +3,7 @@
     <!-- 图片对象显示 -->
     <div class="imageinfo-show">
       <p v-text="imageInfo.title"></p>
-      <el-image :src="imageInfo.img" fit="contain"></el-image>
+      <img :src="imageInfo.img" alt="图片">
       <p v-text="imageInfo.content"></p>
       <div class="imageinfo-show-icon">
         <span>
@@ -22,7 +22,7 @@
 
     <!-- 评论 -->
     <div class="imageinfo-comment">
-      <comment :id="imageInfoId"></comment>
+      <comment :id="imageInfoId" @reinit="initInfo()" :commentNumber="imageInfo.commentNumber"></comment>
     </div>
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
         url: config.EXECUTE_GET_IMAGE_INFO + `/${this.imageInfoId}`
       })
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           this.imageInfo = data.data
         })
         .catch(err => {
@@ -85,7 +85,7 @@ export default {
   .imageinfo-show
     width 100%
 
-    .el-image
+    img
       width 100%
       min-height 250px
       background #fff

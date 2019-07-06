@@ -1,50 +1,40 @@
 // 佛教文化
 <template>
   <div id="buddhism">
-    <ul class="buddhism-list">
-      <li @click="$router.push({name: 'buddhismhome'})">海天佛国</li>
-      <li>
-        <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">普陀山全山寺院 VR 全景</a>
-      </li>
-      <li @click="$router.push({name: 'buddhismhome'})">山水寺院</li>
-      <li @click="$router.push({name: 'buddhismhome'})">佛国历史</li>
-      <li @click="$router.push({name: 'buddhismhome'})">佛国馆藏</li>
-      <li @click="$router.push({name: 'buddhismhome'})">历代高僧</li>
-    </ul>
-    <div class="buddhism-main">
-      <router-view></router-view>
-    </div>
+    <!-- 侧边栏 -->
+    <el-container>
+      <el-aside style="background:#f2f2f2" width="200px">
+        <el-menu :default-openeds="['1', '2', '3']">
+          <el-submenu index="1">
+            <template slot="title">海天佛国</template>
+            <el-menu-item index="1-1" @click="$router.push({name: 'buddhismhome'})">首页</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">山水人文</template>
+            <el-menu-item index="2-1">
+              <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">全山寺院 VR 全景</a>
+            </el-menu-item>
+            <el-menu-item index="2-2" @click="$router.push({name: 'building'})">寺院庵堂</el-menu-item>
+            <el-menu-item index="2-3">景区景点</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">佛国文化</template>
+            <el-menu-item index="3-1">佛国馆藏</el-menu-item>
+            <el-menu-item index="3-2">观音法界</el-menu-item>
+            <el-menu-item index="3-3">佛国编年史</el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+
+      <!-- 主体内容显示区 -->
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
 <style lang="stylus">
 #buddhism
-  padding- @clickp 100px
-
-  .buddhism-main
-    padding 15px
-
-  .buddhism-list
-    list-style none
-    padding 0
-    margin 0
-
-    li
-      height 60px
-      width 200px
-      background #fff
-      text-align center
-      line-height 60px
-
-    li:hover
-      background #409EFF
-
-@media screen and (min-width: 960px)
-  #buddhism
-    padding 100px 15%
-    display flex
-    display -webkit-flex
-
-    .buddhism-main
-      margin-left 30px
+  padding 100px 10%
 </style>
