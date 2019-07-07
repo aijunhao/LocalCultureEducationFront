@@ -3,6 +3,5 @@
     <div>
       历史
     </div>
-    
   </div>
 </template>

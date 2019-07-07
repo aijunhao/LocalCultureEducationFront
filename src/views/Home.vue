@@ -2,70 +2,21 @@
   <div id="home">
     <!-- 走马灯背景图 -->
     <el-carousel :height="carouselHeight" :interval="5000" arrow="always">
-      <el-carousel-item :key="url" v-for="(url, i) in initMessage.carouselImgs">
-        <el-image :src="url" @click="show(i)" fit="fill"></el-image>
+      <el-carousel-item :key="i" v-for="(item, i) in carouselImgs">
+        <el-image :src="item.img" @click="show(i)" fit="fill"></el-image>
       </el-carousel-item>
     </el-carousel>
 
-    <!-- 地理位置 -->
-    <div class="home-content">
-      <p class="home-content-title">{{ initMessage.location.title }}</p>
+    <div class="home-content" v-for="(item, i) in initMessage" :key="i">
+      <p class="home-content-title">{{ content[i] }}</p>
       <div class="home-content-message">
         <div class="home-content-message-img">
-          <el-image :src="initMessage.location.img" fit="fill"></el-image>
+          <el-image :src="item.img" fit="fill"></el-image>
         </div>
         <div class="home-content-message-main">
-          <p>{{ initMessage.location.subtitle }}</p>
-          <p>{{ initMessage.location.message }}</p>
-          <el-button @click="$router.push('/location')" type="danger">更多</el-button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 人文社会 -->
-    <div class="home-content">
-      <p class="home-content-title">{{ initMessage.society.title }}</p>
-      <div class="home-content-message">
-        <div class="home-content-message-img">
-          <el-image :src="initMessage.society.img" fit="fill"></el-image>
-        </div>
-        <div class="home-content-message-main">
-          <p>{{ initMessage.society.subtitle }}</p>
-          <p>{{ initMessage.society.message }}</p>
-          <el-button @click="$router.push('/society')" type="danger">更多</el-button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 自然风景 -->
-    <div class="home-content">
-      <p class="home-content-title">{{ initMessage.nature.title }}</p>
-      <ul id="home_nature_image_list">
-        <li :key="i" v-for="(item, i) in initMessage.nature.imgs">
-          <el-popover placement="top" trigger="hover" width="600">
-            <!-- 弹出框大图 -->
-            <el-image :src="item" fit="fill"></el-image>
-            <!-- 缩略图 -->
-            <el-image :src="item" fit="fill" slot="reference"></el-image>
-          </el-popover>
-        </li>
-        <li @click="$router.push('/nature')">
-          <img src="../assets/next.png" />
-        </li>
-      </ul>
-    </div>
-
-    <!-- 历史背景 -->
-    <div class="home-content">
-      <p class="home-content-title">{{ initMessage.history.title }}</p>
-      <div class="home-content-message">
-        <div class="home-content-message-img">
-          <el-image :src="initMessage.history.img" fit="fill"></el-image>
-        </div>
-        <div class="home-content-message-main">
-          <p>{{ initMessage.history.subtitle }}</p>
-          <p>{{ initMessage.history.message }}</p>
-          <el-button @click="$router.push('/society')" type="danger">更多</el-button>
+          <p>{{ item.title }}</p>
+          <p>{{ item.content }}</p>
+          <el-button @click="jumpTo(i)" type="danger">更多</el-button>
         </div>
       </div>
     </div>
@@ -80,36 +31,11 @@ export default {
     return {
       // 轮播图大小
       carouselHeight: '600px',
+      // 轮播图数据
+      carouselImgs: [],
       // 页面数据
-      initMessage: {
-        carouselImgs: [],
-        // 自然风景模块数据
-        nature: {
-          title: '',
-          imgs: []
-        },
-        // 地理位置模块数据
-        location: {
-          title: '',
-          subtitle: '',
-          message: '',
-          img: ''
-        },
-        // 历史模块数据
-        history: {
-          title: '',
-          subtitle: '',
-          message: '',
-          img: ''
-        },
-        // 人文社会模块数据
-        society: {
-          title: '',
-          subtitle: '',
-          message: '',
-          img: ''
-        }
-      }
+      initMessage: [],
+      content: ['地理环境', '历史背景', '人文社会']
     }
   },
   methods: {
@@ -119,10 +45,26 @@ export default {
     initHome() {
       this.$axios({
         method: 'get',
-        url: config.EXECUTE_GET_HOME_INIT
+        url: config.EXECUTE_GET_HOME_COMTENT
       })
         .then(data => {
+          console.log(data.data)
           this.initMessage = data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取轮播图数据
+     */
+    getCarousel() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_HOME_CAROUSEL
+      })
+        .then(data => {
+          this.carouselImgs = data.data
         })
         .catch(err => {
           console.log(err)
@@ -141,11 +83,24 @@ export default {
       this.$nextTick(() => {
         this.carouselHeight = window.innerWidth * 0.5 + 'px'
       })
+    },
+    /**
+     * 跳转
+     */
+    jumpTo(index) {
+      if (index === 0) {
+        this.$router.push('/location')
+      } else if (index === 1) {
+        this.$router.push('/location')
+      } else if (index === 2) {
+        this.$router.push('/location')
+      }
     }
   },
   created() {
     // 获取初始化页面数据
     this.initHome()
+    this.getCarousel()
   },
   mounted() {
     // 当页面渲染完成时，重载轮播图大小
