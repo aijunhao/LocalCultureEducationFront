@@ -9,6 +9,13 @@
         class="app-logo"
         src="./assets/putuoshan.png"
       />
+
+      <!-- 列表按钮，是否显示 -->
+      <label for="menu-checkbox">
+        <img alt class="app-list" src="./assets/list.png" />
+      </label>
+      <input checked id="menu-checkbox" type="checkbox" />
+
       <!-- 菜单 -->
       <ul class="app-menu">
         <router-link tag="li" to="/home">首页</router-link>
@@ -20,7 +27,7 @@
     </div>
 
     <!-- 主体 -->
-    <router-view></router-view>
+    <router-view class="app-main"></router-view>
 
     <!-- 底部 -->
     <div class="footer">
@@ -61,38 +68,38 @@
 </template>
 
 <style lang="stylus">
+// 布局
+flex($h = flex-start, $v = flex-start, $w = nowrap)
+  display flex
+  display -webkit-flex
+  align-items $v
+  flex-wrap $w
+  justify-content $h
+  
+#menu-checkbox
+  display none 
+
 #app
   .app-header
-    // 布局
-    display flex
-    display -webkit-flex
-    justify-content space-between
-    align-items center
     width 100%
-    padding 5px 0
-    background rgba(255, 255, 255, 0.5)
+    background rgba(255, 255, 255, 0.8)
     // 设置浮动在固定位置，层级在上
     position fixed
+    top 0
     z-index 100
 
     .app-menu
       list-style none
-      display flex
-      margin-right 40px
 
-      >li
-        width 100px
+      li
+        display block
         text-align center
-        color #000
+        color #333
         font-size 1rem
-        border 2px solid #fff0
-        border-radius 5px
-        padding 5px
-        margin 5px
         font-weight 600
 
-      >li:hover
-        border 2px solid #000
+        &:hover
+          background #DCDFE6
 
   .footer
     background #000
@@ -120,11 +127,28 @@
           font-size 1rem
 
 @media screen and (min-width: 960px)
+  $header-height = 80px
+
   #app
     .app-header
+      flex(space-between, center)
+
       .app-logo
-        width 200px
+        height $header-height - 10px
         margin-left 50px
+
+      .app-list
+        display none
+
+      .app-menu
+        flex()
+
+        li
+          line-height $header-height
+          width 100px
+
+    .app-main
+      margin-top $header-height
 
     .footer
       ul
@@ -134,27 +158,32 @@
         li
           width 25%
 
-@media screen and (max-width: 960px) and (min-width: 450px)
+@media screen and (max-width: 960px)
+  $header-height = 70px
+
+  #menu-checkbox:checked ~ .app-menu
+      display none
+
   #app
     .app-header
-      .app-logo
-        width 150px
-        margin-left 50px
+      height $header-height
 
-    .footer
-      ul
-        display flex
-        margin 0
+      .app-logo
+        height $header-height - 10px
+        margin 5px 10px
+
+      .app-list
+        float right
+        margin (($header-height - 64px) / 2)
+
+      .app-menu
+        background #909399
 
         li
-          width 25%
+          line-height 40px
 
-@media screen and (max-width: 450px)
-  #app
-    .app-header
-      .app-logo
-        width 100px
-        margin-left 20px
+    .app-main
+      margin-top $header-height
 
     .footer
       >p:last-child
@@ -162,9 +191,7 @@
         font-size 0.8rem
 
       ul
-        margin 0 auto
-
         li
           text-align center
-          border-bottom 1px solid #fff
+          padding 5px
 </style>

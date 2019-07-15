@@ -73,9 +73,6 @@ export default {
 </script>
 
 <style lang="stylus">
-#nature
-  padding-top 100px
-
 #nature_list
   list-style none
   padding 0
@@ -128,5 +125,4 @@ export default {
   #nature_list
     li
       margin 5px 10px
-      // width 100%
 </style>

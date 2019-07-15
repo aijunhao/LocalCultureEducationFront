@@ -37,9 +37,9 @@
 <style lang="stylus">
 @media screen and (min-width 960px)
   #buddhism
-    padding 100px 10% 0
+    padding 0 10% 
 
 @media screen and (max-width 960px)
   #buddhism
-    padding 100px 0 0
+    padding 0
 </style>

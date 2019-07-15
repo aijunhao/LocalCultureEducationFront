@@ -3,7 +3,7 @@
     <!-- 图片对象显示 -->
     <div class="imageinfo-show">
       <p v-text="imageInfo.title"></p>
-      <img :src="imageInfo.img" alt="图片">
+      <img :src="imageInfo.img" alt="图片" />
       <p v-text="imageInfo.content"></p>
       <div class="imageinfo-show-icon">
         <span>
@@ -22,7 +22,7 @@
 
     <!-- 评论 -->
     <div class="imageinfo-comment">
-      <comment :id="imageInfoId" @reinit="initInfo()" :commentNumber="imageInfo.commentNumber"></comment>
+      <comment :commentNumber="imageInfo.commentNumber" :id="imageInfoId" @reinit="initInfo()"></comment>
     </div>
   </div>
 </template>
@@ -60,13 +60,13 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
+    }
   },
   computed: {
     ...mapState({
       imageInfoId: state => {
         // 判断是否为空
-        if (state.imageInfoId === "") {
+        if (state.imageInfoId === '') {
           state.imageInfoId = parseInt(sessionStorage.getItem('imageInfoId'))
         }
         return parseInt(state.imageInfoId)
@@ -106,11 +106,11 @@ export default {
 // pc
 @media screen and (min-width: 960px)
   #imageinfo
-    padding 100px 15% 0
+    padding 0 15%
 
 // mobile
 @media screen and (max-width: 960px)
   #imageinfo
-    padding 100px 10px 0 
+    padding 0 10px
 </style>
 

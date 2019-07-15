@@ -260,8 +260,6 @@ export default {
 
 <style lang="stylus">
 #location
-  padding-top 100px
-
   .space-between
     display flex
     display -webkit-flex
@@ -306,7 +304,6 @@ export default {
 // pc
 @media screen and (min-width: 960px)
   #location
-
     .location-show
       display flex
       display -webkit-flex
@@ -338,5 +335,5 @@ export default {
 // mobile
 @media screen and (max-width: 960px)
   #location
-    padding 100px 10px
+    padding 0 10px
 </style>

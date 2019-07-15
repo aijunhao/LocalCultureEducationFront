@@ -20,6 +20,8 @@ export default {
   EXECUTE_GET_HOME_COMTENT: `${BASE_URL}/getHomeContent`,
   // 获取 home 页面轮播图数据
   EXECUTE_GET_HOME_CAROUSEL: `${BASE_URL}/getHomeCarousel`,
+  // 获取 home 页面展示图片数据
+  EXECUTE_GET_HOME_NATURE_IMAGES: `${BASE_URL}/getHomeNatureImages`,
   // 获取 nature 初始化数据
   EXECUTE_GET_NATURE_INIT: `${BASE_URL}/nature`,
   // 获取评论初始化数据

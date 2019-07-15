@@ -7,8 +7,9 @@
       </el-carousel-item>
     </el-carousel>
 
+    <!-- 首页简介 -->
     <div class="home-content" v-for="(item, i) in initMessage" :key="i">
-      <p class="home-content-title">{{ content[i] }}</p>
+      <p class="home-content-title">{{ item.moduleName }}</p>
       <div class="home-content-message">
         <div class="home-content-message-img">
           <el-image :src="item.img" fit="fill"></el-image>
@@ -16,9 +17,27 @@
         <div class="home-content-message-main">
           <p>{{ item.title }}</p>
           <p>{{ item.content }}</p>
-          <el-button @click="jumpTo(i)" type="danger">更多</el-button>
+          <el-button @click="jumpTo(item.moduleName)" type="danger">更多</el-button>
         </div>
       </div>
+    </div>
+
+    <!-- 图片列表 -->
+    <div class="home-content">
+      <p class="home-content-title">普陀美景</p>
+      <ul id="home_nature_image_list">
+        <li :key="i" v-for="(item, i) in natureImages">
+          <el-popover placement="top" trigger="hover" width="600">
+            <!-- 弹出框大图 -->
+            <el-image :src="item.img" fit="fill"></el-image>
+            <!-- 缩略图 -->
+            <el-image :src="item.img" fit="fill" slot="reference"></el-image>
+          </el-popover>
+        </li>
+        <li @click="$router.push('/nature')">
+          <img src="../assets/next.png" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -35,7 +54,8 @@ export default {
       carouselImgs: [],
       // 页面数据
       initMessage: [],
-      content: ['地理环境', '历史背景', '人文社会']
+      // 展示图片数据
+      natureImages: []
     }
   },
   methods: {
@@ -48,7 +68,7 @@ export default {
         url: config.EXECUTE_GET_HOME_COMTENT
       })
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           this.initMessage = data.data
         })
         .catch(err => {
@@ -65,6 +85,22 @@ export default {
       })
         .then(data => {
           this.carouselImgs = data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取展示图片数据
+     */
+    getHomeNatureImages() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_HOME_NATURE_IMAGES
+      })
+        .then(data => {
+          // console.log(data.data)
+          this.natureImages = data.data
         })
         .catch(err => {
           console.log(err)
@@ -88,19 +124,20 @@ export default {
      * 跳转
      */
     jumpTo(index) {
-      if (index === 0) {
+      if (index === "地理环境") {
         this.$router.push('/location')
-      } else if (index === 1) {
-        this.$router.push('/location')
-      } else if (index === 2) {
+      } else if (index === "海天佛国") {
+        this.$router.push('/buddhism')
+      } else if (index === "历史文化") {
         this.$router.push('/location')
       }
     }
   },
   created() {
-    // 获取初始化页面数据
+    // 获取初始化页面数据 
     this.initHome()
     this.getCarousel()
+    this.getHomeNatureImages()
   },
   mounted() {
     // 当页面渲染完成时，重载轮播图大小
@@ -168,7 +205,7 @@ export default {
 @media screen and (min-width: 960px)
   #home
     .home-content
-      padding 10px 15%
+      padding 50px 15%
 
       .home-content-message
         display flex

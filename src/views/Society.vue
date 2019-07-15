@@ -16,7 +16,7 @@ export default {}
 
 <style lang="stylus">
 #society
-  margin 100px 50px
+  margin 0 50px
 
 #society-menu
   list-style none
