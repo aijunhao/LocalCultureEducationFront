@@ -11,6 +11,7 @@ import Buddhism from "./views/Buddhism.vue";
 import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
 import Scenery from "./views/Buddhism/Scenery.vue";
 import Building from "./views/Buddhism/Building.vue";
+import Guanyin from "./views/Buddhism/Guanyin.vue";
 import History from "./views/Buddhism/History.vue";
 import Fishery from "./views/Fishery.vue";
 
@@ -83,6 +84,11 @@ export default new Router({
           path: "building",
           component: Building,
           name: "building"
+        },
+        {
+          path: "guanyin",
+          component: Guanyin,
+          name: "guanyin"
         },
         {
           path: "scenery",

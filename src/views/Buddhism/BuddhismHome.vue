@@ -5,7 +5,6 @@
     <video-player
       :options="playerOptions"
       :playsinline="true"
-      class="video-player vjs-custom-skin"
       ref="videoPlayer"
     ></video-player>
   </div>
@@ -30,7 +29,7 @@ export default {
             src: 'http://120.79.254.54:3004/public/video/普陀山.mp4' //视频url地址
           }
         ],
-        poster: '../../static/image/thumb_1_1380_460_20181009043014983386.jpg', //你的封面地址
+        poster: 'http://120.79.254.54:3004/public/images/cover.jpg', //你的封面地址
         // width: document.documentElement.clientWidth,
         notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {

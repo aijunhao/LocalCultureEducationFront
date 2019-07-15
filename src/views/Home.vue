@@ -1,11 +1,7 @@
 <template>
   <div id="home">
-    <!-- 走马灯背景图 -->
-    <el-carousel :height="carouselHeight" :interval="5000" arrow="always">
-      <el-carousel-item :key="i" v-for="(item, i) in carouselImgs">
-        <el-image :src="item.img" @click="show(i)" fit="fill"></el-image>
-      </el-carousel-item>
-    </el-carousel>
+    <!-- 轮播图 -->
+    <carousel :imgList="imgList"></carousel>
 
     <!-- 首页简介 -->
     <div class="home-content" v-for="(item, i) in initMessage" :key="i">
@@ -44,14 +40,13 @@
 
 <script>
 import config from '../config'
+import carousel from '../components/Carousel'
 
 export default {
   data() {
     return {
-      // 轮播图大小
-      carouselHeight: '600px',
       // 轮播图数据
-      carouselImgs: [],
+      imgList: [],
       // 页面数据
       initMessage: [],
       // 展示图片数据
@@ -84,7 +79,7 @@ export default {
         url: config.EXECUTE_GET_HOME_CAROUSEL
       })
         .then(data => {
-          this.carouselImgs = data.data
+          this.imgList = data.data
         })
         .catch(err => {
           console.log(err)
@@ -107,20 +102,6 @@ export default {
         })
     },
     /**
-     * 图片点击事件
-     */
-    show(index) {
-      console.log(index)
-    },
-    /**
-     * 轮播图重载
-     */
-    homeCarouselLoad() {
-      this.$nextTick(() => {
-        this.carouselHeight = window.innerWidth * 0.5 + 'px'
-      })
-    },
-    /**
      * 跳转
      */
     jumpTo(index) {
@@ -139,13 +120,9 @@ export default {
     this.getCarousel()
     this.getHomeNatureImages()
   },
-  mounted() {
-    // 当页面渲染完成时，重载轮播图大小
-    this.homeCarouselLoad()
-    window.onresize = () => {
-      this.homeCarouselLoad()
-    }
-  }
+  components: {
+    carousel
+  },
 }
 </script>
 

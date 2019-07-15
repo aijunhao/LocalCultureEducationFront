@@ -12,13 +12,18 @@
     </div>
 
     <!-- 图片介绍 -->
+    <image-list :imageList="twelveScenery" ></image-list>
   </div>
 </template>
 
 <script>
+import config from "../../config"
+import ImageList from '../../components/ImageList'
+
 export default {
   data() {
     return {
+      twelveScenery: '',
       description: {
         title: '普陀山寺院概况',
         img: '',
@@ -40,7 +45,31 @@ export default {
         ]
       }
     }
-  }
+  },
+  methods: {
+    /**
+     * 获取普陀十二景
+     */
+    getTwelveScenery() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_TWELVE_SCENERIES
+      })
+        .then(data => {
+          console.log(data.data)
+          this.twelveScenery = data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+  },
+  created() {
+    this.getTwelveScenery()
+  },
+  components: {
+    'image-list': ImageList
+  },
 }
 </script>
 

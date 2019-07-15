@@ -20,7 +20,7 @@
           <el-submenu index="3">
             <template slot="title">佛国文化</template>
             <el-menu-item index="3-1">佛国馆藏</el-menu-item>
-            <el-menu-item index="3-2">观音法界</el-menu-item>
+            <el-menu-item index="3-2" @click="$router.push({path: '/buddhism/guanyin'})">观音法界</el-menu-item>
             <el-menu-item index="3-3" @click="$router.push({path: '/buddhism/history'})">佛国编年史</el-menu-item>
           </el-submenu>
         </el-menu>

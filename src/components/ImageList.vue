@@ -66,8 +66,9 @@ export default {
       .description
         min-height 50px
         background rgba(144, 147, 153, 0.8)
-        width 94%
-        padding 3%
+        box-sizing border-box
+        width 100%
+        padding 10px
         position absolute
         bottom 0
 
@@ -93,8 +94,8 @@ export default {
       flex-wrap wrap
 
       li
-        width 30%
         margin 5px
+        width calc((100% / 3) - 10px)
 
 @media screen and (max-width: 960px)
   #image_list
