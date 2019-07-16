@@ -10,6 +10,7 @@ import BaiduMap from "./components/BaiduMap.vue";
 import Buddhism from "./views/Buddhism.vue";
 import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
 import Scenery from "./views/Buddhism/Scenery.vue";
+import Museum from "./views/Buddhism/Museum.vue";
 import Building from "./views/Buddhism/Building.vue";
 import Guanyin from "./views/Buddhism/Guanyin.vue";
 import History from "./views/Buddhism/History.vue";
@@ -89,6 +90,11 @@ export default new Router({
           path: "guanyin",
           component: Guanyin,
           name: "guanyin"
+        },
+        {
+          path: "museum",
+          component: Museum,
+          name: "museum"
         },
         {
           path: "scenery",

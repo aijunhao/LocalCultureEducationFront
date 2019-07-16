@@ -3,7 +3,7 @@
   <div id="buddhism">
     <!-- 侧边栏 -->
     <el-container>
-      <el-aside style="background:#f2f2f2" width="200px">
+      <el-aside class="buddhism-aside">
         <el-menu :default-openeds="['1', '2', '3']">
           <el-submenu index="1">
             <template slot="title">海天佛国</template>
@@ -19,7 +19,7 @@
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">佛国文化</template>
-            <el-menu-item index="3-1">佛国馆藏</el-menu-item>
+            <el-menu-item index="3-1" @click="$router.push({path: '/buddhism/museum'})">佛国馆藏</el-menu-item>
             <el-menu-item index="3-2" @click="$router.push({path: '/buddhism/guanyin'})">观音法界</el-menu-item>
             <el-menu-item index="3-3" @click="$router.push({path: '/buddhism/history'})">佛国编年史</el-menu-item>
           </el-submenu>
@@ -27,7 +27,7 @@
       </el-aside>
 
       <!-- 主体内容显示区 -->
-      <el-main>
+      <el-main class="buddhism-main">
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -35,9 +35,21 @@
 </template>
 
 <style lang="stylus">
+#buddhism
+  .buddhism-aside
+    background #f2f2f2
+    width 200px !important
+
 @media screen and (min-width 960px)
   #buddhism
     padding 0 10% 
+
+    .buddhism-aside
+    //   position fixed
+      margin-top 20px
+
+    // .buddhism-main
+    //   margin-left 200px
 
 @media screen and (max-width 960px)
   #buddhism

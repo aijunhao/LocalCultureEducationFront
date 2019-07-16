@@ -14,8 +14,8 @@
 
       <!-- 描述 -->
       <div class="location-show-description">
-        <p>{{ initMessage.mapDescription.title }}</p>
-        <p>{{ initMessage.mapDescription.content[radio] }}</p>
+        <p class="title">{{ mapDescription[radio].title }}</p>
+        <p :key="i" class="indent" v-for="(item, i) in mapDescription[radio].content">{{item}}</p>
       </div>
     </div>
 
@@ -25,23 +25,23 @@
         <echarts :height="350" :index="1" :option="geologyOption" :width="350"></echarts>
       </div>
       <div class="location-content-main">
-        <p>{{ geologyOverView }}</p>
+        <p class="indent">{{ geologyOverView }}</p>
         <p class="location-content-main-title" v-text="geologyAreaSelected.name">面积占比名称</p>
-        <p v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
+        <p class="indent" v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
         <p class="location-content-main-title" v-text="geologyLineSelected.name">海岸线占比名称</p>
-        <p v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
+        <p class="indent" v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
       </div>
     </div>
 
     <!-- 植被信息 -->
     <div class="location-content">
       <div class="location-content-main">
-        <p>{{ plantOverView }}</p>
+        <p class="indent">{{ plantOverView }}</p>
         <p class="location-content-main-title" v-text="plantSelected.name">植物类别</p>
-        <p v-text="plantSelected.content">点击左侧图表可在此处查看详细信息</p>
+        <p class="indent" v-text="plantSelected.content">点击左侧图表可在此处查看详细信息</p>
       </div>
       <div class="location-content-echarts">
-        <echarts :height="350" :index="2" :option="plantOption" :width="450"></echarts>
+        <echarts :height="400" :index="2" :option="plantOption" :width="400"></echarts>
       </div>
     </div>
   </div>
@@ -57,13 +57,15 @@ export default {
     return {
       // 选择按钮
       radio: 0,
-      // 初始化数据
-      initMessage: {
-        // 地图描述
-        mapDescription: {
+      mapDescription: [
+        {
           title: '',
           content: ['']
         }
+      ],
+      // 初始化数据
+      initMessage: {
+        // 地图描述
       },
       // 地质地貌 echarts 参数
       geologyOption: {
@@ -140,21 +142,21 @@ export default {
           orient: 'vertical',
           left: 'right',
           data: [
+            '沼生水生植被',
+            '木本栽培植被',
+            '草本栽培植被',
+            '盐生植被',
+            '沙生植被',
             '针叶林',
             '阔叶林',
             '竹林',
             '灌丛',
-            '草丛',
-            '盐生植被',
-            '沙生植被',
-            '沼生水生植被',
-            '木本栽培植被',
-            '草本栽培植被'
+            '草丛'
           ]
         },
         series: [
           {
-            name: '海岸线比例',
+            name: '普陀山植被统计',
             type: 'pie',
             selectedMode: 'single',
             radius: [0, '60%'],
@@ -192,7 +194,8 @@ export default {
         url: config.EXECUTE_GET_LOCATION_INIT
       })
         .then(data => {
-          this.initMessage = data.data
+          console.log(data.data)
+          this.mapDescription = data.data.mapDescription
           this.dataCommit(data.data)
         })
         .catch(err => {
@@ -260,6 +263,9 @@ export default {
 
 <style lang="stylus">
 #location
+  .indent
+    text-indent 2rem
+
   .space-between
     display flex
     display -webkit-flex
@@ -331,6 +337,8 @@ export default {
 
       .location-content-main
         border-radius 5px
+        height 330px
+        overflow-y auto
 
 // mobile
 @media screen and (max-width: 960px)

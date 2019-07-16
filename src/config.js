@@ -3,9 +3,9 @@
  */
 
 // 云地址
-const BASE_URL = "http://120.79.254.54:3004";
+// const BASE_URL = "http://120.79.254.54:3004";
 // 本地测试
-// const BASE_URL = "http://localhost:3004";
+const BASE_URL = "http://localhost:3004";
 
 export default {
   // 更路径
@@ -24,6 +24,10 @@ export default {
   EXECUTE_GET_HOME_NATURE_IMAGES: `${BASE_URL}/getHomeNatureImages`,
   // 获取 nature 初始化数据
   EXECUTE_GET_NATURE_INIT: `${BASE_URL}/nature`,
+  // 获取 nature 初始化数据
+  EXECUTE_GET_BUDDHISM_INIT: `${BASE_URL}/buddhism`,
+  // 获取 nature 初始化数据
+  EXECUTE_GET_EXHIBITS: `${BASE_URL}/buddhism/exhibits`,
   // 获取评论初始化数据
   EXECUTE_COMMENTS: `${BASE_URL}/nature/comments`,
   // 获取图片详情
