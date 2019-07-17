@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="scenery">
     <!-- 普陀十二景 -->
     <image-list :imageList="twelveScenery" :title="'普陀十二景'"></image-list>
 
@@ -61,3 +61,9 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+@media screen and (min-width: 960px)
+  #scenery
+    padding 20px 15%
+</style>

@@ -66,42 +66,34 @@ export default new Router({
       props: true
     },
     {
-      path: "/buddhism",
-      component: Buddhism,
-      name: "buddhism",
-      redirect: "/buddhism/buddhismhome",
-      children: [
-        {
-          path: "buddhismhome",
-          component: BuddhismHome,
-          name: "buddhismhome"
-        },
-        {
-          path: "history",
-          component: History,
-          name: "history"
-        },
-        {
-          path: "building",
-          component: Building,
-          name: "building"
-        },
-        {
-          path: "guanyin",
-          component: Guanyin,
-          name: "guanyin"
-        },
-        {
-          path: "museum",
-          component: Museum,
-          name: "museum"
-        },
-        {
-          path: "scenery",
-          component: Scenery,
-          name: "scenery"
-        }
-      ]
+      path: "/buddhism/buddhismhome",
+      component: BuddhismHome,
+      name: "buddhismhome"
+    },
+    {
+      path: "/buddhism/history",
+      component: History,
+      name: "history"
+    },
+    {
+      path: "/buddhism/building",
+      component: Building,
+      name: "building"
+    },
+    {
+      path: "/buddhism/guanyin",
+      component: Guanyin,
+      name: "guanyin"
+    },
+    {
+      path: "/buddhism/museum",
+      component: Museum,
+      name: "museum"
+    },
+    {
+      path: "/buddhism/scenery",
+      component: Scenery,
+      name: "scenery"
     },
     {
       path: "/fishery",

@@ -20,8 +20,7 @@
     </div>
   </div>
 
-  <!-- 整体规划 --> 
-
+  <!-- 整体规划 -->
 </template>
 
 <script>
@@ -83,8 +82,9 @@ export default {
 
       li
         margin 5px
+        box-sizing border-box
         width calc((100% / 2) - 10px)
-        height calc(@width * 0.8)
+        height 130px
 
         img
           width 100%
@@ -104,4 +104,8 @@ export default {
         display -webkit-box
         overflow hidden
         -webkit-box-orient vertical
+
+@media screen and (min-width: 960px)
+  #guanyin
+    padding 20px 15%
 </style>

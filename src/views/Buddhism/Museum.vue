@@ -130,4 +130,8 @@ export default {
 
       &:last-child
         text-indent 2rem
+
+@media screen and (min-width: 960px)
+  #museum
+    padding 20px 15%
 </style>

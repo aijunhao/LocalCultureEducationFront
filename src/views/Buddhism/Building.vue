@@ -12,12 +12,12 @@
     </div>
 
     <!-- 图片介绍 -->
-    <image-list :imageList="twelveScenery" ></image-list>
+    <image-list :imageList="twelveScenery"></image-list>
   </div>
 </template>
 
 <script>
-import config from "../../config"
+import config from '../../config'
 import ImageList from '../../components/ImageList'
 
 export default {
@@ -62,14 +62,14 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
+    }
   },
   created() {
     this.getTwelveScenery()
   },
   components: {
     'image-list': ImageList
-  },
+  }
 }
 </script>
 
@@ -83,10 +83,14 @@ export default {
 
     p:nth-child(2)
       text-align center
-      
+
       span
         padding 0 10px
 
-    p 
+    p
       text-indent 2rem
+
+@media screen and (min-width: 960px)
+  #building
+    padding 20px 15%
 </style>

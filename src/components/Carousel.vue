@@ -2,7 +2,7 @@
   <div id="carousel" ref="carousel">
     <el-carousel :height="carouselHeight + 'px'">
       <el-carousel-item :key="i" v-for="(item, i) in imgList">
-        <img :src="item.img"/>
+        <img :src="item.img" />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -21,7 +21,10 @@ export default {
     // 重载轮播图高度
     imgLoad() {
       this.$nextTick(() => {
-        this.carouselHeight = this.$refs.carousel.clientWidth / 2
+        // 不在当前页面时是没有这个 id 的
+        if (document.getElementById('carousel'))
+          this.carouselHeight =
+            document.getElementById('carousel').clientWidth / 2
       })
     }
   },

@@ -17,13 +17,33 @@
       <input checked id="menu-checkbox" type="checkbox" />
 
       <!-- 菜单 -->
-      <ul class="app-menu">
+      <div class="app-menu">
         <router-link tag="li" to="/home">首页</router-link>
         <router-link tag="li" to="/location">地理环境</router-link>
-        <router-link tag="li" to="/buddhism">海天佛国</router-link>
-        <router-link tag="li" to="/fishery">渔舟唱晚</router-link>
+        <div class="drapdown">
+          <router-link class="dropbtn" tag="a" to="/buddhism/buddhismhome">
+            海天佛国
+            <i class="el-icon-arrow-down"></i>
+          </router-link>
+          <div class="dropdown-content">
+            <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">普陀VR全景</a>
+            <router-link tag="a" to="/buddhism/building">寺庙庵堂</router-link>
+            <router-link tag="a" to="/buddhism/scenery">普陀山水</router-link>
+          </div>
+        </div>
+        <div class="drapdown">
+          <router-link class="dropbtn" tag="a" to="/buddhism">
+            佛学文化
+            <i class="el-icon-arrow-down"></i>
+          </router-link>
+          <div class="dropdown-content">
+            <router-link tag="a" to="/buddhism/museum">佛国馆藏</router-link>
+            <router-link tag="a" to="/buddhism/guanyin">观音法界</router-link>
+            <router-link tag="a" to="/buddhism/history">佛国编年史</router-link>
+          </div>
+        </div>
         <router-link tag="li" to="/nature">自然风景</router-link>
-      </ul>
+      </div>
     </div>
 
     <!-- 主体 -->
@@ -75,9 +95,9 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
   align-items $v
   flex-wrap $w
   justify-content $h
-  
+
 #menu-checkbox
-  display none 
+  display none
 
 #app
   .app-header
@@ -89,17 +109,23 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
     z-index 100
 
     .app-menu
-      list-style none
-
       li
+        list-style none
+
+      a
+        text-decoration none
+
+      li, a
         display block
         text-align center
-        color #333
+        color black
         font-size 1rem
-        font-weight 600
 
         &:hover
           background #DCDFE6
+
+      .drapdown:hover .dropdown-content
+        display block
 
   .footer
     background #000
@@ -143,9 +169,20 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
       .app-menu
         flex()
 
-        li
+        li, .dropbtn
           line-height $header-height
-          width 100px
+          width 130px
+
+        .dropdown-content
+          position absolute
+          background rgba(255, 255, 255, 0.8)
+          display none
+
+          a
+            box-sizing border-box
+            text-align left
+            padding 12px 16px
+            min-width 130px
 
     .app-main
       margin-top $header-height
@@ -162,7 +199,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
   $header-height = 70px
 
   #menu-checkbox:checked ~ .app-menu
-      display none
+    display none
 
   #app
     .app-header
@@ -177,9 +214,15 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
         margin (($header-height - 64px) / 2)
 
       .app-menu
-        background #909399
+        background #fff
 
-        li
+        li, .drapdown
+          border 1px solid #000
+          border-radius 5px
+          padding 5px
+          margin-bottom 5px
+
+        a
           line-height 40px
 
     .app-main
