@@ -2,7 +2,14 @@
   <div id="buddhismhome">
     <p>观音道场普陀山</p>
     <p>中国佛教四大名山之一，是为“五朝恩赐无双地，四海推崇第一山”，以秀丽的自然景观与悠久的佛教文化文明于世，享有“海天佛国”、“人间第一清净寺”之美称。</p>
-    <video-player :options="playerOptions" :playsinline="true" ref="videoPlayer"></video-player>
+    <video-player
+      :options="playerOptions"
+      :playsinline="true"
+      :x5-video-player-fullscreen="true"
+      class="video-player vjs-custom-skin"
+      ref="videoPlayer"
+      style="object-fit:fill"
+    ></video-player>
   </div>
 </template>
 
@@ -41,6 +48,15 @@ export default {
 </script>
 
 <style lang="stylus">
+// 修改播放按钮
+.video-js .vjs-big-play-button
+  width 72px
+  height 72px
+  border-radius 100%
+  z-index 100
+  background-color #ffffff
+  border solid 1px #979797
+
 @media screen and (min-width: 960px)
   #buddhismhome
     padding 20px 15%

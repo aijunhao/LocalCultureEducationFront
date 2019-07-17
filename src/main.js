@@ -10,6 +10,7 @@ import moment from "moment";
 // 视频组件
 import VueVideoPlayer from "vue-video-player";
 import "video.js/dist/video-js.css";
+import "vue-video-player/src/custom-theme.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;

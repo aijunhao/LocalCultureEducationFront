@@ -2,10 +2,10 @@
  * 封装网关域名及所有接口的方法名
  */
 
-// 云地址
-const BASE_URL = "http://120.79.254.54:3004";
+// // 云地址
+// const BASE_URL = "http://120.79.254.54:3004";
 // 本地测试
-// const BASE_URL = "http://localhost:3004";
+const BASE_URL = "http://localhost:3004";
 
 export default {
   // 更路径
