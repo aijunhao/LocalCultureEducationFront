@@ -12,7 +12,7 @@
 
       <!-- 列表按钮，是否显示 -->
       <label for="menu-checkbox">
-        <img alt class="app-list" src="./assets/list.png" />
+        <i class="myicons iconcaidan app-menu-button"></i>
       </label>
       <input checked id="menu-checkbox" type="checkbox" />
 
@@ -26,20 +26,35 @@
             <i class="el-icon-arrow-down"></i>
           </router-link>
           <div class="dropdown-content">
-            <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">VR全景逛普陀</a>
-            <router-link tag="a" to="/buddhism/building">寺庙庵堂</router-link>
-            <router-link tag="a" to="/buddhism/scenery">普陀山水</router-link>
+            <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">
+              <i class="myicons iconVRquanjingtu"></i>&nbspVR全景逛普陀
+            </a>
+            <router-link tag="a" to="/buddhism/building">
+              <i class="myicons iconsimiao"></i>&nbsp寺庙庵堂
+            </router-link>
+            <router-link tag="a" to="/buddhism/scenery">
+              <i class="myicons iconshanshui"></i>&nbsp普陀山水
+            </router-link>
           </div>
         </div>
         <div class="drapdown">
-          <router-link class="dropbtn" tag="a" to="/buddhism">
+          <router-link class="dropbtn" tag="a" to="/buddhism/culturehome">
             佛学文化
             <i class="el-icon-arrow-down"></i>
           </router-link>
           <div class="dropdown-content">
-            <router-link tag="a" to="/buddhism/museum">佛国馆藏</router-link>
-            <router-link tag="a" to="/buddhism/guanyin">观音法界</router-link>
-            <router-link tag="a" to="/buddhism/history">佛国编年史</router-link>
+            <router-link tag="a" to="/buddhism/museum">
+              <i class="myicons iconguancangzongshu"></i>&nbsp佛国馆藏
+            </router-link>
+            <router-link tag="a" to="/buddhism/guanyin">
+              <i class="myicons iconsimiaojianjie"></i>&nbsp观音法界
+            </router-link>
+            <router-link tag="a" to="/buddhism/history">
+              <i class="myicons iconlishi1"></i>&nbsp佛国编年史
+            </router-link>
+            <router-link tag="a" to="/buddhism/culture">
+              <i class="myicons iconjierifuli"></i>&nbsp佛缘 · 朝圣
+            </router-link>
           </div>
         </div>
         <router-link tag="li" to="/nature">自然风景</router-link>
@@ -108,6 +123,13 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
     top 0
     z-index 100
 
+    // 菜单按钮
+    .app-menu-button
+      float right
+      margin-right 10px
+      font-size 3rem !important
+      line-height 70px
+
     .app-menu
       li
         list-style none
@@ -117,7 +139,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
       li, a
         display block
-        text-align center
+        
         color black
         font-size 1rem
 
@@ -163,13 +185,15 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
         height $header-height - 10px
         margin-left 50px
 
-      .app-list
+      // 菜单按钮
+      .app-menu-button
         display none
 
       .app-menu
         flex()
 
         li, .dropbtn
+          text-align center
           line-height $header-height
           width 130px
 
@@ -182,7 +206,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
             box-sizing border-box
             text-align left
             padding 12px 16px
-            min-width 130px
+            min-width 170px
 
     .app-main
       margin-top $header-height
@@ -209,21 +233,19 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
         height $header-height - 10px
         margin 5px 10px
 
-      .app-list
-        float right
-        margin (($header-height - 64px) / 2)
-
       .app-menu
         background #fff
 
         li, .drapdown
           border 1px solid #000
           border-radius 5px
-          padding 5px
+          padding 5px 10px
           margin-bottom 5px
 
-        a
-          line-height 40px
+        .dropdown-content
+          a
+            padding-left 30px
+            line-height 35px
 
     .app-main
       margin-top $header-height

@@ -1,29 +1,38 @@
 <template>
   <div id="building">
+    <!-- 水平滚动图片 -->
+    <horizontal-image-list
+      :height="150"
+      :imageList="buildingList"
+      :width="200"
+      @select="selectBuilding"
+    ></horizontal-image-list>
+
     <!-- 文章描述 -->
     <div class="building-description">
       <p v-text="description.title">标题</p>
       <p>
-        <span>时间：{{ description.time }}</span>
         <span>作者：{{ description.author }}</span>
         <span>来源：{{ description.source }}</span>
       </p>
       <p :key="i" v-for="(item, i) in description.content">{{item}}</p>
     </div>
 
-    <!-- 图片介绍 -->
-    <image-list :imageList="twelveScenery"></image-list>
+    <!-- 图表 -->
+    <echarts :height="echartsHeight" :option="option"></echarts>
   </div>
 </template>
 
 <script>
 import config from '../../config'
-import ImageList from '../../components/ImageList'
+import echarts from '../../components/Echarts'
+import HorizontalImageList from '../../components/HorizontalImageList'
 
 export default {
   data() {
     return {
-      twelveScenery: '',
+      buildingList: '',
+      echartsHeight: '300',
       description: {
         title: '普陀山寺院概况',
         img: '',
@@ -43,6 +52,116 @@ export default {
           '1988年2月，浙江省人民政府办公厅（1988）21号文件规定：将积善堂、晏坐堂、龙寿庵、鹤鸣庵、伴山庵、报本堂、承恩堂、宝莲庵、茅草寮移交给佛协使用。佛协对归还寺庵进行修复、拆造或重建。同时，新建的有不肯去观音院、善财洞庵、南海观音大厅、宝陀讲寺、万佛宝塔、洛迦山大觉禅院、圆通禅院、大悲殿，中国佛学院普陀山学院（院内有普陀讲寺）等；收归的尚有多宝塔院，重建的有梵音古洞、慈云、紫竹林、西方、伴山、隐秀、香林、长生、古佛洞等庵。',
           '截至2016年底，普陀山已修复开放（包括新建）的有4大寺、43所庵院（包括2座茅篷），已收归佛协修复的庵院6处。'
         ]
+      },
+      option: {
+        title: {
+          text: '普陀山寺庙庵堂数量变更图'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['寺', '庵堂', '总数']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: [
+            916,
+            1080,
+            1131,
+            1276,
+            1465,
+            1572,
+            1574,
+            1577,
+            1580,
+            1586,
+            1605,
+            1671,
+            1832,
+            1924,
+            1927,
+            1952,
+            1964,
+            1978,
+            2016
+          ]
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '寺',
+            type: 'line',
+            stack: '总量',
+            data: [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4]
+          },
+          {
+            name: '庵堂',
+            type: 'line',
+            stack: '总量',
+            data: [
+              0,
+              0,
+              1,
+              2,
+              3,
+              2,
+              3,
+              3,
+              3,
+              53,
+              103,
+              190,
+              188,
+              88,
+              90,
+              83,
+              74,
+              64,
+              43
+            ]
+          },
+          {
+            name: '总数',
+            type: 'line',
+            stack: '总量',
+            data: [
+              1,
+              2,
+              3,
+              4,
+              5,
+              4,
+              5,
+              5,
+              5,
+              55,
+              106,
+              193,
+              191,
+              91,
+              93,
+              86,
+              77,
+              67,
+              47
+            ]
+          }
+        ]
       }
     }
   },
@@ -50,25 +169,29 @@ export default {
     /**
      * 获取普陀十二景
      */
-    getTwelveScenery() {
+    getBuilding() {
       this.$axios({
         method: 'get',
-        url: config.EXECUTE_GET_TWELVE_SCENERIES
+        url: config.EXECUTE_GET_BUILDING
       })
         .then(data => {
-          console.log(data.data)
-          this.twelveScenery = data.data
+          // console.log(data.data)
+          if (data.data) this.buildingList = data.data
         })
         .catch(err => {
           console.log(err)
         })
+    },
+    selectBuilding(index) {
+      console.log(index)
     }
   },
   created() {
-    this.getTwelveScenery()
+    this.getBuilding()
   },
   components: {
-    'image-list': ImageList
+    echarts,
+    'horizontal-image-list': HorizontalImageList
   }
 }
 </script>
@@ -76,21 +199,36 @@ export default {
 <style lang="stylus">
 #building
   .building-description
-    p:nth-child(1)
-      text-align center
-      font-weight 600
-      font-size 1.2rem
-
-    p:nth-child(2)
-      text-align center
-
-      span
-        padding 0 10px
+    margin 50px 0
 
     p
       text-indent 2rem
 
+      &:nth-child(1)
+        font-weight 600
+        text-align center
+
+      &:nth-child(2)
+        display flex
+        display -webkit-flex
+        justify-content space-around
+
 @media screen and (min-width: 960px)
   #building
     padding 20px 15%
+
+    .building-description
+      p:nth-child(1)
+        font-size 1.2rem
+
+@media screen and (max-width: 960px)
+  #building
+    padding 10px
+
+    .building-description
+      p
+        font-size 0.8rem
+
+        &:nth-child(1)
+          font-size 1.2rem
 </style>

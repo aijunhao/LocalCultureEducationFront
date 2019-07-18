@@ -12,14 +12,16 @@
     ></video-player>
     <div class="buddhismhome-router">
       <div>
-        <img alt src="../../assets/VR全景逛普陀.png" />
-        普陀山VR全景
+        <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">
+          <img alt src="../../assets/VR全景逛普陀.png" />
+          普陀山VR全景
+        </a>
       </div>
-      <div>
+      <div @click="$router.push('/buddhism/building')">
         <img alt src="../../assets/海天佛国普陀圣境.png" />
         寺庙庵堂
       </div>
-      <div>
+      <div @click="$router.push('/buddhism/scenery')">
         <img alt src="../../assets/普陀山水.png" />
         普陀山水
       </div>
@@ -80,13 +82,17 @@ export default {
     display -webkit-flex
     justify-content flex-start
 
+    a
+      text-decoration none
+      color black
+
     div
       text-align center
       width calc(((100% - 20px) / 3))
 
       img
         width 100%
-        height (@width * 0.8)
+        height @width * 0.8
 
       &:nth-child(2)
         margin 0 10px

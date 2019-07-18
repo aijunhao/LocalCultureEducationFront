@@ -11,6 +11,8 @@ import moment from "moment";
 import VueVideoPlayer from "vue-video-player";
 import "video.js/dist/video-js.css";
 import "vue-video-player/src/custom-theme.css";
+// 自定义图标
+import "./assets/icons/iconfont.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;

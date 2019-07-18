@@ -7,7 +7,8 @@ import ImageInfo from "./views/ImageInfo.vue";
 import ChinaMap from "./components/ChinaMap.vue";
 import ZheJiangMap from "./components/ZheJiangMap.vue";
 import BaiduMap from "./components/BaiduMap.vue";
-import Buddhism from "./views/Buddhism.vue";
+import Culture from "./views/Buddhism/Culture.vue";
+import CultureHome from "./views/Buddhism/CultureHome.vue";
 import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
 import Scenery from "./views/Buddhism/Scenery.vue";
 import Museum from "./views/Buddhism/Museum.vue";
@@ -69,6 +70,16 @@ export default new Router({
       path: "/buddhism/buddhismhome",
       component: BuddhismHome,
       name: "buddhismhome"
+    },
+    {
+      path: "/buddhism/culture",
+      component: Culture,
+      name: "culture"
+    },
+    {
+      path: "/buddhism/culturehome",
+      component: CultureHome,
+      name: "culturehome"
     },
     {
       path: "/buddhism/history",

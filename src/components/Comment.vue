@@ -41,7 +41,7 @@
         <p>
           <span>{{ item.time | dataFormat() }}</span>
           <span @click="addThumbs(item.id)">
-            <img alt src="../assets/thumb.png" />
+            <i class="myicons iconthumbsoup"></i>
             {{ item.thumbs }}
           </span>
         </p>

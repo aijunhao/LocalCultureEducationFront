@@ -29,7 +29,9 @@
           </el-popover>
         </li>
         <li @click="$router.push('/nature')">
-          <img src="../assets/next.png" />
+          <!-- <img src="../assets/next.png" /> -->
+          <i class="myicons iconmore"></i>
+          <p>查看更多</p>
         </li>
       </ul>
     </div>
@@ -156,6 +158,11 @@ export default {
       height 90px
       margin-top 30px
 
+    .myicons 
+      display inline-block
+      font-size 32px
+      margin-top 40px
+
 @media screen and (max-width: 960px)
   #home
     .home-content
@@ -209,6 +216,6 @@ export default {
 
     li
       width 25%
-      height calc(@width)
+      height 150px
 </style>
 

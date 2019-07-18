@@ -1,6 +1,6 @@
 <template>
   <div :style="{height: height + 'px'}" id="horizontal_image_list" ref="box">
-    <ul :style="{width: width * imageList.length + 'px'}" id="list" ref="list">
+    <ul :style="{width: (width + 6) * imageList.length + 'px'}" id="list" ref="list">
       <li
         :key="i"
         :style="{width: width + 'px', height: height + 'px'}"
@@ -11,9 +11,13 @@
         <p>{{ item.title }}</p>
       </li>
     </ul>
+
+    <div class="tip" v-show="imageList.length === 0">空空如也，什么图片也没有呢~</div>
+
     <div @click="right()" class="left button">
       <i class="el-icon-arrow-left"></i>
     </div>
+
     <div @click="left()" class="right button">
       <i class="el-icon-arrow-right"></i>
     </div>
@@ -29,7 +33,8 @@ export default {
       distance: 0,
       // document 对象
       list: '',
-      boxWidth: 0
+      // 容器长度
+      boxWidth: 0,
     }
   },
   mounted() {
@@ -40,18 +45,18 @@ export default {
   },
   methods: {
     left() {
-      let total = this.boxWidth - this.imageList.length * this.width
-      if (this.distance - this.width < total) {
+      let total = this.boxWidth - this.imageList.length * (this.width + 6)
+      if (this.distance - (this.width + 6) < total) {
         this.distance = total
         this.$message('已经是最后一个了呢')
-      } else this.distance -= this.width
+      } else this.distance -= (this.width + 6)
       this.move()
     },
     right() {
-      if (this.distance + this.width > 0) {
+      if (this.distance + (this.width + 6) > 0) {
         this.distance = 0
         this.$message('已经是第一个了呢')
-      } else this.distance += this.width
+      } else this.distance += (this.width + 6)
       this.move()
     },
     move() {
@@ -83,6 +88,12 @@ export default {
   .right
     right 0
 
+  .tip
+    left 0
+    right 0
+    text-align center
+    position absolute
+
 #list
   position absolute
   white-space nowrap
@@ -92,6 +103,7 @@ export default {
   li
     list-style none
     float left
+    padding 0 3px
 
     img
       width 100%
