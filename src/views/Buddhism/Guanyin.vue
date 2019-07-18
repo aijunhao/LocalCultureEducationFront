@@ -1,10 +1,10 @@
 <template>
   <div id="guanyin" ref="guanyin">
     <!-- logo -->
-    <img alt src="../../assets/观音法界.png" />
+    <img alt class="guanyin-logo" src="../../assets/观音法界.png" />
 
     <!-- 轮播图 -->
-    <carousel :imgList="imgList"></carousel>
+    <carousel :imgList="imgList" :showIndicator="'none'"></carousel>
 
     <!-- 整体规划 -->
     <div>
@@ -93,7 +93,6 @@ export default {
     font-size 1.2rem
 
   .title
-    font-size 1.5rem
     font-family '华文行楷'
 
   .content
@@ -106,18 +105,16 @@ export default {
 
     div
       background rgba(255, 255, 255, 0.6)
-      padding 20px
-
-      p:nth-child(2)
-        font-size 0.9rem
-        -webkit-line-clamp 13
-        display -webkit-box
-        overflow hidden
-        -webkit-box-orient vertical
 
 @media screen and (min-width: 960px)
   #guanyin
     padding 20px 15%
+
+    .title
+      font-size 1.5rem
+
+    .content
+      font-size 1rem
 
     .guanyin-main
       margin 50px 0
@@ -125,8 +122,8 @@ export default {
 
       div
         width 50%
-        
         border-radius 10px
+        padding 20px
 
         p:nth-child(2)
           font-size 0.9rem
@@ -155,8 +152,20 @@ export default {
   #guanyin
     padding 10px
 
+    .title
+      font-size 1.2rem
+
+    .content
+      font-size 0.8rem
+
+    .guanyin-logo
+      height 50px
+
     .guanyin-main
-      margin 20px 0
+      margin 10px 0
+
+      div
+        padding 10px
 
     .guanyin-item
       margin 10px 0

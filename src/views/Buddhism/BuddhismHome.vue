@@ -10,6 +10,20 @@
       ref="videoPlayer"
       style="object-fit:fill"
     ></video-player>
+    <div class="buddhismhome-router">
+      <div>
+        <img alt src="../../assets/VR全景逛普陀.png" />
+        普陀山VR全景
+      </div>
+      <div>
+        <img alt src="../../assets/海天佛国普陀圣境.png" />
+        寺庙庵堂
+      </div>
+      <div>
+        <img alt src="../../assets/普陀山水.png" />
+        普陀山水
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,7 +71,34 @@ export default {
   background-color #ffffff
   border solid 1px #979797
 
+#buddhismhome
+  padding 20px 15%
+
+  .buddhismhome-router
+    margin-top 20px
+    display flex
+    display -webkit-flex
+    justify-content flex-start
+
+    div
+      text-align center
+      width calc(((100% - 20px) / 3))
+
+      img
+        width 100%
+        height (@width * 0.8)
+
+      &:nth-child(2)
+        margin 0 10px
+
 @media screen and (min-width: 960px)
   #buddhismhome
     padding 20px 15%
+
+@media screen and (max-width: 960px)
+  #buddhismhome
+    padding 10px
+
+    .buddhismhome-router
+      font-size 0.8rem
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div id="carousel" ref="carousel">
-    <el-carousel :height="carouselHeight + 'px'">
+  <div id="carousel" ref="carousel" >
+    <el-carousel :height="carouselHeight + 'px'" :indicator-position="showIndicator" arrow="always">
       <el-carousel-item :key="i" v-for="(item, i) in imgList">
         <img :src="item.img" />
       </el-carousel-item>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  props: ['imgList'],
+  props: ['imgList', 'showIndicator'],
   data() {
     return {
       // 轮播图大小

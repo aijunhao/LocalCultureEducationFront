@@ -28,6 +28,16 @@
       <img :src="exhibitList[index].img" />
       <p>{{ exhibitList[index].content }}</p>
     </div>
+
+    <!-- 上一个下一个 -->
+    <div class="museum-button">
+      <span @click="pre">
+        <i class="el-icon-arrow-left"></i>上一个
+      </span>
+      <span @click="next">
+        下一个<i class="el-icon-arrow-right"></i>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -58,7 +68,7 @@ export default {
   },
   methods: {
     /**
-     * 获取普陀十二景
+     * 获取展品数据
      */
     getExhibits() {
       this.$axios({
@@ -73,8 +83,21 @@ export default {
           console.log(err)
         })
     },
+    // 展品选择
     selectExhibits(index) {
       this.index = index
+    },
+    // 上一个
+    pre() {
+      if (this.index > 0) this.index--
+
+      console.log(this.index)
+    },
+    // 下一个
+    next() {
+      if (this.index < this.exhibitList.length - 1) this.index++
+
+      console.log(this.index)
     }
   }
 }
@@ -83,21 +106,15 @@ export default {
 <style lang="stylus">
 #museum
   .museum
-    display flex
-    display -webkit-flex
-    justify-content space-between
     margin-bottom 20px
     background #d3dcd9
 
     div
-      width 40%
-      padding 0 20px
+      padding 20px
 
       p:nth-child(1)
         text-align center
-        font-size 2rem
         font-family '华文行楷'
-        margin 20px
 
       p:nth-child(2)
         text-indent 2rem
@@ -114,13 +131,11 @@ export default {
       text-align left
 
       &:nth-child(1)
-        font-size 1.2rem
         font-weight 600
         font-family '华文行楷'
 
       &:nth-child(2)
         text-align center
-        font-size 1.5rem
         font-weight 600
 
       &:nth-child(3)
@@ -131,7 +146,79 @@ export default {
       &:last-child
         text-indent 2rem
 
+  .museum-button
+    display flex
+    display -webkit-flex
+    justify-content space-between
+    user-select none
+
 @media screen and (min-width: 960px)
   #museum
     padding 20px 15%
+
+    .museum
+      display flex
+      display -webkit-flex
+      justify-content space-between
+      margin-bottom 20px
+
+      div
+        width 40%
+
+        p:nth-child(1)
+          font-size 2rem
+          margin 20px
+
+      img
+        width 60%
+        height 300px
+
+    .museum-exhibit-info
+      margin-top 20px
+      text-align center
+
+      p
+        text-align left
+
+        &:nth-child(1)
+          font-size 1.2rem
+
+        &:nth-child(2)
+          font-size 1.5rem
+
+@media screen and (max-width: 960px)
+  $space = 10px
+
+  #museum
+    padding $space
+    font-size 0.8rem
+
+    .museum
+      margin-bottom $space
+
+      div
+        padding $space
+
+        p:nth-child(1)
+          font-size 1.5rem
+          margin 0
+
+      img
+        width 100%
+        height (@width * 0.8)
+
+    .museum-exhibit-info
+      margin-top $space
+      text-align center
+
+      img   
+        width 100%
+      p
+        text-align left
+
+        &:nth-child(1)
+          font-size 1.2rem
+
+        &:nth-child(2)
+          font-size 1.5rem
 </style>

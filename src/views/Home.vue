@@ -4,12 +4,10 @@
     <carousel :imgList="imgList"></carousel>
 
     <!-- 首页简介 -->
-    <div class="home-content" v-for="(item, i) in initMessage" :key="i">
+    <div :key="i" class="home-content" v-for="(item, i) in initMessage">
       <p class="home-content-title">{{ item.moduleName }}</p>
       <div class="home-content-message">
-        <div class="home-content-message-img">
-          <el-image :src="item.img" fit="fill"></el-image>
-        </div>
+        <img :src="item.img" />
         <div class="home-content-message-main">
           <p>{{ item.title }}</p>
           <p>{{ item.content }}</p>
@@ -105,96 +103,103 @@ export default {
      * 跳转
      */
     jumpTo(index) {
-      if (index === "地理环境") {
+      if (index === '地理环境') {
         this.$router.push('/location')
-      } else if (index === "海天佛国") {
+      } else if (index === '海天佛国') {
         this.$router.push('/buddhism')
-      } else if (index === "历史文化") {
+      } else if (index === '历史文化') {
         this.$router.push('/location')
       }
     }
   },
   created() {
-    // 获取初始化页面数据 
+    // 获取初始化页面数据
     this.initHome()
     this.getCarousel()
     this.getHomeNatureImages()
   },
   components: {
     carousel
-  },
+  }
 }
 </script>
 
 <style lang="stylus">
 #home
-  .el-image
-    height 100%
-    width 100%
-
   .home-content
-    .home-content-message-img
-      min-height 100px
-      background #fff
-
     .home-content-title
       text-align center
-      font-size 2.5rem
-      margin 30px 0
 
     .home-content-message
       p:nth-child(1)
-        font-size 2rem
         margin 0
-
-      p:nth-child(2)
-        font-size 1rem
 
 #home_nature_image_list
   list-style none
+  padding 0
+  margin 0
 
   li
     text-align center
     padding 0
+    margin 0
 
-  li:last-child:hover
-    background #e6e6e6
+    .el-image
+      width 100%
+      height 100%
 
-  li:last-child img
-    width 100px
-    height 90px
-    margin-top 30px
+    &:last-child:hover
+      background #e6e6e6
+
+    &:last-child img
+      width 100px
+      height 90px
+      margin-top 30px
 
 @media screen and (max-width: 960px)
   #home
     .home-content
       padding 10px
 
-      .home-content-message-img
+      img
         width 100%
-        margin-bottom 10px
 
-  #home_nature_image_list li
-    margin-bottom 10px
-    min-height 50px
-    background-color #fff
+      .home-content-title
+        font-size 1.5rem
+        margin 10px 0
+
+      .home-content-message
+        p:nth-child(1)
+          font-size 1.2rem
+
+        p:nth-child(2)
+          font-size 0.8rem
 
 @media screen and (min-width: 960px)
   #home
     .home-content
       padding 50px 15%
 
+      .home-content-title
+        font-size 2.5rem
+        margin 30px 0
+
       .home-content-message
         display flex
         display -webkit-flex
+        justify-content space-between
 
-        .home-content-message-img
-          width 25%
-          min-width 300px
+        img
+          width 35%
 
         .home-content-message-main
-          margin-left 5%
-          width 95%
+          width 60%
+
+          p:nth-child(1)
+            font-size 2rem
+
+          p:nth-child(2)
+            font-size 1rem
 
   #home_nature_image_list
     display flex
@@ -204,6 +209,6 @@ export default {
 
     li
       width 25%
-      height 150px
+      height calc(@width)
 </style>
 

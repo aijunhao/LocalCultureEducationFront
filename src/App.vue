@@ -26,7 +26,7 @@
             <i class="el-icon-arrow-down"></i>
           </router-link>
           <div class="dropdown-content">
-            <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">普陀VR全景</a>
+            <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">VR全景逛普陀</a>
             <router-link tag="a" to="/buddhism/building">寺庙庵堂</router-link>
             <router-link tag="a" to="/buddhism/scenery">普陀山水</router-link>
           </div>
