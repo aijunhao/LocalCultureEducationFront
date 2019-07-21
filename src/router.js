@@ -15,7 +15,11 @@ import Museum from "./views/Buddhism/Museum.vue";
 import Building from "./views/Buddhism/Building.vue";
 import Guanyin from "./views/Buddhism/Guanyin.vue";
 import History from "./views/Buddhism/History.vue";
-import Fishery from "./views/Fishery.vue";
+
+// 管理员页面
+import Admin from "./views/Admin/Admin.vue";
+import Overview from "./views/Admin/Overview.vue";
+import HomeEdit from "./views/Admin/HomeEdit.vue";
 
 Vue.use(Router);
 
@@ -52,6 +56,24 @@ export default new Router({
           path: "baidumap",
           component: BaiduMap,
           name: "baidumap"
+        }
+      ]
+    },
+    {
+      path: "/admin",
+      component: Admin,
+      name: "admin",
+      redirect: "/admin/overview",
+      children: [
+        {
+          path: "overview",
+          component: Overview,
+          name: "Overview"
+        },
+        {
+          path: "/homeedit",
+          component: HomeEdit,
+          name: "HomeEdit"
         }
       ]
     },
@@ -105,11 +127,6 @@ export default new Router({
       path: "/buddhism/scenery",
       component: Scenery,
       name: "scenery"
-    },
-    {
-      path: "/fishery",
-      component: Fishery,
-      name: "fishery"
     }
   ]
 });

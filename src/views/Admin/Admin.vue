@@ -1,0 +1,132 @@
+<template>
+  <div id="admin">
+    <el-container>
+      <!-- 头部 -->
+      <el-header id="admin_header">
+        <!-- 头像 -->
+        <div class="portrait"></div>
+        <div>普陀山佛学文化教育 管理员页面</div>
+        <div @click="$router.push('/home')">返回网页</div>
+      </el-header>
+
+      <!-- 主体 -->
+      <el-container id="admin_container">
+        <!-- 左侧导航 -->
+        <div>
+          <div @click="changeAside()" class="aside-button">
+            <i class="el-icon-arrow-right" v-if="isCollapse"></i>
+            <i class="el-icon-arrow-left" v-else></i>
+          </div>
+          <el-menu :collapse="isCollapse" class="el-menu-vertical-demo" default-active="1">
+            <!-- 总览 -->
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span slot="title">总览</span>
+              </template>
+              <el-menu-item-group>
+                <span slot="title">分组一</span>
+                <el-menu-item @click="$router.push({name: 'Overview'})" index="1-1">总览</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+
+            <!-- 页面设置 -->
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span slot="title">模块</span>
+              </template>
+              <el-menu-item @click="$router.push({name: 'HomeEdit'})" index="2-1">首页</el-menu-item>
+              <el-menu-item index="2-2">地理环境</el-menu-item>
+              <el-menu-item index="2-3">海天佛国</el-menu-item>
+              <el-menu-item index="2-4">佛国文化</el-menu-item>
+              <el-menu-item index="2-5">佛国编年史</el-menu-item>
+            </el-submenu>
+
+            <!-- 用户 -->
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span slot="title">用户</span>
+              </template>
+              <el-menu-item index="3-1">用户管理</el-menu-item>
+            </el-submenu>
+
+            <!-- 社区 -->
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span slot="title">社区</span>
+              </template>
+              <el-menu-item index="4-1">社区管理</el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </div>
+
+        <!-- 右侧内容 -->
+        <router-view class="admin-main"></router-view>
+      </el-container>
+    </el-container>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      // 展开收起状态
+      isCollapse: true
+    }
+  },
+  mounted() {
+    document.getElementById('header').style.display = 'none'
+  },
+  beforeDestroy() {
+    document.getElementById('header').style.display = 'flex'
+  },
+  methods: {
+    changeAside() {
+      this.isCollapse = !this.isCollapse
+    }
+  }
+}
+</script>
+
+
+<style lang="stylus">
+#admin
+  margin 0 !important
+
+#admin_header
+  background #B3C0D1
+  height 80px !important
+  display flex
+  display -webkit-flex
+  justify-content space-between
+  align-items center
+
+  .portrait
+    width 50px
+    height 50px
+    background #fff
+    border-radius 50%
+
+#admin_container
+  margin 30px
+
+  .el-menu-vertical-demo:not(.el-menu--collapse)
+    width 200px
+
+  .aside-button
+    width 64px
+    height 64px
+    line-height 64px
+    background #fff
+    text-align center
+    margin-bottom 5px
+
+  .admin-main
+    margin-left 30px
+    width 100%
+</style>

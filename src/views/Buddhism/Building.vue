@@ -55,13 +55,16 @@ export default {
       },
       option: {
         title: {
-          text: '普陀山寺庙庵堂数量变更图'
+          text: '普陀山千年寺庙庵堂数量变更图',
+          left: 'center'
         },
         tooltip: {
           trigger: 'axis'
         },
         legend: {
-          data: ['寺', '庵堂', '总数']
+          data: ['寺', '庵堂', '总数'],
+          left: 0,
+          top: 25
         },
         grid: {
           left: '3%',
@@ -182,8 +185,9 @@ export default {
           console.log(err)
         })
     },
-    selectBuilding(index) {
-      console.log(index)
+    selectBuilding(id) {
+      console.log(id)
+      // this.$router.push({name: 'imageinfos', params: {id: id}})
     }
   },
   created() {

@@ -39,5 +39,11 @@ export default {
   // 点赞
   EXECUTE_ADD_THUMBS: `${BASE_URL}/nature/addthumbs`,
   // 获取普陀十二景
-  EXECUTE_GET_TWELVE_SCENERIES: `${BASE_URL}/nature/twelve-sceneries`
+  EXECUTE_GET_TWELVE_SCENERIES: `${BASE_URL}/nature/twelve-sceneries`,
+  // 上传图片
+  EXECUTE_POST_UPLOAD_IMAGE: `${BASE_URL}/user/upload`,
+  // 删除图片
+  EXECUTE_GET_DELETE_IMAGE: `${BASE_URL}/user/delete`,
+  // 更新图片信息
+  EXECUTE_POST_UPDATE_IMAGE_MESSAGE: `${BASE_URL}/user/update`
 };

@@ -79,7 +79,8 @@ export default {
         url: config.EXECUTE_GET_HOME_CAROUSEL
       })
         .then(data => {
-          this.imgList = data.data
+          console.log(data.data)
+          if (data.data) this.imgList = data.data
         })
         .catch(err => {
           console.log(err)
@@ -158,7 +159,7 @@ export default {
       height 90px
       margin-top 30px
 
-    .myicons 
+    .myicons
       display inline-block
       font-size 32px
       margin-top 40px

@@ -4,7 +4,7 @@
       <li
         :key="i"
         :style="{width: width + 'px', height: height + 'px'}"
-        @click="$emit('select', i)"
+        @click="$emit('select', item.id)"
         v-for="(item, i) in imageList"
       >
         <img :src="item.img" alt />

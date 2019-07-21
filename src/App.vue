@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 头部 -->
-    <div class="app-header">
+    <div class="app-header" id="header">
       <!-- logo -->
       <img
         @click="$router.push('/home')"
@@ -49,15 +49,16 @@
             <router-link tag="a" to="/buddhism/guanyin">
               <i class="myicons iconsimiaojianjie"></i>&nbsp观音法界
             </router-link>
-            <router-link tag="a" to="/buddhism/history">
-              <i class="myicons iconlishi1"></i>&nbsp佛国编年史
-            </router-link>
             <router-link tag="a" to="/buddhism/culture">
               <i class="myicons iconjierifuli"></i>&nbsp佛缘 · 朝圣
             </router-link>
+            <router-link tag="a" to="/buddhism/culture">
+              <i class="myicons iconjierifuli"></i>&nbsp佛学非物质文化遗产
+            </router-link>
           </div>
         </div>
-        <router-link tag="li" to="/nature">自然风景</router-link>
+        <router-link tag="li" to="/buddhism/history">佛国编年史</router-link>
+        <!-- <router-link tag="li" to="/nature">自然风景</router-link> -->
       </div>
     </div>
 
@@ -81,11 +82,12 @@
         </li>
         <li>
           <p>相关连接</p>
-          <p>首页</p>
-          <p>地理环境</p>
-          <p>人文社会</p>
-          <p>自然风景</p>
-          <p>历史背景</p>
+          <router-link tag="p" to="/home">首页</router-link>
+          <router-link tag="p" to="/location">地理环境</router-link>
+          <router-link tag="p" to="/buddhism/buddhismhome">海天佛国</router-link>
+          <router-link tag="p" to="/buddhism/culturehome">佛学文化</router-link>
+          <router-link tag="p" to="/buddhism/history">佛国编年史</router-link>
+          <router-link tag="p" to="/admin">管理员页面</router-link>
           <p>团队成员</p>
         </li>
         <li>
@@ -139,7 +141,6 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
       li, a
         display block
-        
         color black
         font-size 1rem
 
