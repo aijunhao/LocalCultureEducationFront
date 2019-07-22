@@ -7,7 +7,7 @@
     <div :key="i" class="home-content" v-for="(item, i) in initMessage">
       <p class="home-content-title">{{ item.moduleName }}</p>
       <div class="home-content-message">
-        <img :src="item.img" />
+        <img :src="item.url" />
         <div class="home-content-message-main">
           <p>{{ item.title }}</p>
           <p>{{ item.content }}</p>

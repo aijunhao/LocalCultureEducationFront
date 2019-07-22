@@ -25,7 +25,7 @@
         <span>作者：普陀山佛教协会</span>
         <span>来源：普陀山佛教网</span>
       </p>
-      <img :src="exhibitList[index].img" />
+      <img :src="exhibitList[index].url" />
       <p>{{ exhibitList[index].content }}</p>
     </div>
 
@@ -76,7 +76,7 @@ export default {
         url: config.EXECUTE_GET_EXHIBITS
       })
         .then(data => {
-          // console.log(data.data)
+          console.log(data.data)
           if (data.data) this.exhibitList = data.data
         })
         .catch(err => {
@@ -85,6 +85,7 @@ export default {
     },
     // 展品选择
     selectExhibits(index) {
+      console.log(index)
       this.index = index
     },
     // 上一个

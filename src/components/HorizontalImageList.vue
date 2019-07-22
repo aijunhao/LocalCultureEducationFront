@@ -4,10 +4,10 @@
       <li
         :key="i"
         :style="{width: width + 'px', height: height + 'px'}"
-        @click="$emit('select', item.id)"
+        @click="$emit('select', i)"
         v-for="(item, i) in imageList"
       >
-        <img :src="item.img" alt />
+        <img :src="item.url" alt />
         <p>{{ item.title }}</p>
       </li>
     </ul>

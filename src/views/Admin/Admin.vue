@@ -40,7 +40,7 @@
               <el-menu-item @click="$router.push({name: 'HomeEdit'})" index="2-1">首页</el-menu-item>
               <el-menu-item index="2-2">地理环境</el-menu-item>
               <el-menu-item index="2-3">海天佛国</el-menu-item>
-              <el-menu-item index="2-4">佛国文化</el-menu-item>
+              <el-menu-item @click="$router.push({name: 'CultureEdit'})" index="2-4">佛国文化</el-menu-item>
               <el-menu-item index="2-5">佛国编年史</el-menu-item>
             </el-submenu>
 

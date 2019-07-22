@@ -20,6 +20,8 @@ import History from "./views/Buddhism/History.vue";
 import Admin from "./views/Admin/Admin.vue";
 import Overview from "./views/Admin/Overview.vue";
 import HomeEdit from "./views/Admin/HomeEdit.vue";
+import CultureEdit from "./views/Admin/CultureEdit.vue";
+import ArticleInfoEdit from "./views/Admin/ArticleInfoEdit.vue";
 
 Vue.use(Router);
 
@@ -74,9 +76,21 @@ export default new Router({
           path: "/homeedit",
           component: HomeEdit,
           name: "HomeEdit"
+        },
+        {
+          path: "/cultureedit",
+          component: CultureEdit,
+          name: "CultureEdit"
+        },
+        {
+          path: "/articleinfoedit",
+          component: ArticleInfoEdit,
+          name: "ArticleInfoEdit",
+          props: true
         }
       ]
     },
+
     {
       path: "/nature",
       component: Nature,

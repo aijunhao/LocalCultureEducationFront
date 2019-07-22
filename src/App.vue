@@ -49,11 +49,11 @@
             <router-link tag="a" to="/buddhism/guanyin">
               <i class="myicons iconsimiaojianjie"></i>&nbsp观音法界
             </router-link>
-            <router-link tag="a" to="/buddhism/culture">
+            <!-- <router-link tag="a" to="/buddhism/culture">
               <i class="myicons iconjierifuli"></i>&nbsp佛缘 · 朝圣
-            </router-link>
+            </router-link> -->
             <router-link tag="a" to="/buddhism/culture">
-              <i class="myicons iconjierifuli"></i>&nbsp佛学非物质文化遗产
+              <i class="myicons iconjierifuli"></i>&nbsp非物质文化遗产
             </router-link>
           </div>
         </div>

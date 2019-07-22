@@ -37,7 +37,7 @@
         <p class="title">{{ item.title }}</p>
         <p class="content">{{ item.content }}</p>
       </div>
-      <img :src="item.img" alt />
+      <img :src="item.url" alt />
     </div>
   </div>
 

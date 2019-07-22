@@ -2,27 +2,25 @@
   <div id="home_edit">
     <!-- 面包屑 -->
     <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>首页</el-breadcrumb-item>
       <el-breadcrumb-item>活动管理</el-breadcrumb-item>
       <el-breadcrumb-item>活动列表</el-breadcrumb-item>
       <el-breadcrumb-item>活动详情</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 轮播图 -->
-    <div class="module-box">
+    <div class="home-edit-box">
       <p class="title">轮播图</p>
       <p class="tips">轮播图组件，此模块建议采用 JPG 格式的图片。</p>
       <carousel-edit :imgList="imgList" :type="2"></carousel-edit>
     </div>
 
     <!-- 首页导航模块 -->
-    <div class="module-box">
+    <div class="home-edit-box">
       <p class="title">首页导航模块</p>
       <p class="tips">导航模块，由预览图片、模块名称、模块标题、模块内容及跳转页面组成，是全局信息的简介部分。</p>
 
-      <div :key="i" v-for="(item, i) in moduleList">
-        <module-edit :module="item"></module-edit>
-      </div>
+      <module-edit :moduleList="moduleList" :readonly="moduleReadonly" :status="moduleStatus"></module-edit>
     </div>
   </div>
 </template>
@@ -35,9 +33,11 @@ import CarouselEdit from '../../components/CarouselEdit'
 export default {
   data() {
     return {
-      // 图片列表
+      // 轮播图片列表
       imgList: [],
-      moduleList: []
+      moduleList: [],
+      moduleReadonly: [],
+      moduleStatus: []
     }
   },
   components: {
@@ -45,7 +45,6 @@ export default {
     'carousel-edit': CarouselEdit
   },
   methods: {
-    
     /**
      * 获取轮播图数据
      */
@@ -71,8 +70,11 @@ export default {
         url: config.EXECUTE_GET_HOME_COMTENT
       })
         .then(data => {
-          if (data.status === 200 && data.data) {
+          if (data.status === 200) {
             this.moduleList = data.data
+            
+            this.moduleReadonly = new Array(this.moduleList.length).fill(true)
+            this.moduleStatus = new Array(this.moduleList.length).fill(0)
           }
         })
         .catch(err => {
@@ -89,7 +91,7 @@ export default {
 
 <style lang="stylus">
 #home_edit
-  .module-box
+  .home-edit-box
     background #fff
     padding 50px
     margin-bottom 20px

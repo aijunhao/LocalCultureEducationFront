@@ -45,5 +45,11 @@ export default {
   // 删除图片
   EXECUTE_GET_DELETE_IMAGE: `${BASE_URL}/user/delete`,
   // 更新图片信息
-  EXECUTE_POST_UPDATE_IMAGE_MESSAGE: `${BASE_URL}/user/update`
+  EXECUTE_POST_UPDATE_IMAGE_MESSAGE: `${BASE_URL}/user/update`,
+  // 更新文章信息
+  EXECUTE_POST_UPDATE_ARTICLE_MESSAGE: `${BASE_URL}/user/updateArticle`,
+  // 发布文章
+  EXECUTE_POST_NEW_ARTICLE: `${BASE_URL}/user/newArticle`,
+  // 删除文章
+  EXECUTE_GET_DELETE_ARTICLE: `${BASE_URL}/user/deleteArticle`
 };

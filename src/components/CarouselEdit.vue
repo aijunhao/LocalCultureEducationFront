@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       dialogImageUrl: '',
-      dialogVisible: false,
+      dialogVisible: false
     }
   },
   methods: {
@@ -50,14 +50,16 @@ export default {
      * 文件上传成功时的钩子
      */
     handleSuccess(req, file, imgList) {
-      let image = {
-        id: req.id,
-        url: req.url,
-        name: req.name,
-        uid: file.uid,
-        status: 'success'
+      if (req.status === 200) {
+        let image = {
+          id: req.data.id,
+          url: req.data.url,
+          name: req.data.name,
+          uid: file.uid,
+          status: 'success'
+        }
+        this.imgList.push(image)
       }
-      this.imgList.push(image)
     },
     // 删除图片
     deleteImage(id) {

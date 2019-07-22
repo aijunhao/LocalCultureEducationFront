@@ -1,52 +1,54 @@
  <template>
   <div id="module_edit">
-    <!-- 上传 -->
-    <div>
-      <el-upload
-        :action="uploadUrl()"
-        :on-success="handleModuleSuccess"
-        :show-file-list="false"
-        class="avatar-uploader"
-        list-type="picture-card"
-      >
-        <img :src="module.url" class="avatar" v-if="module.url" />
-        <i class="el-icon-plus avatar-uploader-icon" v-else></i>
-      </el-upload>
-      <p class="tips">导航模块仅支持显示一张图片，点击图片即可重新上传</p>
-    </div>
+    <div :key="i" class="module-box" v-for="(module, i) in moduleList">
+      <!-- 上传 -->
+      <div>
+        <el-upload
+          :action="uploadUrl()"
+          :on-success="(response, file, fileList) => handleModuleSuccess(response, file, fileList, i)"
+          :show-file-list="false"
+          class="avatar-uploader"
+          list-type="picture-card"
+        >
+          <img :src="module.url" class="avatar" v-if="module.url" />
+          <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+        </el-upload>
+        <p class="tips">导航模块仅支持显示一张图片，点击图片即可重新上传</p>
+      </div>
 
-    <!-- 内容 -->
-    <div class="home-content-message">
-      <el-form label-width="80px">
-        <el-form-item label="模块名称">
-          <el-input :readonly="readonly" v-model="module.moduleName"></el-input>
-        </el-form-item>
-        <el-form-item label="模块标题">
-          <el-input :readonly="readonly" v-model="module.title"></el-input>
-        </el-form-item>
-        <el-form-item label="模块内容">
-          <el-input
-            :autosize="{ minRows: 2, maxRows: 4}"
-            :readonly="readonly"
-            placeholder="请输入内容"
-            type="textarea"
-            v-model="module.content"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="跳转页面">
-          <el-input placeholder="此功能暂未开启。" readonly></el-input>
-        </el-form-item>
-      </el-form>
-    </div>
+      <!-- 内容 -->
+      <div class="module-edit-message">
+        <el-form label-width="80px">
+          <el-form-item label="模块名称">
+            <el-input readonly v-model="module.moduleName"></el-input>
+          </el-form-item>
+          <el-form-item label="模块标题">
+            <el-input :readonly="readonly[i]" v-model="module.title"></el-input>
+          </el-form-item>
+          <el-form-item label="模块内容">
+            <el-input
+              :autosize="{ minRows: 2, maxRows: 4}"
+              :readonly="readonly[i]"
+              placeholder="请输入内容"
+              type="textarea"
+              v-model="module.content"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="跳转页面">
+            <el-input placeholder="此功能暂未开启。" readonly></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
 
-    <!-- 按钮 -->
-    <div class="home-content-setting">
-      <!-- 状态 -->
-      <p class="tips" v-text="status"></p>
       <!-- 按钮 -->
-      <el-button @click="edit()" circle icon="el-icon-edit" type="success"></el-button>
-      <el-button @click="lock()" circle icon="el-icon-lock" type="warning"></el-button>
-      <el-button @click="update()" circle icon="el-icon-upload" type="primary"></el-button>
+      <div class="module-edit-button">
+        <!-- 状态 -->
+        <p class="tips" v-text="statusShow(i)"></p>
+        <!-- 按钮 -->
+        <el-button @click="edit(i)" circle icon="el-icon-edit" type="success"></el-button>
+        <el-button @click="lock(i)" circle icon="el-icon-lock" type="warning"></el-button>
+        <el-button @click="update(module, i)" circle icon="el-icon-upload" type="primary"></el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -55,25 +57,39 @@
 import config from '../config'
 
 export default {
-  data() {
-    return {
-      // 是否只读
-      readonly: true,
-      // 状态， 0 锁定， 1编辑， 2更新中
-      status: '已锁定...'
-    }
+  props: ['moduleList', 'readonly', 'status'],
+  created() {
+    console.log(this.moduleList)
   },
-  props: ['module'],
   methods: {
     uploadUrl() {
       return config.EXECUTE_POST_UPLOAD_IMAGE
     },
     /**
+     * 状态显示值
+     */
+    statusShow(index) {
+      switch (this.status[index]) {
+        case 0:
+          return '已锁定...'
+          break
+        case 1:
+          return '编辑中...'
+          break
+        case 2:
+          return '提交中...'
+          break
+        default:
+          return '已锁定...'
+          break
+      }
+    },
+    /**
      * 锁定
      */
     lock(index) {
-      this.readonly = true
-      this.status = '已锁定...'
+      this.$set(this.readonly, index, true)
+      this.$set(this.status, index, 0)
 
       this.$notify({
         title: '锁定模式',
@@ -85,26 +101,27 @@ export default {
     /**
      * 提交
      */
-    update(index) {
-      this.readonly = true
-      this.status = '提交中...'
+    update(module, index) {
+      this.$set(this.readonly, index, true)
+      this.$set(this.status, index, 2)
 
-      var urlArr = this.module.url.split('/')
+      console.log(module)
+      var urlArr = module.url.split('/')
 
       this.$axios({
         method: 'post',
         url: config.EXECUTE_POST_UPDATE_IMAGE_MESSAGE,
         data: {
-          id: this.module.id,
+          id: module.id,
           url: urlArr[urlArr.length - 1],
-          title: this.module.title,
-          content: this.module.content,
-          moduleName: this.module.moduleName
+          title: module.title,
+          content: module.content,
+          moduleName: module.moduleName
         }
       })
         .then(data => {
           if (data.status === 200) {
-            this.status = '已锁定...'
+            this.$set(this.status, index, 0)
             this.$notify({
               title: '成功',
               message: '模块信息更新成功，模块已锁定。',
@@ -124,9 +141,9 @@ export default {
     /**
      * 编辑
      */
-    edit() {
-      this.readonly = false
-      this.status = '编辑中...'
+    edit(index) {
+      this.$set(this.readonly, index, false)
+      this.$set(this.status, index, 1)
 
       this.$notify({
         title: '编辑模式',
@@ -137,11 +154,19 @@ export default {
     /**
      * 文件上传成功时的钩子
      */
-    handleModuleSuccess(req, file, imgList) {
-      //  重置对象
-      this.module.url = req
-      console.log(this.module)
-      this.edit()
+    handleModuleSuccess(req, file, imgList, index) {
+      if (req.status === 200) {
+        this.edit()
+        //  重置对象
+        this.module.url = req.url
+
+        console.log(this.module)
+        this.$notify({
+          title: '图片上传',
+          message: '图片上传成功',
+          type: 'success'
+        })
+      }
     }
   }
 }
@@ -149,42 +174,47 @@ export default {
 
 <style lang="stylus">
 #module_edit
-  display flex
-  display -webkit-flex
-  justify-content flex-start
-  border-bottom 1px solid black
-  padding 30px 0
+  .module-box
+    display flex
+    display -webkit-flex
+    justify-content flex-start
+    border-bottom 1px solid black
+    padding 30px 0
 
-  .home-content-message
-    margin 0 50px
-    width 100%
+    .el-form-item
+      margin-bottom 10px !important
 
-  .home-content-setting
-    button
-      margin 5px
+    .module-edit-message
+      margin 0 50px
+      width 100%
 
-  .avatar-uploader .el-upload
-    width 178px
-    height 178px
-    border 1px dashed #d9d9d9
-    border-radius 6px
-    cursor pointer
-    position relative
-    overflow hidden
+    .module-edit-button
+      button
+        margin 10px
+        display block
 
-  .avatar-uploader .el-upload:hover
-    border-color #409EFF
+    .avatar-uploader .el-upload
+      width 178px
+      height 178px
+      border 1px dashed #d9d9d9
+      border-radius 6px
+      cursor pointer
+      position relative
+      overflow hidden
 
-  .avatar-uploader-icon
-    font-size 28px
-    color #8c939d
-    width 180px
-    height 180px
-    line-height 180px
-    text-align center
+    .avatar-uploader .el-upload:hover
+      border-color #409EFF
 
-  .avatar
-    width 180px
-    height 180px
-    display block
+    .avatar-uploader-icon
+      font-size 28px
+      color #8c939d
+      width 178px
+      height 178px
+      line-height 178px
+      text-align center
+
+    .avatar
+      width 178px
+      height 178px
+      display block
 </style>
