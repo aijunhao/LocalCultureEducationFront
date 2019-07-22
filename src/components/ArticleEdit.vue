@@ -1,6 +1,6 @@
 <template>
   <div id="article_edit">
-    <div class="article-box" v-for="(article, i) in articleList">
+    <div class="article-box" v-for="(article, i) in articleList" :class="anchor">
       <div class="article-edit-content">
         <p>
           <span class="article-edit-title">标题：</span>
@@ -47,7 +47,7 @@
 import config from '../config'
 
 export default {
-  props: ['articleList'],
+  props: ['articleList', 'anchor'],
   methods: {
     deleteArticle(id) {
       console.log(id)

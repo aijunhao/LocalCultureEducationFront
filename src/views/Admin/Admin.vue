@@ -65,7 +65,11 @@
         </div>
 
         <!-- 右侧内容 -->
-        <router-view class="admin-main"></router-view>
+        <div class="admin-main">
+          <router-view></router-view>
+          <!-- <div id="link-slot">
+          </div> -->
+        </div>
       </el-container>
     </el-container>
   </div>
@@ -128,5 +132,7 @@ export default {
 
   .admin-main
     margin-left 30px
+    margin-right 220px
     width 100%
+
 </style>

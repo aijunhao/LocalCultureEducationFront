@@ -1,11 +1,10 @@
 <template>
   <div id="home_edit">
     <!-- 面包屑 -->
-    <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
+    <el-breadcrumb style="line-height: 64px" separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/admin' }">管理员首页</el-breadcrumb-item>
+      <el-breadcrumb-item>模块</el-breadcrumb-item>
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 轮播图 -->
@@ -72,7 +71,7 @@ export default {
         .then(data => {
           if (data.status === 200) {
             this.moduleList = data.data
-            
+
             this.moduleReadonly = new Array(this.moduleList.length).fill(true)
             this.moduleStatus = new Array(this.moduleList.length).fill(0)
           }

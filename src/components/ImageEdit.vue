@@ -1,6 +1,6 @@
 <template>
   <div id="image_edit">
-    <div :key="i" class="image-edit-box" v-for="(exhibitList, i) in exhibitList">
+    <div :key="i" class="image-edit-box" v-for="(exhibitList, i) in exhibitList" :class="anchor">
       <div>
         <p class="list-number">列表顺序：{{ i + 1 }}</p>
 
@@ -56,7 +56,7 @@
 import config from '../config'
 
 export default {
-  props: ['exhibitList', 'type'],
+  props: ['exhibitList', 'type', 'anchor'],
   data() {
     return {
       readonly: true

@@ -142,5 +142,13 @@ export default new Router({
       component: Scenery,
       name: "scenery"
     }
-  ]
+  ],
+  // 回滚到顶部
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
 });
