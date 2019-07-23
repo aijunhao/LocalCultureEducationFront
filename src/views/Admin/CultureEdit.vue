@@ -18,27 +18,62 @@
         >{{ exhibit.title }}</li>
       </ul>
 
-      <p @click="goAnchor(1 + exhibitList.length)">非物质文化遗产模块</p>
+      <p @click="goAnchor(1 + exhibitList.length)">观音法界轮播图模块</p>
+      <p @click="goAnchor(2 + exhibitList.length)">观音法界单体项目模块</p>
       <ul>
         <li
           :key="i"
-          @click="goAnchor(2 + exhibitList.length + i)"
+          @click="goAnchor(3 + exhibitList.length + i)"
+          v-for="(project, i) in guanyinSingleProjectList"
+        >{{ project.title }}</li>
+      </ul>
+
+      <p @click="goAnchor(3 + exhibitList.length + guanyinSingleProjectList.length)">非物质文化遗产模块</p>
+      <ul>
+        <li
+          :key="i"
+          @click="goAnchor(4 + exhibitList.length + guanyinSingleProjectList.length + i)"
           v-for="(article, i) in articleList"
         >{{ article.title }}</li>
       </ul>
     </div>
 
     <!-- 博物馆页面编辑 -->
-    <div class="culture-edit-box anchor-class" id="cluture_museum">
+    <div class="culture-edit-box anchor-class">
       <p class="title">博物馆模块</p>
       <p class="tips">博物馆模块页面，主要包括博物馆介绍及展品展示等。</p>
 
       <!-- 展品展示 -->
-      <image-edit :anchor="'anchor-class'" :exhibitList="exhibitList"></image-edit>
+      <image-edit
+        :anchor="'anchor-class'"
+        :disabled="imageDisabled"
+        :imageList="exhibitList"
+        :status="imageStatus"
+      ></image-edit>
+    </div>
+
+    <!-- 观音法界页面轮播图编辑 -->
+    <div class="culture-edit-box anchor-class">
+      <p class="title">观音法界轮播图模块</p>
+      <p class="tips">轮播图组件，此模块建议采用 JPG 格式的图片。</p>
+      <carousel-edit :imageList="guanyinList" :type="2"></carousel-edit>
+    </div>
+
+    <!-- 观音法界页面单体项目编辑 -->
+    <div class="culture-edit-box anchor-class">
+      <p class="title">观音法界单体项目模块</p>
+      <p class="tips">该模块</p>
+      <module-edit
+        :anchor="'anchor-class'"
+        :disabled="gyDisabled"
+        :inputMaxRows="7"
+        :moduleList="guanyinSingleProjectList"
+        :status="gyStatus"
+      ></module-edit>
     </div>
 
     <!-- 非物质文化遗产页面编辑 -->
-    <div class="culture-edit-box anchor-class" id="cultural_heritage">
+    <div class="culture-edit-box anchor-class">
       <p class="title">非物质文化遗产模块</p>
       <p class="tips">非物质文化遗产页面，主要包括佛学非物质文化遗产及佛学文化日等文章描述。</p>
 
@@ -48,7 +83,7 @@
       <div class="culture-article-more">
         <p class="tips">创建文章</p>
         <!-- 创建按钮 -->
-        <el-button @click="newArticle()" circle icon="el-icon-plus" type="success"></el-button>
+        <el-button @click="newArticle()" circle icon="el-icon-plus" type="primary"></el-button>
       </div>
     </div>
   </div>
@@ -58,18 +93,37 @@
 import ImageEdit from '../../components/ImageEdit'
 import QuillEditor from '../../components/QuillEditor'
 import ArticleEdit from '../../components/ArticleEdit'
+import CarouselEdit from '../../components/CarouselEdit'
+import ModuleEdit from '../../components/ModuleEdit'
 import config from '../../config'
 
 export default {
   components: {
     'quill-editor': QuillEditor,
     'article-edit': ArticleEdit,
-    'image-edit': ImageEdit
+    'image-edit': ImageEdit,
+    'carousel-edit': CarouselEdit,
+    'module-edit': ModuleEdit
   },
   data() {
     return {
+      // 文章列表
       articleList: [],
+      // 展品列表
       exhibitList: [],
+      // 图片可编辑列表
+      imageDisabled: [],
+      // 图片状态列表
+      imageStatus: [],
+      // 观音轮播图列表
+      guanyinList: [],
+      // 观音法界单体项目列表
+      guanyinSingleProjectList: [],
+      // 观音法界单体项目模块可编辑列表
+      gyDisabled: [],
+      // 观音法界单体项目模块状态列表
+      gyStatus: [],
+      // 文章列表
       article: {
         id: '',
         title: '',
@@ -80,6 +134,11 @@ export default {
         overview: ''
       }
     }
+  },
+  created() {
+    this.getCulture()
+    this.getExhibits()
+    this.getCarousel()
   },
   methods: {
     /**
@@ -106,7 +165,38 @@ export default {
         url: config.EXECUTE_GET_EXHIBITS
       })
         .then(req => {
-          if (req.data) this.exhibitList = req.data
+          if (req.status === 200) {
+            this.exhibitList = req.data
+
+            this.imageDisabled = new Array(this.exhibitList.length).fill(true)
+            this.imageStatus = new Array(this.exhibitList.length).fill(0)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取观音法界轮播图数据
+     */
+    getCarousel() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_BUDDHISM_INIT
+      })
+        .then(req => {
+          if (req.status === 200) {
+            this.guanyinList = req.data.carousel
+            this.guanyinSingleProjectList = req.data.others
+
+            // 初始化编辑和状态数组
+            this.gyDisabled = new Array(
+              this.guanyinSingleProjectList.length
+            ).fill(true)
+            this.gyStatus = new Array(
+              this.guanyinSingleProjectList.length
+            ).fill(0)
+          }
         })
         .catch(err => {
           console.log(err)
@@ -123,6 +213,7 @@ export default {
     },
     // 平滑滚动
     goAnchor(index) {
+      console.log(index)
       // 顶部偏移量
       let currentTop =
         document.documentElement.scrollTop ||
@@ -164,12 +255,7 @@ export default {
         }
       }, 1)
     }
-  },
-  created() {
-    this.getCulture()
-    this.getExhibits()
-  },
-  watch: {}
+  }
 }
 </script>
 
@@ -177,6 +263,8 @@ export default {
 // 全局属性，右侧快速导航
 #right_menu
   width 200px
+  max-height 600px
+  overflow-y auto
   position fixed
   right 20px
   top 110px
@@ -223,5 +311,4 @@ export default {
 
       button
         margin 0 10px
-
 </style>

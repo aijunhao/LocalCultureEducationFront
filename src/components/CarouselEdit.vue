@@ -2,7 +2,7 @@
   <div>
     <el-upload
       :action="uploadUrl()"
-      :file-list="imgList"
+      :file-list="imageList"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :on-success="handleSuccess"
@@ -21,7 +21,7 @@
 import config from '../config'
 
 export default {
-  props: ['type', 'imgList'],
+  props: ['type', 'imageList'],
   data() {
     return {
       dialogImageUrl: '',
@@ -36,8 +36,28 @@ export default {
      * 文件列表移除文件时的钩子
      */
     handleRemove(file, imgList) {
-      console.log(file.id, file.uid, imgList)
-      this.deleteImage(file.id)
+      // 更新数据库
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_DELETE_IMAGE + `/${file.id}`
+      })
+        .then(data => {
+          if (data.status === 200)
+            this.$notify({
+              title: '成功',
+              message: '图片删除成功',
+              type: 'success'
+            })
+          else {
+            this.$notify.error({
+              title: '错误',
+              message: '图片删除失败'
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     /**
      * 点击文件列表中已上传的文件时的钩子
@@ -58,32 +78,13 @@ export default {
           uid: file.uid,
           status: 'success'
         }
-        this.imgList.push(image)
+        this.imageList.push(image)
+        this.$notify({
+          title: '成功',
+          message: '图片上传成功',
+          type: 'success'
+        })
       }
-    },
-    // 删除图片
-    deleteImage(id) {
-      this.$axios({
-        method: 'get',
-        url: config.EXECUTE_GET_DELETE_IMAGE + `/${id}`
-      })
-        .then(data => {
-          if (data.status === 200)
-            this.$notify({
-              title: '成功',
-              message: '图片删除成功',
-              type: 'success'
-            })
-          else {
-            this.$notify.error({
-              title: '错误',
-              message: '图片删除失败'
-            })
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   }
 }

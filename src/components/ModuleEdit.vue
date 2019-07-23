@@ -1,6 +1,6 @@
  <template>
   <div id="module_edit">
-    <div :key="i" class="module-box" v-for="(module, i) in moduleList">
+    <div :class="anchor" :key="i" class="module-box" v-for="(module, i) in moduleList">
       <!-- 上传 -->
       <div>
         <el-upload
@@ -19,23 +19,23 @@
       <!-- 内容 -->
       <div class="module-edit-message">
         <el-form label-width="80px">
-          <el-form-item label="模块名称">
-            <el-input readonly v-model="module.moduleName"></el-input>
+          <el-form-item label="模块名称" v-show="showModuleName">
+            <el-input disabled v-model="module.moduleName"></el-input>
           </el-form-item>
           <el-form-item label="模块标题">
-            <el-input :readonly="readonly[i]" v-model="module.title"></el-input>
+            <el-input :disabled="disabled[i]" v-model="module.title"></el-input>
           </el-form-item>
           <el-form-item label="模块内容">
             <el-input
-              :autosize="{ minRows: 2, maxRows: 4}"
-              :readonly="readonly[i]"
+              :autosize="{ minRows: 2, maxRows: inputMaxRows}"
+              :disabled="disabled[i]"
               placeholder="请输入内容"
               type="textarea"
               v-model="module.content"
             ></el-input>
           </el-form-item>
-          <el-form-item label="跳转页面">
-            <el-input placeholder="此功能暂未开启。" readonly></el-input>
+          <el-form-item label="跳转页面" v-show="showJumpModule">
+            <el-input disabled placeholder="此功能暂未开启。"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -45,9 +45,9 @@
         <!-- 状态 -->
         <p class="tips" v-text="statusShow(i)"></p>
         <!-- 按钮 -->
-        <el-button @click="edit(i)" circle icon="el-icon-edit" type="success"></el-button>
-        <el-button @click="lock(i)" circle icon="el-icon-lock" type="warning"></el-button>
-        <el-button @click="update(module, i)" circle icon="el-icon-upload" type="primary"></el-button>
+        <el-button @click="editModule(i)" circle icon="el-icon-edit" type="success"></el-button>
+        <el-button @click="lockModule(i)" circle icon="el-icon-lock" type="warning"></el-button>
+        <el-button @click="updateModule(module, i)" circle icon="el-icon-upload" type="primary"></el-button>
       </div>
     </div>
   </div>
@@ -57,9 +57,23 @@
 import config from '../config'
 
 export default {
-  props: ['moduleList', 'readonly', 'status'],
-  created() {
-    console.log(this.moduleList)
+  props: {
+    moduleList: Array,
+    disabled: Array,
+    status: Array,
+    showModuleName: {
+      type: Boolean,
+      default: false
+    },
+    showJumpModule: {
+      type: Boolean,
+      default: false
+    },
+    inputMaxRows: {
+      type: Number,
+      default: 4
+    },
+    anchor: String
   },
   methods: {
     uploadUrl() {
@@ -87,8 +101,8 @@ export default {
     /**
      * 锁定
      */
-    lock(index) {
-      this.$set(this.readonly, index, true)
+    lockModule(index) {
+      this.$set(this.disabled, index, true)
       this.$set(this.status, index, 0)
 
       this.$notify({
@@ -101,8 +115,8 @@ export default {
     /**
      * 提交
      */
-    update(module, index) {
-      this.$set(this.readonly, index, true)
+    updateModule(module, index) {
+      this.$set(this.disabled, index, true)
       this.$set(this.status, index, 2)
 
       console.log(module)
@@ -116,7 +130,6 @@ export default {
           url: urlArr[urlArr.length - 1],
           title: module.title,
           content: module.content,
-          moduleName: module.moduleName
         }
       })
         .then(data => {
@@ -141,8 +154,8 @@ export default {
     /**
      * 编辑
      */
-    edit(index) {
-      this.$set(this.readonly, index, false)
+    editModule(index) {
+      this.$set(this.disabled, index, false)
       this.$set(this.status, index, 1)
 
       this.$notify({
@@ -156,11 +169,11 @@ export default {
      */
     handleModuleSuccess(req, file, imgList, index) {
       if (req.status === 200) {
-        this.edit()
+        this.editModule(index)
         //  重置对象
-        this.module.url = req.url
+        this.moduleList[index].url = req.url
 
-        console.log(this.module)
+        console.log(this.moduleList[index])
         this.$notify({
           title: '图片上传',
           message: '图片上传成功',

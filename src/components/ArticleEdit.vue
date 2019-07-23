@@ -27,17 +27,14 @@
       </div>
 
       <!-- 按钮 -->
-      <div class="article-edit-button">
-
+      <div class="edit-button">
           <el-button
             @click="$router.push({name: 'ArticleInfoEdit', params: {article: article}})"
             circle
             icon="el-icon-edit"
-            type="primary"
+            type="success"
           ></el-button>
-
           <el-button @click="deleteArticle(article.id)" circle icon="el-icon-delete" type="danger"></el-button>
-
       </div>
     </div>
   </div>
@@ -89,7 +86,7 @@ export default {
         display -webkit-flex
         justify-content space-between
 
-    .article-edit-button
+    .edit-button
       padding-top 50px
       display block
 

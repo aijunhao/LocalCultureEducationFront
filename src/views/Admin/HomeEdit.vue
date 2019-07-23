@@ -1,7 +1,7 @@
 <template>
   <div id="home_edit">
     <!-- 面包屑 -->
-    <el-breadcrumb style="line-height: 64px" separator-class="el-icon-arrow-right">
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
       <el-breadcrumb-item :to="{ path: '/admin' }">管理员首页</el-breadcrumb-item>
       <el-breadcrumb-item>模块</el-breadcrumb-item>
       <el-breadcrumb-item>首页</el-breadcrumb-item>
@@ -11,7 +11,7 @@
     <div class="home-edit-box">
       <p class="title">轮播图</p>
       <p class="tips">轮播图组件，此模块建议采用 JPG 格式的图片。</p>
-      <carousel-edit :imgList="imgList" :type="2"></carousel-edit>
+      <carousel-edit :imageList="imgList" :type="2"></carousel-edit>
     </div>
 
     <!-- 首页导航模块 -->
@@ -19,7 +19,13 @@
       <p class="title">首页导航模块</p>
       <p class="tips">导航模块，由预览图片、模块名称、模块标题、模块内容及跳转页面组成，是全局信息的简介部分。</p>
 
-      <module-edit :moduleList="moduleList" :readonly="moduleReadonly" :status="moduleStatus"></module-edit>
+      <module-edit
+        :disabled="moduleDisabled"
+        :moduleList="moduleList"
+        :showJumpModule="true"
+        :showModuleName="true"
+        :status="moduleStatus"
+      ></module-edit>
     </div>
   </div>
 </template>
@@ -35,7 +41,7 @@ export default {
       // 轮播图片列表
       imgList: [],
       moduleList: [],
-      moduleReadonly: [],
+      moduleDisabled: [],
       moduleStatus: []
     }
   },
@@ -72,7 +78,7 @@ export default {
           if (data.status === 200) {
             this.moduleList = data.data
 
-            this.moduleReadonly = new Array(this.moduleList.length).fill(true)
+            this.moduleDisabled = new Array(this.moduleList.length).fill(true)
             this.moduleStatus = new Array(this.moduleList.length).fill(0)
           }
         })

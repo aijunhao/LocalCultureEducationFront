@@ -12,7 +12,7 @@
         <el-input v-model="article.author"></el-input>
       </el-form-item>
       <el-form-item label="发布时间">
-        <el-input v-model="article.time"  readonly placeholder="now"></el-input>
+        <el-input v-model="article.time" disabled placeholder="now"></el-input>
       </el-form-item>
       <el-form-item label="文章总览">
         <el-input
