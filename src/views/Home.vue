@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <!-- 轮播图 -->
+    <!-- 轮播图 --> 
     <carousel :imgList="imgList"></carousel>
 
     <!-- 首页简介 -->
