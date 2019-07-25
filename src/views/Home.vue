@@ -23,9 +23,9 @@
         <li :key="i" v-for="(item, i) in natureImages">
           <el-popover placement="top" trigger="hover" width="600">
             <!-- 弹出框大图 -->
-            <el-image :src="item.img" fit="fill"></el-image>
+            <el-image :src="item.url" fit="fill"></el-image>
             <!-- 缩略图 -->
-            <el-image :src="item.img" fit="fill" slot="reference"></el-image>
+            <el-image :src="item.url" fit="fill" slot="reference"></el-image>
           </el-popover>
         </li>
         <li @click="$router.push('/nature')">
@@ -79,7 +79,7 @@ export default {
         url: config.EXECUTE_GET_HOME_CAROUSEL
       })
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           if (data.data) this.imgList = data.data
         })
         .catch(err => {

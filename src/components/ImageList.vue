@@ -3,7 +3,7 @@
     <p>{{ title }}</p>
     <ul>
       <li :key="i" @click="getImageInfo(item.id)" v-for="(item, i) in imageList">
-        <el-image :src="item.img" fit="fill"></el-image>
+        <el-image :src="item.url" fit="fill"></el-image>
         <div class="description">
           <p>{{ item.title }}</p>
           <div>

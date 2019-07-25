@@ -23,8 +23,8 @@
     <!-- 提交按钮 -->
     <div class="button">
       <el-button round type="success" @click="$emit('save', content)">保存</el-button>
-      <el-button round type="warning" @click="cancel()">取消</el-button>
-      <el-button type="danger" round @click="del()">删除按钮</el-button>
+      <el-button round type="warning" @click="$emit('cancel')">取消</el-button>
+      <el-button type="danger" round @click="$emit('delete')">删除按钮</el-button>
     </div>
   </div>
 </template>

@@ -49,6 +49,7 @@
         :disabled="imageDisabled"
         :imageList="exhibitList"
         :status="imageStatus"
+        :type="5"
       ></image-edit>
     </div>
 
@@ -79,19 +80,12 @@
 
       <!-- 文章编辑列表 -->
       <article-edit :anchor="'anchor-class'" :articleList="articleList"></article-edit>
-
-      <div class="culture-article-more">
-        <p class="tips">创建文章</p>
-        <!-- 创建按钮 -->
-        <el-button @click="newArticle()" circle icon="el-icon-plus" type="primary"></el-button>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ImageEdit from '../../components/ImageEdit'
-import QuillEditor from '../../components/QuillEditor'
 import ArticleEdit from '../../components/ArticleEdit'
 import CarouselEdit from '../../components/CarouselEdit'
 import ModuleEdit from '../../components/ModuleEdit'
@@ -99,7 +93,6 @@ import config from '../../config'
 
 export default {
   components: {
-    'quill-editor': QuillEditor,
     'article-edit': ArticleEdit,
     'image-edit': ImageEdit,
     'carousel-edit': CarouselEdit,
@@ -122,17 +115,7 @@ export default {
       // 观音法界单体项目模块可编辑列表
       gyDisabled: [],
       // 观音法界单体项目模块状态列表
-      gyStatus: [],
-      // 文章列表
-      article: {
-        id: '',
-        title: '',
-        subtitle: '',
-        time: '',
-        author: '',
-        content: '',
-        overview: ''
-      }
+      gyStatus: []
     }
   },
   created() {
@@ -201,15 +184,6 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-    /**
-     * 创建文章
-     */
-    newArticle() {
-      this.$router.push({
-        name: 'ArticleInfoEdit',
-        params: { article: this.article }
-      })
     },
     // 平滑滚动
     goAnchor(index) {
@@ -301,14 +275,4 @@ export default {
     background #fff
     padding 50px
     margin-bottom 20px
-
-    .culture-article-more
-      margin-top 20px
-      display flex
-      display -webkit-flex
-      justify-content flex-end
-      align-items center
-
-      button
-        margin 0 10px
 </style>

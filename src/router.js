@@ -22,6 +22,7 @@ import Overview from "./views/Admin/Overview.vue";
 import HomeEdit from "./views/Admin/HomeEdit.vue";
 import CultureEdit from "./views/Admin/CultureEdit.vue";
 import ArticleInfoEdit from "./views/Admin/ArticleInfoEdit.vue";
+import BuddhismEdit from "./views/Admin/BuddhismEdit.vue";
 
 Vue.use(Router);
 
@@ -87,6 +88,11 @@ export default new Router({
           component: ArticleInfoEdit,
           name: "ArticleInfoEdit",
           props: true
+        },
+        {
+          path: "/buddhismedit",
+          component: BuddhismEdit,
+          name: "BuddhismEdit"
         }
       ]
     },

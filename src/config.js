@@ -43,7 +43,9 @@ export default {
   // 上传图片
   EXECUTE_POST_UPLOAD_IMAGE: `${BASE_URL}/user/upload`,
   // 删除图片
-  EXECUTE_GET_DELETE_IMAGE: `${BASE_URL}/user/delete`,
+  EXECUTE_GET_DELETE_IMAGE: `${BASE_URL}/user/deleteImage`,
+  // 创建图片
+  EXECUTE_GET_NEW_IMAGE: `${BASE_URL}/user/newImage`,
   // 更新图片信息
   EXECUTE_POST_UPDATE_IMAGE_MESSAGE: `${BASE_URL}/user/update`,
   // 更新文章信息

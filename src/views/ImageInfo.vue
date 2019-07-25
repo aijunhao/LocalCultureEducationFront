@@ -3,7 +3,7 @@
     <!-- 图片对象显示 -->
     <div class="imageinfo-show">
       <p v-text="imageInfo.title"></p>
-      <img :src="imageInfo.img" alt="图片" />
+      <img :src="imageInfo.url" alt="图片" />
       <p v-text="imageInfo.content"></p>
       <div class="imageinfo-show-icon">
         <span>

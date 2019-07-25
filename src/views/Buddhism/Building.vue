@@ -170,16 +170,16 @@ export default {
   },
   methods: {
     /**
-     * 获取普陀十二景
+     * 获取寺庙庵堂图片
      */
     getBuilding() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_BUILDING
       })
-        .then(data => {
+        .then(req => {
           // console.log(data.data)
-          if (data.data) this.buildingList = data.data
+          if (req.status === 200) this.buildingList = req.data
         })
         .catch(err => {
           console.log(err)

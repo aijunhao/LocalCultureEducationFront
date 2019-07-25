@@ -101,9 +101,6 @@ export default {
     padding 50px
     margin-bottom 20px
 
-  .breadcrumb
-    line-height 64px
-
   .title
     font-size 1.5rem
     font-weight 600
