@@ -7,6 +7,8 @@ import ImageInfo from "./views/ImageInfo.vue";
 import ChinaMap from "./components/ChinaMap.vue";
 import ZheJiangMap from "./components/ZheJiangMap.vue";
 import BaiduMap from "./components/BaiduMap.vue";
+
+// 佛学文化
 import Culture from "./views/Buddhism/Culture.vue";
 import CultureHome from "./views/Buddhism/CultureHome.vue";
 import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
@@ -14,6 +16,7 @@ import Scenery from "./views/Buddhism/Scenery.vue";
 import Museum from "./views/Buddhism/Museum.vue";
 import Building from "./views/Buddhism/Building.vue";
 import Guanyin from "./views/Buddhism/Guanyin.vue";
+import HistoryHome from "./views/Buddhism/HistoryHome.vue";
 import History from "./views/Buddhism/History.vue";
 
 // 管理员页面
@@ -126,7 +129,12 @@ export default new Router({
     {
       path: "/buddhism/history",
       component: History,
-      name: "history"
+      name: "History"
+    },
+    {
+      path: "/buddhism/HistoryHome",
+      component: HistoryHome,
+      name: "HistoryHome"
     },
     {
       path: "/buddhism/building",

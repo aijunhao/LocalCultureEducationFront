@@ -3,9 +3,9 @@
  */
 
 // // 云地址
-// const BASE_URL = "http://120.79.254.54:3004";
+const BASE_URL = "http://120.79.254.54:3004";
 // 本地测试
-const BASE_URL = "http://localhost:3004";
+// const BASE_URL = "http://localhost:3004";
 
 export default {
   // 更路径
@@ -33,7 +33,9 @@ export default {
   // 获取文化节数据
   EXECUTE_GET_CULTURE: `${BASE_URL}/buddhism/culture`,
   // 获取评论初始化数据
-  EXECUTE_COMMENTS: `${BASE_URL}/nature/comments`,
+  EXECUTE_GET_COMMENTS: `${BASE_URL}/nature/comments`,
+  // 添加评论初始化数据
+  EXECUTE_POST_COMMENTS: `${BASE_URL}/nature/comments`,
   // 获取图片详情
   EXECUTE_GET_IMAGE_INFO: `${BASE_URL}/nature/imageinfo`,
   // 点赞
@@ -53,5 +55,7 @@ export default {
   // 发布文章
   EXECUTE_POST_NEW_ARTICLE: `${BASE_URL}/user/newArticle`,
   // 删除文章
-  EXECUTE_GET_DELETE_ARTICLE: `${BASE_URL}/user/deleteArticle`
+  EXECUTE_GET_DELETE_ARTICLE: `${BASE_URL}/user/deleteArticle`,
+  // 获取博物馆文章
+  EXECUTE_GET_MUSEUM_ARTICLE: `${BASE_URL}/buddhism/museumArticle`
 };

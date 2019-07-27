@@ -4,7 +4,7 @@
       <li
         :key="i"
         :style="{width: width + 'px', height: height + 'px'}"
-        @click="$emit('select', i)"
+        @click="getImageInfo(item.id)"
         v-for="(item, i) in imageList"
       >
         <img :src="item.url" alt />
@@ -44,6 +44,15 @@ export default {
     })
   },
   methods: {
+    /**
+     * 图片点击
+     */
+    getImageInfo(id) {
+      // 将图片 id 传给 vuex 进行 vuex 存储和 sessionStore 存储
+      this.$store.dispatch('imageInfoId', id)
+      // 路由跳转
+      this.$router.push({ name: 'imageinfo' })
+    },
     left() {
       let total = this.boxWidth - this.imageList.length * (this.width + 6)
       if (this.distance - (this.width + 6) < total) {

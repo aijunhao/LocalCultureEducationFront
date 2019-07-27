@@ -1,42 +1,22 @@
 <template>
   <div id="museum">
-    <!-- 博物馆 -->
-    <div class="museum">
-      <div>
-        <p>博物馆</p>
-        <p>普陀山佛教博物馆位于香华街36号原昙华庵址。博物馆为仿宋建筑，总建筑面积3643平方米，主体工程占地面积3400平方米，高度19. 68米，上下两层，分九厅。由原昙华庵拆建，与普陀山普济禅寺、多宝塔以及百子堂相毗邻，形成优势互补。现有馆藏佛教文物1200余件。</p>
-      </div>
-      <img alt src="http://120.79.254.54:3004/public/images/museum.jpg" />
-    </div>
+    <!-- 面包屑 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
+      <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
+      <el-breadcrumb-item>佛学馆藏</el-breadcrumb-item>
+    </el-breadcrumb>
 
     <!-- 水平滚动图片 -->
-    <horizontal-image-list
-      :height="150"
-      :imageList="exhibitList"
-      :width="200"
-      @select="selectExhibits"
-    ></horizontal-image-list>
+    <horizontal-image-list :height="150" :imageList="exhibitList" :width="200"></horizontal-image-list>
 
-    <!-- 展品详情 -->
-    <div class="museum-exhibit-info">
-      <p>展品详情</p>
-      <p>{{ exhibitList[index].title }}</p>
-      <p>
-        <span>作者：普陀山佛教协会</span>
-        <span>来源：普陀山佛教网</span>
+    <!-- 文章 -->
+    <div class="museum-article">
+      <p class="museum-article-title">{{ museumArticle.title }}</p>
+      <p class="museum-article-subtitle">
+        <span>转载：{{ museumArticle.subtitle }}</span>
+        <span>作者：{{ museumArticle.author }}</span>
       </p>
-      <img :src="exhibitList[index].url" />
-      <p>{{ exhibitList[index].content }}</p>
-    </div>
-
-    <!-- 上一个下一个 -->
-    <div class="museum-button">
-      <span @click="pre">
-        <i class="el-icon-arrow-left"></i>上一个
-      </span>
-      <span @click="next">
-        下一个<i class="el-icon-arrow-right"></i>
-      </span>
+      <div v-html="museumArticle.content"></div>
     </div>
   </div>
 </template>
@@ -59,14 +39,34 @@ export default {
           content: '数据丢失了，请稍后再试！'
         }
       ],
+      museumArticle: '',
       // 选中展品项序号
       index: 0
     }
   },
   created() {
     this.getExhibits()
+    this.getMuseumArticle()
   },
   methods: {
+    /**
+     * 获取博物馆文章
+     */
+    getMuseumArticle() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_MUSEUM_ARTICLE
+      })
+        .then(req => {
+          if (req.status === 200) {
+            this.museumArticle = req.data
+            console.log(req.data)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     /**
      * 获取展品数据
      */
@@ -76,18 +76,14 @@ export default {
         url: config.EXECUTE_GET_EXHIBITS
       })
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           if (data.data) this.exhibitList = data.data
         })
         .catch(err => {
           console.log(err)
         })
     },
-    // 展品选择
-    selectExhibits(index) {
-      console.log(index)
-      this.index = index
-    },
+
     // 上一个
     pre() {
       if (this.index > 0) this.index--
@@ -106,47 +102,6 @@ export default {
 
 <style lang="stylus">
 #museum
-  .museum
-    margin-bottom 20px
-    background #d3dcd9
-
-    div
-      padding 20px
-
-      p:nth-child(1)
-        text-align center
-        font-family '华文行楷'
-
-      p:nth-child(2)
-        text-indent 2rem
-
-    img
-      width 60%
-      height 300px
-
-  .museum-exhibit-info
-    margin-top 20px
-    text-align center
-
-    p
-      text-align left
-
-      &:nth-child(1)
-        font-weight 600
-        font-family '华文行楷'
-
-      &:nth-child(2)
-        text-align center
-        font-weight 600
-
-      &:nth-child(3)
-        display flex
-        display -webkit-flex
-        justify-content space-around
-
-      &:last-child
-        text-indent 2rem
-
   .museum-button
     display flex
     display -webkit-flex
@@ -157,35 +112,24 @@ export default {
   #museum
     padding 20px 15%
 
-    .museum
-      display flex
-      display -webkit-flex
-      justify-content space-between
-      margin-bottom 20px
+    .museum-article
+      .museum-article-title
+        font-size 2rem
+        font-family '华文行楷'
+        text-align center
 
-      div
-        width 40%
+      .museum-article-subtitle
+        font-weight 600
+        display -webkit-flex
+        display flex
+        justify-content space-around
 
-        p:nth-child(1)
-          font-size 2rem
-          margin 20px
+      p
+        text-indent 2rem
+        // text-align center
 
       img
         width 60%
-        height 300px
-
-    .museum-exhibit-info
-      margin-top 20px
-      text-align center
-
-      p
-        text-align left
-
-        &:nth-child(1)
-          font-size 1.2rem
-
-        &:nth-child(2)
-          font-size 1.5rem
 
 @media screen and (max-width: 960px)
   $space = 10px
@@ -193,33 +137,4 @@ export default {
   #museum
     padding $space
     font-size 0.8rem
-
-    .museum
-      margin-bottom $space
-
-      div
-        padding $space
-
-        p:nth-child(1)
-          font-size 1.5rem
-          margin 0
-
-      img
-        width 100%
-        height (@width * 0.8)
-
-    .museum-exhibit-info
-      margin-top $space
-      text-align center
-
-      img   
-        width 100%
-      p
-        text-align left
-
-        &:nth-child(1)
-          font-size 1.2rem
-
-        &:nth-child(2)
-          font-size 1.5rem
 </style>

@@ -1,10 +1,21 @@
 <template>
   <div id="imageinfo">
+    <!-- 面包屑 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
+      <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
+      <el-breadcrumb-item>图片详情</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ imageInfo.title }}</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- 图片对象显示 -->
     <div class="imageinfo-show">
-      <p v-text="imageInfo.title"></p>
-      <img :src="imageInfo.url" alt="图片" />
-      <p v-text="imageInfo.content"></p>
+      <p class="imageinfo-show-title" v-text="imageInfo.title"></p>
+      <p class="imageinfo-show-author-source">
+        <span>作者：普陀山佛教协会</span>
+        <span>来源：普陀山佛教网</span>
+      </p>
+      <img :src="imageInfo.url" alt="图片"/>
+      <p v-text="imageInfo.content" class="imageinfo-show-content"></p>
       <div class="imageinfo-show-icon">
         <span>
           <i class="el-icon-view"></i>
@@ -22,7 +33,7 @@
 
     <!-- 评论 -->
     <div class="imageinfo-comment">
-      <comment :commentNumber="imageInfo.commentNumber" :id="imageInfoId" @reinit="initInfo()"></comment>
+      <comment :commentNumber="imageInfo.commentNumber" :id="imageInfoId" @reInit="initInfo"></comment>
     </div>
   </div>
 </template>
@@ -83,34 +94,49 @@ export default {
     font-size 0.8rem
 
   .imageinfo-show
-    width 100%
+    text-align center
 
-    img
-      width 100%
-      min-height 250px
-      background #fff
-
-    p:first-child
+    .imageinfo-show-title
       text-align center
-      font-size 1rem
       font-weight 600
+      margin-top 0
 
-    p:last-child
-      font-size 1rem
-
-    .imageinfo-show-icon
+    .imageinfo-show-author-source, .imageinfo-show-icon
       display flex
       display -webkit-flex
       justify-content space-around
+
+    .imageinfo-show-content
+      text-align left 
+      text-indent 2rem
 
 // pc
 @media screen and (min-width: 960px)
   #imageinfo
     padding 0 15%
 
+    .imageinfo-show
+
+      img
+        width 70%
+        min-height 250px
+
+      .imageinfo-show-title
+        font-size 1.5rem
+
 // mobile
 @media screen and (max-width: 960px)
   #imageinfo
     padding 0 10px
+
+    .imageinfo-show
+      font-size 0.8rem
+
+      img
+        width 100%
+        min-height 250px
+
+      .imageinfo-show-title
+        font-size 1.2rem
 </style>
 

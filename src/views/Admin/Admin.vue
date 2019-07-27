@@ -109,6 +109,9 @@ export default {
   display -webkit-flex
   justify-content space-between
   align-items center
+  position fixed
+  width 100%
+  z-index 100
 
   .portrait
     width 50px
@@ -117,7 +120,7 @@ export default {
     border-radius 50%
 
 #admin_container
-  margin 30px
+  margin 110px 30px
 
   .el-menu-vertical-demo:not(.el-menu--collapse)
     width 200px

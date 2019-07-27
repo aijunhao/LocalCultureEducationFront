@@ -56,7 +56,7 @@
       :background="true"
       :current-page.sync="pages"
       :hide-on-single-page="hideSinglePage"
-      :page-size="10"
+      :page-size="pageSize"
       :total="commentNumber"
       @current-change="getComments()"
       layout="prev, pager, next"
@@ -71,11 +71,18 @@ export default {
   props: ['id', 'commentNumber'],
   data() {
     return {
+      // 当前页
       pages: 1,
+      // 评论列表
       comments: [],
+      // 我的评论内容
       myComment: '',
+      // 排序类型
       sortType: 1,
-      hideSinglePage: true
+      // 不足一页隐藏分页列表
+      hideSinglePage: true,
+      // 每页的数量
+      pageSize: 10
     }
   },
   methods: {
@@ -96,10 +103,13 @@ export default {
       this.$axios({
         method: 'get',
         url:
-          config.EXECUTE_COMMENTS + `/${this.id}/${this.pages}/${this.sortType}`
+          config.EXECUTE_GET_COMMENTS + `/${this.id}/${this.pages}/${this.sortType}`
       })
-        .then(data => {
-          this.comments = data.data
+        .then(req => {
+          if (req.status === 200) {
+            console.log(req.data)
+            this.comments = req.data
+          }
         })
         .catch(err => {
           console.log(err)
@@ -133,19 +143,20 @@ export default {
       if (this.myComment != '') {
         this.$axios({
           method: 'post',
-          url: config.EXECUTE_COMMENTS,
+          url: config.EXECUTE_POST_COMMENTS,
           data: {
             image_id: this.id,
             content: this.myComment
           }
         })
-          .then(data => {
-            if (data.status === 200) {
+          .then(req => {
+            console.log(req)
+            if (req.status === 200) {
               this.$message('评论成功')
               // 重新加载数据
               this.getComments()
               // 自定义事件，给父组件发信息，刷新父组件页面
-              this.$emit('reinit')
+              this.$emit('reInit')
             } else {
               this.$message.error('服务器繁忙，请稍后再试。')
             }
@@ -167,8 +178,10 @@ export default {
     tipText() {
       if (this.comments.length === 0) {
         return '评论列表空空如也，快来抢沙发吧！'
-      } else {
+      } else if (this.comments.length < this.pageSize) {
         return '亲，已经加载完全部了呢！'
+      } else {
+        return ''
       }
     }
   }

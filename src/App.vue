@@ -44,23 +44,32 @@
           </router-link>
           <div class="dropdown-content">
             <router-link tag="a" to="/buddhism/museum">
-              <i class="myicons iconguancangzongshu"></i>&nbsp佛国馆藏
+              <i class="myicons iconbowuguan"></i>&nbsp佛国馆藏
             </router-link>
             <router-link tag="a" to="/buddhism/guanyin">
-              <i class="myicons iconsimiaojianjie"></i>&nbsp观音法界
+              <i class="myicons iconlianhuachan"></i>&nbsp观音法界
             </router-link>
-            <!-- <router-link tag="a" to="/buddhism/culture">
-              <i class="myicons iconjierifuli"></i>&nbsp佛缘 · 朝圣
-            </router-link> -->
             <router-link tag="a" to="/buddhism/culture">
-              <i class="myicons iconjierifuli"></i>&nbsp非物质文化遗产
+              <i class="myicons iconyichanjicheng"></i>&nbsp非物质文化遗产
             </router-link>
           </div>
         </div>
-        <router-link tag="li" to="/buddhism/history">佛国编年史</router-link>
-        <!-- <router-link tag="li" to="/nature">自然风景</router-link> -->
+        <div class="drapdown">
+          <router-link tag="li" to="/buddhism/HistoryHome">
+            佛国编年史
+            <i class="el-icon-arrow-down"></i>
+          </router-link>
+          <div class="dropdown-content">
+            <router-link tag="a" to="/buddhism/history">
+              <i class="myicons iconbowuguan"></i>&nbsp历史
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- 管理员 -->
+    <el-button id="admin_link" class="myicons iconguanliyuan" circle @click="$router.push({ name: 'admin'})"></el-button>
 
     <!-- 主体 -->
     <router-view class="app-main"></router-view>
@@ -115,6 +124,12 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
 #menu-checkbox
   display none
+
+#admin_link
+  position fixed
+  top 150px
+  right 50px
+  z-index 50
 
 #app
   .app-header
@@ -192,6 +207,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
       .app-menu
         flex()
+        margin-right 50px
 
         li, .dropbtn
           text-align center

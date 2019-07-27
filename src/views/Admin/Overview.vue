@@ -1,12 +1,14 @@
 <template>
   <div id="overview">
-    <echarts :height="300" :option="option"></echarts>
+    <div class="echarts">
+      <echarts :height="300" :option="option"></echarts>
+    </div>
+    <div class="text">测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</div>
   </div>
 </template>
 
 <script>
 import ECharts from '../../components/Echarts'
-
 
 export default {
   components: {
@@ -48,3 +50,16 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+#overview
+  display flex
+  display -webkit-flex
+  justify-content space-between
+
+  .echarts
+    width 40%
+
+  .text 
+    width 60%
+</style>

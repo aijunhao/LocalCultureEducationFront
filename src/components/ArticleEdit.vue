@@ -138,6 +138,7 @@ export default {
 
     .article-edit-content
       margin-right 50px
+      width calc(100% - 60px)
 
       .article-edit-title
         font-weight 600
@@ -150,6 +151,7 @@ export default {
     .edit-button
       padding-top 50px
       display block
+      width 60px
 
       button
         margin 10px

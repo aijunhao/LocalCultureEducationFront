@@ -1,12 +1,7 @@
 <template>
   <div id="building">
     <!-- 水平滚动图片 -->
-    <horizontal-image-list
-      :height="150"
-      :imageList="buildingList"
-      :width="200"
-      @select="selectBuilding"
-    ></horizontal-image-list>
+    <horizontal-image-list :height="150" :imageList="buildingList" :width="200"></horizontal-image-list>
 
     <!-- 文章描述 -->
     <div class="building-description">
@@ -184,10 +179,6 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-    selectBuilding(id) {
-      console.log(id)
-      // this.$router.push({name: 'imageinfos', params: {id: id}})
     }
   },
   created() {

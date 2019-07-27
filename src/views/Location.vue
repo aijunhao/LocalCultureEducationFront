@@ -31,17 +31,17 @@
         <p class="location-content-main-title" v-text="geologyLineSelected.name">海岸线占比名称</p>
         <p class="indent" v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
       </div>
-    </div>
+    </div> 
 
     <!-- 植被信息 -->
     <div class="location-content">
+      <div class="location-content-echarts">
+        <echarts :height="350" :index="2" :option="plantOption" :width="400"></echarts>
+      </div>
       <div class="location-content-main">
         <p class="indent">{{ plantOverView }}</p>
         <p class="location-content-main-title" v-text="plantSelected.name">植物类别</p>
         <p class="indent" v-text="plantSelected.content">点击左侧图表可在此处查看详细信息</p>
-      </div>
-      <div class="location-content-echarts">
-        <echarts :height="400" :index="2" :option="plantOption" :width="400"></echarts>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@ export default {
           formatter: '{a} <br/>{b} : {d}%'
         },
         legend: {
-          left: 'center',
+          left: 'left',
           bottom: 10,
           data: ['山地', '海蚀海积阶地', '海积地', '砾石滩', '泥滩', '海蚀地']
         },
@@ -87,7 +87,7 @@ export default {
             name: '海岸线比例',
             type: 'pie',
             selectedMode: 'single',
-            radius: [0, '30%'],
+            radius: [0, '35%'],
             label: {
               normal: {
                 position: 'inner'
@@ -109,7 +109,7 @@ export default {
             name: '所占面积',
             type: 'pie',
             selectedMode: 'single',
-            radius: ['40%', '60%'],
+            radius: ['45%', '65%'],
             label: {
               normal: {
                 position: 'inner'
@@ -141,6 +141,7 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'right',
+          top: 30,
           data: [
             '沼生水生植被',
             '木本栽培植被',
@@ -160,6 +161,7 @@ export default {
             type: 'pie',
             selectedMode: 'single',
             radius: [0, '60%'],
+            center: ['45%', '55%'],
             itemStyle: {
               emphasis: {
                 shadowBlur: 10,
@@ -266,11 +268,6 @@ export default {
   .indent
     text-indent 2rem
 
-  .space-between
-    display flex
-    display -webkit-flex
-    justify-content space-between
-
   .location-show-description
     background #fff
     border-radius 5px
@@ -291,17 +288,8 @@ export default {
       z-index 50
 
   .location-content
-    padding 50px 0
-
-    .location-content-echarts
-      display flex
-      justify-content center
-      margin 0 20px
-
     .location-content-main
-      width 100%
       background #fff
-      padding 20px
       border-radius 5px
 
       .location-content-main-title
@@ -314,7 +302,7 @@ export default {
       display flex
       display -webkit-flex
       justify-content space-between
-      margin 0 15px
+      padding 20px 15px
 
       .location-show-description
         width 20%
@@ -335,13 +323,24 @@ export default {
       display -webkit-flex
       justify-content space-between
 
+      &:nth-child(odd)
+        flex-direction row-reverse
+
       .location-content-main
-        border-radius 5px
-        height 330px
+        box-sizing border-box
+        padding 20px
+        height 350px
         overflow-y auto
 
 // mobile
 @media screen and (max-width: 960px)
   #location
     padding 0 10px
+
+    .location-content
+      margin 20px 0
+
+      .location-content-main
+        box-sizing border-box
+        padding 10px
 </style>

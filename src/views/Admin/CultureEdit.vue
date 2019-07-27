@@ -8,33 +8,51 @@
     </el-breadcrumb>
 
     <!-- 右侧快速导航 -->
-    <div id="right_menu">
-      <p @click="goAnchor(0)">博物馆模块</p>
+    <div id="culture__edit_right_menu">
       <ul>
-        <li
-          :key="i"
-          @click="goAnchor(1 + i)"
-          v-for="(exhibit, i) in exhibitList"
-        >{{ exhibit.title }}</li>
-      </ul>
+        <li :class="{select: 0 === index, 'menu-title': true}" @click="goAnchor(0)">博物馆模块</li>
 
-      <p @click="goAnchor(1 + exhibitList.length)">观音法界轮播图模块</p>
-      <p @click="goAnchor(2 + exhibitList.length)">观音法界单体项目模块</p>
-      <ul>
-        <li
-          :key="i"
-          @click="goAnchor(3 + exhibitList.length + i)"
-          v-for="(project, i) in guanyinSingleProjectList"
-        >{{ project.title }}</li>
-      </ul>
+        <ul>
+          <li
+            :class="{select: 1 + i === index}"
+            :key="i"
+            @click="goAnchor(1 + i)"
+            v-for="(exhibit, i) in exhibitList"
+          >{{ exhibit.title }}</li>
+        </ul>
 
-      <p @click="goAnchor(3 + exhibitList.length + guanyinSingleProjectList.length)">非物质文化遗产模块</p>
-      <ul>
         <li
-          :key="i"
-          @click="goAnchor(4 + exhibitList.length + guanyinSingleProjectList.length + i)"
-          v-for="(article, i) in articleList"
-        >{{ article.title }}</li>
+          :class="{select: 1 + exhibitList.length === index, 'menu-title': true}"
+          @click="goAnchor(1 + exhibitList.length)"
+        >观音法界轮播图模块</li>
+
+        <li
+          :class="{select: 2 + exhibitList.length === index, 'menu-title': true}"
+          @click="goAnchor(2 + exhibitList.length)"
+        >观音法界单体项目模块</li>
+
+        <ul>
+          <li
+            :class="{select: 3 + exhibitList.length + i === index}"
+            :key="i"
+            @click="goAnchor(3 + exhibitList.length + i)"
+            v-for="(project, i) in guanyinSingleProjectList"
+          >{{ project.title }}</li>
+        </ul>
+
+        <li
+          :class="{select: 3 + exhibitList.length + guanyinSingleProjectList.length === index, 'menu-title': true}"
+          @click="goAnchor(3 + exhibitList.length + guanyinSingleProjectList.length)"
+        >非物质文化遗产模块</li>
+
+        <ul>
+          <li
+            :class="{select: 4 + exhibitList.length + guanyinSingleProjectList.length + i === index}"
+            :key="i"
+            @click="goAnchor(4 + exhibitList.length + guanyinSingleProjectList.length + i)"
+            v-for="(article, i) in articleList"
+          >{{ article.title }}</li>
+        </ul>
       </ul>
     </div>
 
@@ -115,7 +133,9 @@ export default {
       // 观音法界单体项目模块可编辑列表
       gyDisabled: [],
       // 观音法界单体项目模块状态列表
-      gyStatus: []
+      gyStatus: [],
+      // 位置
+      index: 0
     }
   },
   created() {
@@ -123,7 +143,32 @@ export default {
     this.getExhibits()
     this.getCarousel()
   },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   methods: {
+    /**
+     * 滚动监听
+     */
+    handleScroll() {
+      let currentTop =
+        window.pageYOffset ||
+        document.body.scrollTop ||
+        document.documentElement.scrollTop
+      let target = document.getElementsByClassName('anchor-class')
+      for (var i = 0; i < target.length - 1; i++) {
+        if (
+          currentTop >= target[i].offsetTop &&
+          currentTop < target[i + 1].offsetTop
+        )
+          this.index = i
+      }
+      if (currentTop >= target[target.length - 1].offsetTop)
+        this.index = target.length - 1
+    },
     /**
      * 获取文章
      */
@@ -235,7 +280,7 @@ export default {
 
 <style lang="stylus">
 // 全局属性，右侧快速导航
-#right_menu
+#culture__edit_right_menu
   width 200px
   max-height 600px
   overflow-y auto
@@ -245,21 +290,18 @@ export default {
   color #909399
   font-size 0.8rem
 
-  p
+  .menu-title
     padding 10px 0 10px 15px
-    font-size 1rem
-    margin 0
 
   li
     padding 2px 0 2px 30px
     list-style none
-
-  li, p
     border-left 2px solid #909399
 
-    &:hover
-      border-left 2px solid #409EFF
-      color #409EFF
+  li:hover, .select
+    border-left 2px solid #409EFF
+    background #fff
+    color #409EFF
 
 #culture_edit
   .title
