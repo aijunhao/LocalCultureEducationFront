@@ -15,9 +15,10 @@ import BuddhismHome from "./views/Buddhism/BuddhismHome.vue";
 import Scenery from "./views/Buddhism/Scenery.vue";
 import Museum from "./views/Buddhism/Museum.vue";
 import Building from "./views/Buddhism/Building.vue";
-import Guanyin from "./views/Buddhism/Guanyin.vue";
+import GuanYin from "./views/Buddhism/Guanyin.vue";
 import HistoryHome from "./views/Buddhism/HistoryHome.vue";
 import History from "./views/Buddhism/History.vue";
+import Monk from "./views/Buddhism/Monk.vue";
 
 // 管理员页面
 import Admin from "./views/Admin/Admin.vue";
@@ -45,7 +46,7 @@ export default new Router({
     {
       path: "/location",
       component: Location,
-      name: "location",
+      name: "Location",
       redirect: "/location/chinamap",
       children: [
         {
@@ -103,7 +104,7 @@ export default new Router({
     {
       path: "/nature",
       component: Nature,
-      name: "nature"
+      name: "Nature"
     },
     {
       path: "/imageinfo",
@@ -114,17 +115,17 @@ export default new Router({
     {
       path: "/buddhism/buddhismhome",
       component: BuddhismHome,
-      name: "buddhismhome"
+      name: "BuddhismHome"
     },
     {
       path: "/buddhism/culture",
       component: Culture,
-      name: "culture"
+      name: "Culture"
     },
     {
       path: "/buddhism/culturehome",
       component: CultureHome,
-      name: "culturehome"
+      name: "CultureHome"
     },
     {
       path: "/buddhism/history",
@@ -132,7 +133,7 @@ export default new Router({
       name: "History"
     },
     {
-      path: "/buddhism/HistoryHome",
+      path: "/buddhism/historyhome",
       component: HistoryHome,
       name: "HistoryHome"
     },
@@ -143,18 +144,23 @@ export default new Router({
     },
     {
       path: "/buddhism/guanyin",
-      component: Guanyin,
-      name: "guanyin"
+      component: GuanYin,
+      name: "GuanYin"
     },
     {
       path: "/buddhism/museum",
       component: Museum,
-      name: "museum"
+      name: "Museum"
     },
     {
       path: "/buddhism/scenery",
       component: Scenery,
       name: "scenery"
+    },
+    {
+      path: "/buddhism/monk",
+      component: Monk,
+      name: "Monk"
     }
   ],
   // 回滚到顶部

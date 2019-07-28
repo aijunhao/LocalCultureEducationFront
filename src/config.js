@@ -57,5 +57,11 @@ export default {
   // 删除文章
   EXECUTE_GET_DELETE_ARTICLE: `${BASE_URL}/user/deleteArticle`,
   // 获取博物馆文章
-  EXECUTE_GET_MUSEUM_ARTICLE: `${BASE_URL}/buddhism/museumArticle`
+  EXECUTE_GET_MUSEUM_ARTICLE: `${BASE_URL}/buddhism/museumArticle`,
+
+  // 文化首页
+  EXECUTE_GET_CULTURE_HOME: `${BASE_URL}/buddhism/getCultureHomeContent`,
+
+  // 海天佛骨哦首页
+  EXECUTE_GET_BUDDHISM_HOME: `${BASE_URL}/buddhism/getBuddhismHomeContent`
 };

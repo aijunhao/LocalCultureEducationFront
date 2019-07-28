@@ -4,12 +4,10 @@
     <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
       <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/buddhism/HistoryHome'}">普陀编年史</el-breadcrumb-item>
-      <el-breadcrumb-item>普陀佛史</el-breadcrumb-item>
+      <el-breadcrumb-item>历代高僧</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div>
-      普陀佛史
-    </div>
+    <div>高僧</div>
   </div>
 </template>
 

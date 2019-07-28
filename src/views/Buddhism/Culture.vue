@@ -22,8 +22,7 @@
     >
       <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/buddhism/culturehome'}">佛学文化</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/buddhism/culture' }">非物质文化遗产</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/buddhism/culture' }">总览</el-breadcrumb-item>
+      <el-breadcrumb-item>非物质文化遗产</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 总览 -->
@@ -220,6 +219,7 @@ export default {
       color #409EFF
 
   #culture
+    padding-top 20px
     padding-right calc(15% + 200px)
     padding-left 15%
 

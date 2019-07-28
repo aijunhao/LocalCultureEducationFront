@@ -1,5 +1,11 @@
 <template>
   <div id="location">
+    <!-- 面包屑 -->
+    <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
+      <el-breadcrumb-item>地理环境</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- 地图及描述 -->
     <div class="location-show">
       <!-- 地图 -->
@@ -20,7 +26,7 @@
     </div>
 
     <!-- 地质地貌 -->
-    <div class="location-content">
+    <div class="location-content direction">
       <div class="location-content-echarts">
         <echarts :height="350" :index="1" :option="geologyOption" :width="350"></echarts>
       </div>
@@ -31,12 +37,12 @@
         <p class="location-content-main-title" v-text="geologyLineSelected.name">海岸线占比名称</p>
         <p class="indent" v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
       </div>
-    </div> 
+    </div>
 
     <!-- 植被信息 -->
     <div class="location-content">
       <div class="location-content-echarts">
-        <echarts :height="350" :index="2" :option="plantOption" :width="400"></echarts>
+        <echarts :height="350" :index="2" :option="plantOption" :width="350"></echarts>
       </div>
       <div class="location-content-main">
         <p class="indent">{{ plantOverView }}</p>
@@ -269,6 +275,7 @@ export default {
     text-indent 2rem
 
   .location-show-description
+    box-sizing border-box
     background #fff
     border-radius 5px
     padding 20px
@@ -288,6 +295,11 @@ export default {
       z-index 50
 
   .location-content
+    .location-content-echarts
+      display flex
+      display -webkit-flex
+      justify-content center
+
     .location-content-main
       background #fff
       border-radius 5px
@@ -298,11 +310,20 @@ export default {
 // pc
 @media screen and (min-width: 960px)
   #location
+    padding 20px
+
+    .breadcrumb
+      line-height 64px
+      padding 0 15%
+
+    .direction
+      flex-direction row-reverse
+
     .location-show
       display flex
       display -webkit-flex
       justify-content space-between
-      padding 20px 15px
+      padding-bottom 20px
 
       .location-show-description
         width 20%
@@ -323,19 +344,21 @@ export default {
       display -webkit-flex
       justify-content space-between
 
-      &:nth-child(odd)
-        flex-direction row-reverse
-
       .location-content-main
         box-sizing border-box
         padding 20px
         height 350px
         overflow-y auto
+        width calc(100% - 400px)
 
 // mobile
 @media screen and (max-width: 960px)
   #location
     padding 0 10px
+
+    .breadcrumb
+      line-height 64px
+      padding 0 10px
 
     .location-content
       margin 20px 0

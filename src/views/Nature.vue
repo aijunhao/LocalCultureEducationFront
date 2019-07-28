@@ -2,7 +2,7 @@
   <div id="nature">
     <ul id="nature_list">
       <li :key="i" @click="chooseImage(item.id)" v-for="(item, i) in initMessage">
-        <el-image :src="item.img" fit="fill"></el-image>
+        <el-image :src="item.url" fit="fill"></el-image>
         <div class="nature-list-description">
           <p class="nature-list-description-content">{{ item.content }}</p>
           <div class="nature-list-description-icon">
@@ -49,7 +49,7 @@ export default {
         url: config.EXECUTE_GET_NATURE_INIT
       })
         .then(data => {
-          // console.log(data.data)
+          console.log(data.data)
           this.initMessage = data.data
         })
         .catch(err => {

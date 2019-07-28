@@ -1,5 +1,12 @@
 <template>
   <div id="scenery">
+    <!-- 面包屑 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
+      <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/buddhism/buddhismhome'}">海天佛国</el-breadcrumb-item>
+      <el-breadcrumb-item>普陀山水</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- 普陀十二景 -->
     <image-list :imageList="twelveScenery" :title="'普陀十二景'"></image-list>
 
@@ -66,4 +73,8 @@ export default {
 @media screen and (min-width: 960px)
   #scenery
     padding 20px 15%
+
+@media screen and (max-width: 960px)
+  #scenery
+    padding 10px
 </style>

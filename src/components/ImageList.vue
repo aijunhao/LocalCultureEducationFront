@@ -46,6 +46,7 @@ export default {
   >p
     font-weight 600
     font-size 1.2rem
+    margin 5px 0
 
   ul
     list-style none
@@ -100,5 +101,5 @@ export default {
 @media screen and (max-width: 960px)
   #image_list
     li
-      margin 10px
+      margin 10px 0
 </style>

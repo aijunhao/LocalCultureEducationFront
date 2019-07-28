@@ -1,7 +1,15 @@
 <template>
   <div id="guanyin" ref="guanyin">
+
+    <!-- 面包屑 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
+      <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/buddhism/culturehome'}">佛国文化</el-breadcrumb-item>
+      <el-breadcrumb-item>观音法界</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- logo -->
-    <img alt class="guanyin-logo" src="../../assets/观音法界.png" />
+    <!-- <img alt class="guanyin-logo" src="../../assets/logo-观音法界.jpg" /> -->
 
     <!-- 轮播图 -->
     <carousel :imgList="imgList" :showIndicator="'none'"></carousel>

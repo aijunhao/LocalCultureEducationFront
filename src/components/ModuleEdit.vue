@@ -20,7 +20,7 @@
       <div class="module-edit-message">
         <el-form label-width="80px">
           <el-form-item label="模块名称" v-show="showModuleName">
-            <el-input disabled v-model="module.moduleName"></el-input>
+            <el-input :disabled="disabled[i]" v-model="module.module_name"></el-input>
           </el-form-item>
           <el-form-item label="模块标题">
             <el-input :disabled="disabled[i]" v-model="module.title"></el-input>
@@ -35,7 +35,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="跳转页面" v-show="showJumpModule">
-            <el-input disabled placeholder="此功能暂未开启。"></el-input>
+            <el-input :disabled="disabled[i]" placeholder="此功能暂未开启。" v-model="module.target"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -129,7 +129,7 @@ export default {
           id: module.id,
           url: urlArr[urlArr.length - 1],
           title: module.title,
-          content: module.content,
+          content: module.content
         }
       })
         .then(data => {

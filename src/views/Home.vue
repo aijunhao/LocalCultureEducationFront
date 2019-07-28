@@ -1,17 +1,19 @@
 <template>
   <div id="home">
-    <!-- 轮播图 --> 
+    <!-- 轮播图 -->
     <carousel :imgList="imgList"></carousel>
 
     <!-- 首页简介 -->
     <div :key="i" class="home-content" v-for="(item, i) in initMessage">
-      <p class="home-content-title">{{ item.moduleName }}</p>
+      <p class="home-content-title">{{ item.module_name }}</p>
       <div class="home-content-message">
-        <img :src="item.url" />
+        <div class="home-content-message-img">
+          <img :src="item.url" />
+        </div>
         <div class="home-content-message-main">
           <p>{{ item.title }}</p>
           <p>{{ item.content }}</p>
-          <el-button @click="jumpTo(item.moduleName)" type="danger">更多</el-button>
+          <el-button @click="$router.push({name: item.target})" type="danger">更多</el-button>
         </div>
       </div>
     </div>
@@ -29,7 +31,7 @@
           </el-popover>
         </li>
         <li @click="$router.push('/nature')">
-          <!-- <img src="../assets/next.png" /> -->
+
           <i class="myicons iconmore"></i>
           <p>查看更多</p>
         </li>
@@ -57,7 +59,7 @@ export default {
     /**
      * 获取初始化页面数据
      */
-    initHome() {
+    getHomeContent() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_HOME_COMTENT
@@ -79,7 +81,7 @@ export default {
         url: config.EXECUTE_GET_HOME_CAROUSEL
       })
         .then(data => {
-          // console.log(data.data)
+          console.log(data.data)
           if (data.data) this.imgList = data.data
         })
         .catch(err => {
@@ -101,23 +103,11 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-    /**
-     * 跳转
-     */
-    jumpTo(index) {
-      if (index === '地理环境') {
-        this.$router.push('/location')
-      } else if (index === '海天佛国') {
-        this.$router.push('/buddhism')
-      } else if (index === '历史文化') {
-        this.$router.push('/location')
-      }
     }
   },
   created() {
     // 获取初始化页面数据
-    this.initHome()
+    this.getHomeContent()
     this.getCarousel()
     this.getHomeNatureImages()
   },
@@ -197,8 +187,12 @@ export default {
         display -webkit-flex
         justify-content space-between
 
-        img
+        .home-content-message-img
           width 35%
+
+          img
+            width 100%
+            height 100%
 
         .home-content-message-main
           width 60%
@@ -208,6 +202,10 @@ export default {
 
           p:nth-child(2)
             font-size 1rem
+            -webkit-line-clamp 8
+            display -webkit-box
+            overflow hidden
+            -webkit-box-orient vertical
 
   #home_nature_image_list
     display flex

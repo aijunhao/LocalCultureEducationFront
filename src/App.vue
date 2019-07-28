@@ -55,13 +55,16 @@
           </div>
         </div>
         <div class="drapdown">
-          <router-link tag="li" to="/buddhism/HistoryHome">
+          <router-link class="dropbtn" tag="a" to="/buddhism/HistoryHome">
             佛国编年史
             <i class="el-icon-arrow-down"></i>
           </router-link>
           <div class="dropdown-content">
             <router-link tag="a" to="/buddhism/history">
-              <i class="myicons iconbowuguan"></i>&nbsp历史
+              <i class="myicons iconhistory"></i>&nbsp普陀佛史
+            </router-link>
+            <router-link tag="a" to="/buddhism/monk">
+              <i class="myicons iconchancha"></i>&nbsp历代高僧
             </router-link>
           </div>
         </div>
@@ -69,7 +72,12 @@
     </div>
 
     <!-- 管理员 -->
-    <el-button id="admin_link" class="myicons iconguanliyuan" circle @click="$router.push({ name: 'admin'})"></el-button>
+    <el-button
+      @click="$router.push({ name: 'admin'})"
+      circle
+      class="myicons iconguanliyuan"
+      id="admin_link"
+    ></el-button>
 
     <!-- 主体 -->
     <router-view class="app-main"></router-view>

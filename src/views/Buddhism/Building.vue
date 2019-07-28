@@ -1,5 +1,12 @@
 <template>
   <div id="building">
+    <!-- 面包屑 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
+      <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/buddhism/buddhismhome'}">海天佛国</el-breadcrumb-item>
+      <el-breadcrumb-item>寺庙庵堂</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- 水平滚动图片 -->
     <horizontal-image-list :height="150" :imageList="buildingList" :width="200"></horizontal-image-list>
 
