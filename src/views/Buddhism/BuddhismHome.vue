@@ -19,97 +19,50 @@
       ></video-player>
     </div>
 
-    <div v-for="(item, i) in buddhismHomeContent" :key="i">
+    <div v-if="buddhismHomeContent[0]">
       <div class="buddhismhome-link">
-        <i :class="['myicons', 'icons-big', item.icon]"></i>
-        <span v-text="item.module_name"></span>
-        <p @click="$router.push({name: item.target})">
-          更多
-          <i class="myicons icondouble-up"></i>
-        </p>
-      </div>
-      <div :class="['buddhismhome-box', i % 2 ? 'direction' : '']">
-        <img :src="item.url" />
-        <div>
-          <p class="title" v-text="item.title"></p>
-          <p class="content" v-html="item.content" v-if="i === 0"></p>
-          <p class="content" v-text="item.content" v-else></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- <div>
-      <div class="buddhismhome-link">
-        <i class="myicons iconVRquanjingtu icons-big"></i>
-        <span>VR 全景逛普陀</span>
+        <i :class="['myicons', 'icons-big', buddhismHomeContent[0].icon]"></i>
+        <span v-text="buddhismHomeContent[0].module_name"></span>
         <p>
-          <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">详情</a>
+          <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">更多</a>
           <i class="myicons icondouble-up"></i>
         </p>
       </div>
       <div class="buddhismhome-box">
-        <img alt src="http://120.79.254.54:3004/public/images/VR全景逛普陀.png" />
+        <img :src="buddhismHomeContent[0].url" />
         <div>
-          <p>版权所有：普陀山佛教协会</p>
-          <p>开发者：心佛文化传播公司</p>
-          <p>摄影师：杨赫</p>
-          <p>平台：视维云</p>
-          <p>作品详情：庆祝南海观音开光二十周年</p>
-          <p style="color: red">说明：此部分仅用于普陀山佛学乡土文化教育学习拓展，我们只提供站外链接，如果侵权行为，请联系删除。</p>
+          <p class="title" v-text="buddhismHomeContent[0].title"></p>
+          <p class="html-content" v-html="buddhismHomeContent[0].content"></p>
         </div>
       </div>
-    </div> -->
+    </div>
 
-    <!-- <div>
+    <module :direction="true" :module="buddhismHomeContent[1]" v-if="buddhismHomeContent[1]"></module>
+
+    <div v-if="buddhismHomeContent[2]">
       <div class="buddhismhome-link">
-        <i class="myicons iconsimiao icons-big"></i>
-        <span>寺庙庵堂</span>
-        <p @click="$router.push({name: 'building'})">
+        <i :class="['myicons', 'icons-big', buddhismHomeContent[2].icon]"></i>
+        <span v-text="buddhismHomeContent[2].module_name"></span>
+        <p @click="$router.push({name: buddhismHomeContent[2].target})">
           更多
           <i class="myicons icondouble-up"></i>
         </p>
       </div>
-      <div class="buddhismhome-box"></div>
-    </div> -->
-
-    <!-- <div>
-      <div class="buddhismhome-link">
-        <i class="myicons iconshanshui icons-big"></i>
-        <span>普陀山水</span>
-        <p @click="$router.push({name: 'Scenery'})">
-          更多
-          <i class="myicons icondouble-up"></i>
-        </p>
-      </div>
-      <div class="buddhismhome-box">普陀山水</div>
-    </div> -->
-
-    <!-- <div class="buddhismhome-router">
       <div>
-        <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">
-          <img alt src="../../assets/VR全景逛普陀.png" />
-          普陀山VR全景
-        </a>
+        图片吧
       </div>
-      <div @click="$router.push('/buddhism/building')">
-        <img alt src="../../assets/海天佛国普陀圣境.png" />
-        寺庙庵堂
-      </div>
-      <div @click="$router.push('/buddhism/scenery')">
-        <img alt src="../../assets/普陀山水.png" />
-        普陀山水
-      </div>
-    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
 import config from '../../config'
+import module from '../../components/Module'
 
 export default {
   data() {
     return {
-      buddhismHomeContent: '',
+      buddhismHomeContent: [],
       // 播放器
       playerOptions: {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
@@ -139,6 +92,9 @@ export default {
     }
   },
   methods: {
+    jump() {
+      window.location.href = 'https://i.svrvr.com/?a=wapview&id=s62806'
+    },
     /**
      * 获取内容
      */
@@ -155,6 +111,9 @@ export default {
           console.log(err)
         })
     }
+  },
+  components: {
+    module
   },
   created() {
     this.getBuddhismHomeContent()
@@ -175,6 +134,11 @@ export default {
 #buddhismhome
   padding 20px 15%
 
+  a
+    color black
+    text-decoration none
+    margin-right 3px
+
   .buddhismhome-overview
     margin-bottom 20px
 
@@ -193,12 +157,25 @@ export default {
       text-align right
       border-bottom 2px solid black
 
-    a
-      text-decoration none
-      color black
+    .icons-big
+      font-size 32px
 
-  .icons-big
-    font-size 32px
+  .buddhismhome-box
+    margin-top 10px
+
+    .title
+      text-align center
+      font-family '微软雅黑'
+
+    .content
+      text-indent 2rem
+      -webkit-line-clamp 10
+      display -webkit-box
+      overflow hidden
+      -webkit-box-orient vertical
+
+  .html-content > p
+    margin 5px 0
 
 @media screen and (min-width: 960px)
   #buddhismhome
@@ -209,20 +186,41 @@ export default {
       display -webkit-flex
       justify-content space-between
       margin-bottom 20px
+      max-height 300px
 
-      // height 300px
       div
         box-sizing border-box
-        width 55%
+        width 50%
         padding 10px
 
+        .title
+          font-size 1.8rem
+          margin 10px 0
+
+        .content
+          font-size 1rem
+
       img
-        width 40%
+        width 45%
 
 @media screen and (max-width: 960px)
   #buddhismhome
     padding 10px
 
-    .buddhismhome-router
-      font-size 0.8rem
+    .buddhismhome-box
+      margin-bottom 10px
+
+      div
+        padding 10px
+
+        .title
+          font-size 1.5rem
+          margin 10px 0
+
+        .content
+          font-size 0.8rem
+
+      img
+        width 100%
+        height @width * 0.8
 </style>

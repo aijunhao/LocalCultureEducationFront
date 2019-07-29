@@ -9,54 +9,53 @@
     <!-- 介绍文字 -->
     <div class="historyhome-overview">这里预计需要一段全局介绍</div>
 
-    <!-- 普陀佛史 -->
-    <div>
-      <div class="historyhome-link">
-        <i class="myicons iconhistory icons-big"></i>
-        <span>普陀佛史</span>
-        <p @click="$router.push({name: 'History'})">
-          更多
-          <i class="myicons icondouble-up"></i>
-        </p>
-      </div>
-      <div>普陀佛史</div>
-    </div>
-
-    <!-- 历代高僧 -->
-    <div>
-      <div class="historyhome-link">
-        <i class="myicons iconchancha icons-big"></i>
-        <span>历代高僧</span>
-        <p @click="$router.push({name: 'Monk'})">
-          更多
-          <i class="myicons icondouble-up"></i>
-        </p>
-      </div>
-      <div>历代高僧</div>
-    </div>
+    <module
+      :direction="i % 2 ? true : false"
+      :key="i"
+      :module="item"
+      v-for="(item, i) in historyHomeContent"
+    ></module>
   </div>
 </template>
 
+<script>
+import config from '../../config'
+import module from '../../components/Module'
+
+export default {
+  data() {
+    return {
+      historyHomeContent: ''
+    }
+  },
+  components: {
+    module
+  },
+  methods: {
+    /**
+     * 获取内容
+     */
+    getHistoryHomeContent() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_HISTORY_HOME
+      })
+        .then(req => {
+          if (req.status === 200) this.historyHomeContent = req.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created() {
+    this.getHistoryHomeContent()
+  }
+}
+</script>
+
 <style lang="stylus">
 #historyhome
-  .historyhome-link
-    display flex
-    display -webkit-flex
-    justify-content space-between
-    align-items center
-    margin 5px 0 5px 10px
-    font-family '华文行楷'
-
-    p
-      margin 0
-      width calc(100% - 150px)
-      line-height 32px
-      text-align right
-      border-bottom 2px solid black
-
-  .icons-big
-    font-size 32px
-
   .historyhome-overview
     height 300px
     background #ffffff

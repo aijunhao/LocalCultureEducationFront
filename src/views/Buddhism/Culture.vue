@@ -4,29 +4,24 @@
     <!-- 右侧导航 -->
     <div id="culture_right_menu">
       <ul>
-        <li :class="{select: 0 === index}" @click="goAnchor(0)">总览</li>
+        <li class="select" @click="goAnchor('culture_overview')">总览</li>
         <li
-          :class="{select: i + 1 === index}"
           :key="i"
-          @click="goAnchor(i + 1)"
+          @click="goAnchor('culture_content_' + i)"
           v-for="(item, i) in culture"
         >{{ item.title }}</li>
       </ul>
     </div>
 
     <!-- 面包屑 -->
-    <el-breadcrumb
-      class="anchor-class"
-      separator-class="el-icon-arrow-right"
-      style="line-height: 64px"
-    >
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="line-height: 64px">
       <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/buddhism/culturehome'}">佛学文化</el-breadcrumb-item>
       <el-breadcrumb-item>非物质文化遗产</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 总览 -->
-    <div class="culture-overview">
+    <div class="culture-overview anchor-class" id="culture_overview">
       <img alt src="../../assets/非物质文化遗产.jpg" />
       <div>
         <p>一是国家级非遗“观音传说”，不仅包含了丰富感人的观音民间故事，还有观音造像艺术、自然景观造型传说以及观音文化节庆活动；</p>
@@ -37,8 +32,13 @@
     </div>
 
     <!-- 文章模块 -->
-    <div :key="i" class="culture-content" v-for="(item, i) in culture">
-      <div class="culture-content-header anchor-class">
+    <div
+      :id="'culture_content_' + i"
+      :key="i"
+      class="culture-content anchor-class"
+      v-for="(item, i) in culture"
+    >
+      <div class="culture-content-header">
         <p v-text="item.title">标题</p>
         <p v-text="item.subtitle">时间</p>
       </div>
@@ -95,68 +95,31 @@ export default {
       return ['myicons', this.type[index % this.type.length]]
     },
     // 平滑滚动
-    goAnchor(index) {
-      // console.log(index)
-      // 顶部偏移量
-      let currentTop =
-        document.documentElement.scrollTop ||
-        window.pageYOffset ||
-        document.body.scrollTop
-      // 目标距离，特殊情况需要减去顶部
-      let target = document.getElementsByClassName('anchor-class')[index]
-        .offsetTop
-      target -= 80
-      // 总偏移量 = 目标位置 - 当前位置， 正负不论
-      let total = target - currentTop
-      let step = 30
-
-      clearInterval(timer)
-      let timer = setInterval(() => {
-        if (total >= 0) {
-          if (currentTop + step >= target) {
-            document.documentElement.scrollTop = target
-            window.pageYOffset = target
-            document.body.scrollTop = target
-            clearInterval(timer)
-          } else {
-            document.documentElement.scrollTop += step
-            window.pageYOffset += step
-            document.body.scrollTop += step
-            currentTop += step
-          }
-        } else if (total < 0) {
-          if (currentTop - step <= target) {
-            document.documentElement.scrollTop = target
-            window.pageYOffset = target
-            document.body.scrollTop = target
-            clearInterval(timer)
-          } else {
-            document.documentElement.scrollTop -= step
-            window.pageYOffset -= step
-            document.body.scrollTop -= step
-            currentTop -= step
-          }
-        }
-      }, 1)
+    goAnchor(id) {
+      $('html,body').animate({ scrollTop: $('#' + id).offset().top - 80 }, 500)
     },
     /**
      * 滚动监听
      */
     handleScroll() {
-      let currentTop =
-        window.pageYOffset ||
-        document.body.scrollTop ||
-        document.documentElement.scrollTop
-      let target = document.getElementsByClassName('anchor-class')
-      for (var i = 0; i < target.length - 1; i++) {
+      let $currentTop = $(document).scrollTop()
+      let $target = $('.anchor-class')
+      let index = 0
+      for (var i = 0; i < $target.length - 1; i++) {
         if (
-          currentTop >= target[i].offsetTop - 80 &&
-          currentTop < target[i + 1].offsetTop - 80
+          $currentTop >= $target[i].offsetTop - 80 &&
+          $currentTop < $target[i + 1].offsetTop - 80
         )
-          this.index = i
+          index = i
       }
-      if (currentTop >= target[target.length - 1].offsetTop - 80)
-        this.index = target.length - 1
+      if ($currentTop >= $target[$target.length - 1].offsetTop - 80)
+        index = $target.length - 1
+
+      // 设置选中项
+      $('#culture_right_menu li').each(function(i) {
+        if (i === index) $(this).addClass('select')
+        else $(this).removeClass('select')
+      })
     }
   },
   created() {

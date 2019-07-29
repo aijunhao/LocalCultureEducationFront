@@ -1,6 +1,12 @@
  <template>
   <div id="module_edit">
-    <div :class="anchor" :key="i" class="module-box" v-for="(module, i) in moduleList">
+    <div
+      :class="anchor"
+      :id="idName + '_' + i"
+      :key="i"
+      class="module-box"
+      v-for="(module, i) in moduleList"
+    >
       <!-- 上传 -->
       <div>
         <el-upload
@@ -73,7 +79,8 @@ export default {
       type: Number,
       default: 4
     },
-    anchor: String
+    anchor: String,
+    idName: String
   },
   methods: {
     uploadUrl() {

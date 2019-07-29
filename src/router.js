@@ -27,6 +27,8 @@ import HomeEdit from "./views/Admin/HomeEdit.vue";
 import CultureEdit from "./views/Admin/CultureEdit.vue";
 import ArticleInfoEdit from "./views/Admin/ArticleInfoEdit.vue";
 import BuddhismEdit from "./views/Admin/BuddhismEdit.vue";
+import HistoryEdit from "./views/Admin/HistoryEdit.vue";
+import LocationEdit from "./views/Admin/LocationEdit.vue";
 
 Vue.use(Router);
 
@@ -97,6 +99,16 @@ export default new Router({
           path: "/buddhismedit",
           component: BuddhismEdit,
           name: "BuddhismEdit"
+        },
+        {
+          path: "/HistoryEdit",
+          component: HistoryEdit,
+          name: "HistoryEdit"
+        },
+        {
+          path: "/LocationEdit",
+          component: LocationEdit,
+          name: "LocationEdit"
         }
       ]
     },
@@ -155,7 +167,7 @@ export default new Router({
     {
       path: "/buddhism/scenery",
       component: Scenery,
-      name: "scenery"
+      name: "Scenery"
     },
     {
       path: "/buddhism/monk",

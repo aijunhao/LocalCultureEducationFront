@@ -8,56 +8,78 @@
     </el-breadcrumb>
 
     <!-- 右侧快速导航 -->
-    <div id="culture__edit_right_menu">
+    <div id="culture_edit_right_menu">
       <ul>
-        <li :class="{select: 0 === index, 'menu-title': true}" @click="goAnchor(0)">博物馆模块</li>
+        <!-- 首页 -->
+        <li @click="goAnchor('culture_edit_home')" class="select menu-title">佛国文化首页</li>
 
+        <!-- 首页导航模块 -->
         <ul>
           <li
-            :class="{select: 1 + i === index}"
             :key="i"
-            @click="goAnchor(1 + i)"
+            @click="goAnchor('culture_edit_home_' + i)"
+            v-for="(module, i) in moduleList"
+          >{{ module.title }}</li>
+        </ul>
+
+        <!-- 博物馆 -->
+        <li @click="goAnchor('culture_edit_museum')" class="menu-title">博物馆模块</li>
+
+        <!-- 展品 -->
+        <ul>
+          <li
+            :key="i"
+            @click="goAnchor('exhibit_' + i)"
             v-for="(exhibit, i) in exhibitList"
           >{{ exhibit.title }}</li>
         </ul>
 
-        <li
-          :class="{select: 1 + exhibitList.length === index, 'menu-title': true}"
-          @click="goAnchor(1 + exhibitList.length)"
-        >观音法界轮播图模块</li>
+        <li @click="goAnchor('culture_edit_guanyin')" class="menu-title">观音法界轮播图模块</li>
 
-        <li
-          :class="{select: 2 + exhibitList.length === index, 'menu-title': true}"
-          @click="goAnchor(2 + exhibitList.length)"
-        >观音法界单体项目模块</li>
+        <li @click="goAnchor('culture_edit_guanyin_project')" class="menu-title">观音法界单体项目模块</li>
 
+        <!-- 观音法界单体项目 -->
         <ul>
           <li
-            :class="{select: 3 + exhibitList.length + i === index}"
             :key="i"
-            @click="goAnchor(3 + exhibitList.length + i)"
+            @click="goAnchor('culture_edit_gy_p_' + i)"
             v-for="(project, i) in guanyinSingleProjectList"
           >{{ project.title }}</li>
         </ul>
 
-        <li
-          :class="{select: 3 + exhibitList.length + guanyinSingleProjectList.length === index, 'menu-title': true}"
-          @click="goAnchor(3 + exhibitList.length + guanyinSingleProjectList.length)"
-        >非物质文化遗产模块</li>
+        <li @click="goAnchor('culture_edit_culture')" class="menu-title">非物质文化遗产模块</li>
 
+        <!-- 文章 -->
         <ul>
           <li
-            :class="{select: 4 + exhibitList.length + guanyinSingleProjectList.length + i === index}"
             :key="i"
-            @click="goAnchor(4 + exhibitList.length + guanyinSingleProjectList.length + i)"
+            @click="goAnchor('culture_edit_article_' + i)"
             v-for="(article, i) in articleList"
           >{{ article.title }}</li>
         </ul>
       </ul>
     </div>
 
+    <!-- 首页 -->
+    <div class="culture-edit-box anchor-class" id="culture_edit_home">
+      <p class="title">佛国文化首页模块</p>
+      <p class="tips">该部分主要包括佛国馆藏、观音法界、非物质文化遗产模块</p>
+
+      <div>介绍</div>
+
+      <module-edit
+        :anchor="'anchor-class'"
+        :disabled="moduleDisabled"
+        :idName="'culture_edit_home'"
+        :moduleList="moduleList"
+        :showJumpModule="true"
+        :showModuleName="true"
+        :status="moduleStatus"
+      ></module-edit>
+    </div>
+
     <!-- 博物馆页面编辑 -->
-    <div class="culture-edit-box anchor-class">
+    <div class="culture-edit-box anchor-class" id="culture_edit_museum">
       <p class="title">博物馆模块</p>
       <p class="tips">博物馆模块页面，主要包括博物馆介绍及展品展示等。</p>
 
@@ -65,6 +87,7 @@
       <image-edit
         :anchor="'anchor-class'"
         :disabled="imageDisabled"
+        :idName="'exhibit'"
         :imageList="exhibitList"
         :status="imageStatus"
         :type="5"
@@ -72,19 +95,21 @@
     </div>
 
     <!-- 观音法界页面轮播图编辑 -->
-    <div class="culture-edit-box anchor-class">
+    <div class="culture-edit-box anchor-class" id="culture_edit_guanyin">
       <p class="title">观音法界轮播图模块</p>
       <p class="tips">轮播图组件，此模块建议采用 JPG 格式的图片。</p>
       <carousel-edit :imageList="guanyinList" :type="2"></carousel-edit>
     </div>
 
     <!-- 观音法界页面单体项目编辑 -->
-    <div class="culture-edit-box anchor-class">
+    <div class="culture-edit-box anchor-class" id="culture_edit_guanyin_project">
       <p class="title">观音法界单体项目模块</p>
       <p class="tips">该模块</p>
+
       <module-edit
         :anchor="'anchor-class'"
         :disabled="gyDisabled"
+        :idName="'culture_edit_gy_p'"
         :inputMaxRows="7"
         :moduleList="guanyinSingleProjectList"
         :status="gyStatus"
@@ -92,16 +117,20 @@
     </div>
 
     <!-- 非物质文化遗产页面编辑 -->
-    <div class="culture-edit-box anchor-class">
+    <div class="culture-edit-box anchor-class" id="culture_edit_culture">
       <p class="title">非物质文化遗产模块</p>
       <p class="tips">非物质文化遗产页面，主要包括佛学非物质文化遗产及佛学文化日等文章描述。</p>
 
       <!-- 文章编辑列表 -->
-      <article-edit :anchor="'anchor-class'" :articleList="articleList"></article-edit>
+      <article-edit
+        :anchor="'anchor-class'"
+        :articleList="articleList"
+        :idName="'culture_edit_article'"
+      ></article-edit>
     </div>
   </div>
 </template>
-
+ 
 <script>
 import ImageEdit from '../../components/ImageEdit'
 import ArticleEdit from '../../components/ArticleEdit'
@@ -134,14 +163,16 @@ export default {
       gyDisabled: [],
       // 观音法界单体项目模块状态列表
       gyStatus: [],
-      // 位置
-      index: 0
+      moduleList: [],
+      moduleDisabled: [],
+      moduleStatus: []
     }
   },
   created() {
     this.getCulture()
     this.getExhibits()
     this.getCarousel()
+    this.getCultureModule()
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
@@ -154,20 +185,28 @@ export default {
      * 滚动监听
      */
     handleScroll() {
-      let currentTop =
-        window.pageYOffset ||
-        document.body.scrollTop ||
-        document.documentElement.scrollTop
-      let target = document.getElementsByClassName('anchor-class')
-      for (var i = 0; i < target.length - 1; i++) {
+      let $currentTop = $(document).scrollTop()
+      let $target = $('.anchor-class')
+      let index = 0
+      for (var i = 0; i < $target.length - 1; i++) {
         if (
-          currentTop >= target[i].offsetTop &&
-          currentTop < target[i + 1].offsetTop
+          $currentTop >= $target[i].offsetTop - 80 &&
+          $currentTop < $target[i + 1].offsetTop - 80
         )
-          this.index = i
+          index = i
       }
-      if (currentTop >= target[target.length - 1].offsetTop)
-        this.index = target.length - 1
+      if ($currentTop >= $target[$target.length - 1].offsetTop - 80)
+        index = $target.length - 1
+
+      // 设置选中项
+      $('#culture_edit_right_menu li').each(function(i) {
+        if (i === index) $(this).addClass('select')
+        else $(this).removeClass('select')
+      })
+    },
+    // 平滑滚动
+    goAnchor(id) {
+      $('html,body').animate({ scrollTop: $('#' + id).offset().top - 80 }, 500)
     },
     /**
      * 获取文章
@@ -230,49 +269,26 @@ export default {
           console.log(err)
         })
     },
-    // 平滑滚动
-    goAnchor(index) {
-      console.log(index)
-      // 顶部偏移量
-      let currentTop =
-        document.documentElement.scrollTop ||
-        window.pageYOffset ||
-        document.body.scrollTop
-      // 目标距离
-      let target = document.getElementsByClassName('anchor-class')[index]
-        .offsetTop
-      // 总偏移量 = 目标位置 - 当前位置， 正负不论
-      let total = target - currentTop
-      let step = 30
+    /**
+     * 获取初始化页面数据
+     */
+    getCultureModule() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_CULTURE_HOME
+      })
+        .then(req => {
+          if (req.status === 200) {
+            console.log(req.data)
+            this.moduleList = req.data
 
-      clearInterval(timer)
-      let timer = setInterval(() => {
-        if (total >= 0) {
-          if (currentTop + step >= target) {
-            document.documentElement.scrollTop = target
-            window.pageYOffset = target
-            document.body.scrollTop = target
-            clearInterval(timer)
-          } else {
-            document.documentElement.scrollTop += step
-            window.pageYOffset += step
-            document.body.scrollTop += step
-            currentTop += step
+            this.moduleDisabled = new Array(this.moduleList.length).fill(true)
+            this.moduleStatus = new Array(this.moduleList.length).fill(0)
           }
-        } else if (total < 0) {
-          if (currentTop - step <= target) {
-            document.documentElement.scrollTop = target
-            window.pageYOffset = target
-            document.body.scrollTop = target
-            clearInterval(timer)
-          } else {
-            document.documentElement.scrollTop -= step
-            window.pageYOffset -= step
-            document.body.scrollTop -= step
-            currentTop -= step
-          }
-        }
-      }, 1)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
@@ -280,7 +296,7 @@ export default {
 
 <style lang="stylus">
 // 全局属性，右侧快速导航
-#culture__edit_right_menu
+#culture_edit_right_menu
   width 200px
   max-height 600px
   overflow-y auto

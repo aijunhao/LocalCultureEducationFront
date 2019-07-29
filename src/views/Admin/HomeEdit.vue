@@ -11,7 +11,7 @@
     <div class="home-edit-box">
       <p class="title">轮播图</p>
       <p class="tips">轮播图组件，此模块建议采用 JPG 格式的图片。</p>
-      <carousel-edit :imageList="imgList" :type="2"></carousel-edit>
+      <carousel-edit :imageList="homeCarouselList" :type="2"></carousel-edit>
     </div>
 
     <!-- 首页导航模块 -->
@@ -27,6 +27,14 @@
         :status="moduleStatus"
       ></module-edit>
     </div>
+
+    <!-- 首页展示图片 -->
+    <div class="home-edit-box">
+      <p class="title">普陀美景模块</p>
+      <p class="tips">此模块最佳图片数量为 7 张，默认导航页面为 海天佛国 > 普陀山水</p>
+
+      <carousel-edit :imageList="homeSceneryList" :type="7"></carousel-edit>
+    </div>
   </div>
 </template>
  
@@ -39,7 +47,9 @@ export default {
   data() {
     return {
       // 轮播图片列表
-      imgList: [],
+      homeCarouselList: [],
+      // 
+      homeSceneryList: [],
       moduleList: [],
       moduleDisabled: [],
       moduleStatus: []
@@ -53,6 +63,22 @@ export default {
     /**
      * 获取轮播图数据
      */
+    getScenery() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_HOME_NATURE_IMAGES
+      })
+        .then(data => {
+          // console.log(data.data)
+          if (data.data) this.homeSceneryList = data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取轮播图数据
+     */
     getCarousel() {
       this.$axios({
         method: 'get',
@@ -60,7 +86,7 @@ export default {
       })
         .then(data => {
           // console.log(data.data)
-          if (data.data) this.imgList = data.data
+          if (data.data) this.homeCarouselList = data.data
         })
         .catch(err => {
           console.log(err)
@@ -90,6 +116,7 @@ export default {
   created() {
     this.getCarousel()
     this.initModule()
+    this.getScenery()
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <!-- 轮播图 -->
     <carousel :imgList="imgList"></carousel>
 
-    <!-- 首页简介 -->
+    <!-- 首页导航 -->
     <div :key="i" class="home-content" v-for="(item, i) in initMessage">
       <p class="home-content-title">{{ item.module_name }}</p>
       <div class="home-content-message">
@@ -30,7 +30,7 @@
             <el-image :src="item.url" fit="fill" slot="reference"></el-image>
           </el-popover>
         </li>
-        <li @click="$router.push('/nature')">
+        <li @click="$router.push({name: 'Scenery'})">
 
           <i class="myicons iconmore"></i>
           <p>查看更多</p>

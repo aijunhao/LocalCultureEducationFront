@@ -46,7 +46,12 @@ import config from '../../config'
 import QuillEditor from '../../components/QuillEditor'
 
 export default {
-  props: ['article'],
+  props: {
+    article: {
+      type: Object,
+      require: true
+    }
+  },
   components: {
     'quill-editor': QuillEditor
   },

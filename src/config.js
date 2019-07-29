@@ -3,9 +3,9 @@
  */
 
 // // 云地址
-const BASE_URL = "http://120.79.254.54:3004";
+// const BASE_URL = "http://120.79.254.54:3004";
 // 本地测试
-// const BASE_URL = "http://localhost:3004";
+const BASE_URL = "http://localhost:3004";
 
 export default {
   // 更路径
@@ -62,6 +62,9 @@ export default {
   // 文化首页
   EXECUTE_GET_CULTURE_HOME: `${BASE_URL}/buddhism/getCultureHomeContent`,
 
-  // 海天佛骨哦首页
-  EXECUTE_GET_BUDDHISM_HOME: `${BASE_URL}/buddhism/getBuddhismHomeContent`
+  // 海天佛国首页
+  EXECUTE_GET_BUDDHISM_HOME: `${BASE_URL}/buddhism/getBuddhismHomeContent`,
+
+  // 佛国编年史首页
+  EXECUTE_GET_HISTORY_HOME: `${BASE_URL}/buddhism/getHistoryHomeContent`
 };

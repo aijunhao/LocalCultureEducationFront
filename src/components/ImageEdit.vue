@@ -1,7 +1,13 @@
 <template>
   <div id="image_edit">
     <!-- 列表 -->
-    <div :class="anchor" :key="i" class="image-edit-box" v-for="(image, i) in imageList">
+    <div
+      :class="anchor"
+      :id="idName + '_' + i"
+      :key="i"
+      class="image-edit-box"
+      v-for="(image, i) in imageList"
+    >
       <div>
         <p class="list-number">列表顺序：{{ i + 1 }}</p>
 
@@ -70,7 +76,32 @@
 import config from '../config'
 
 export default {
-  props: ['imageList', 'type', 'anchor', 'disabled', 'status'],
+  props: {
+    // 数据列表
+    imageList: {
+      type: Array
+    },
+    // 数据库存储表桥
+    type: {
+      type: Number
+    },
+    // 锚点定位类
+    anchor: {
+      type: String
+    },
+    // 数据不可编辑
+    disabled: {
+      type: Array
+    },
+    // 数据状态
+    status: {
+      type: Array
+    },
+    // id
+    idName: {
+      type: String
+    }
+  },
   methods: {
     uploadUrl() {
       return config.EXECUTE_POST_UPLOAD_IMAGE

@@ -1,6 +1,11 @@
 <template>
   <div id="article_edit">
-    <div :class="anchor" class="article-box" v-for="(article, i) in articleList">
+    <div
+      :class="anchor"
+      :id="idName + '_' + i"
+      class="article-box"
+      v-for="(article, i) in articleList"
+    >
       <div class="article-edit-content">
         <p>
           <span class="article-edit-title">标题：</span>
@@ -50,7 +55,13 @@
 import config from '../config'
 
 export default {
-  props: ['articleList', 'anchor'],
+  props: {
+    articleList: {
+      type: Array
+    },
+    anchor: String,
+    idName: String
+  },
   data() {
     return {
       // 文章列表

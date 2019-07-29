@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 module.exports = {
   // 基本路径配置，即原先的 baseUrl，默认是 '/'，打包会出错
   publicPath: "/",
@@ -7,6 +9,17 @@ module.exports = {
   assetsDir: "assets",
   // 是否使用eslint
   lintOnSave: true,
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+
+        jQuery: "jquery",
+
+        "windows.jQuery": "jquery"
+      })
+    ]
+  },
   // webpack-dev-server 相关配置
   devServer: {
     // 运行项目后自动打开浏览器
