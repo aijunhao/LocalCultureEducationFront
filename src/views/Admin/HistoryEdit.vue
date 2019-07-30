@@ -8,11 +8,17 @@
     </el-breadcrumb>
 
     <!-- 首页 -->
-    <div class="history-edit-box">
+    <div class="history-edit-box" id>
       <p class="title">佛国编年史首页</p>
-      <p class="tips">该部分主要包括普陀佛史、历代高僧模块</p>
+      <p class="tips">介绍</p>
 
       <div>介绍</div>
+    </div>
+
+    <!-- 首页 -->
+    <div class="history-edit-box">
+      <p class="title">佛国编年史首页导航</p>
+      <p class="tips">该部分主要包括普陀佛史、历代高僧模块</p>
 
       <module-edit
         :disabled="moduleDisabled"
@@ -22,6 +28,14 @@
         :status="moduleStatus"
       ></module-edit>
     </div>
+
+    <!-- 高僧 -->
+    <div class="history-edit-box">
+      <p class="title">历代高僧</p>
+      <p class="tips">高僧</p>
+
+      <text-edit :textList="monkList"></text-edit>
+    </div>
   </div>
 </template>
 
@@ -30,6 +44,7 @@ import ImageEdit from '../../components/ImageEdit'
 import ArticleEdit from '../../components/ArticleEdit'
 import CarouselEdit from '../../components/CarouselEdit'
 import ModuleEdit from '../../components/ModuleEdit'
+import TextEdit from '../../components/TextEdit'
 import config from '../../config'
 
 export default {
@@ -37,13 +52,20 @@ export default {
     'article-edit': ArticleEdit,
     'image-edit': ImageEdit,
     'carousel-edit': CarouselEdit,
-    'module-edit': ModuleEdit
+    'module-edit': ModuleEdit,
+    'text-edit': TextEdit
   },
   data() {
-    return { moduleList: [], moduleDisabled: [], moduleStatus: [] }
+    return {
+      // 高僧
+      monkList: [],
+      // 导航模块
+      moduleList: [],
+    }
   },
   created() {
     this.getHistoryModule()
+    this.getMonk()
   },
   methods: {
     /**
@@ -56,11 +78,26 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            console.log(req.data)
+            // console.log(req.data)
             this.moduleList = req.data
-
-            this.moduleDisabled = new Array(this.moduleList.length).fill(true)
-            this.moduleStatus = new Array(this.moduleList.length).fill(0)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取初始化页面数据
+     */
+    getMonk() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_BUDDHISM_MONK
+      })
+        .then(req => {
+          if (req.status === 200) {
+            // console.log(req.data)
+            this.monkList = req.data
           }
         })
         .catch(err => {

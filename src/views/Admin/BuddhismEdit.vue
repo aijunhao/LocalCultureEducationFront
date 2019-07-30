@@ -3,8 +3,16 @@
     <!-- 右侧导航 -->
     <div id="buddhism_edit_right_menu">
       <ul>
-        <li @click="goAnchor('buddhism_edit_home')" class="menu-title">海天佛国首页</li>
-        <li @click="goAnchor('buddhism_edit_vr')">VR 逛普陀</li>
+        <li @click="goAnchor('buddhism_edit_home')" class="select menu-title">海天佛国首页</li>
+        <li @click="goAnchor('buddhism_edit_navigation')" class="menu-title">海天佛国首页导航</li>
+        <ul>
+          <li
+            :key="i"
+            @click="goAnchor('buddhism_edit_navigation_' + i)"
+            v-for="(module, i) in moduleList"
+          >{{ module.title }}</li>
+        </ul>
+
         <li @click="goAnchor('buddhism_edit_building')" class="menu-title">寺庙庵堂模块</li>
         <ul>
           <li
@@ -23,25 +31,25 @@
       <el-breadcrumb-item>海天佛国</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <!-- 首页 -->
+    <!-- 海天佛国首页 -->
     <div class="buddhism-edit-box select anchor-class" id="buddhism_edit_home">
       <p class="title">海天佛国首页</p>
       <p class="tips">该部分主要包括普陀山的风景介绍和路由导航</p>
+      <div>介绍</div>
     </div>
 
-    <!-- VR 逛普陀 -->
-    <div class="buddhism-edit-box anchor-class" id="buddhism_edit_vr">
-      <p class="title">VR 逛普陀</p>
-      <p class="tips">该部分采用第三方网站提供的普陀山全山寺庙和山水风光 VR 全景图</p>
-      <p>版权所有：普陀山佛教协会</p>
-      <p>开发者：心佛文化传播公司</p>
-      <p>摄影师：杨赫</p>
-      <p>平台：视维云</p>
-      <p>作品详情：庆祝南海观音开光二十周年</p>
-      <p style="color: red">说明：此部分仅用于普陀山佛学乡土文化教育学习拓展，我们只提供站外链接，如果侵权行为，请联系删除。</p>
-      <el-input placeholder="i.svrvr.com/?a=wapview&id=s62806#" readonly>
-        <template slot="prepend">https://</template>
-      </el-input>
+    <!-- 海天佛国首页 -->
+    <div class="buddhism-edit-box select anchor-class" id="buddhism_edit_navigation">
+      <p class="title">海天佛国首页导航</p>
+      <p class="tips">该部分主要包括普陀山的风景介绍和路由导航</p>
+
+      <module-edit
+        :anchor="'anchor-class'"
+        :idName="'buddhism_edit_navigation'"
+        :moduleList="moduleList"
+        :showJumpModule="true"
+        :showModuleName="true"
+      ></module-edit>
     </div>
 
     <!-- 寺庙庵堂 -->
@@ -51,36 +59,38 @@
 
       <image-edit
         :anchor="'anchor-class'"
-        :disabled="buildingDisabled"
         :idName="'buddhism_edit_building'"
         :imageList="buildingList"
-        :status="buildingStatus"
-        :type="6"
       ></image-edit>
     </div>
   </div>
 </template>
 
 <script>
+import config from '../../config'
 import ImageEdit from '../../components/ImageEdit'
 import ArticleEdit from '../../components/ArticleEdit'
-import config from '../../config'
+import ModuleEdit from '../../components/ModuleEdit'
+import CarouselEdit from '../../components/CarouselEdit'
 
 export default {
   components: {
     'article-edit': ArticleEdit,
-    'image-edit': ImageEdit
+    'image-edit': ImageEdit,
+    'module-edit': ModuleEdit,
+    'carousel-edit': CarouselEdit
   },
   data() {
     return {
+      // 导航模块
+      moduleList: [],
       // 寺庙庵堂数据列表
-      buildingList: [],
-      buildingDisabled: [],
-      buildingStatus: []
+      buildingList: []
     }
   },
   created() {
     this.getBuilding()
+    this.initModule()
   },
   methods: {
     /**
@@ -95,11 +105,24 @@ export default {
           // console.log(data.data)
           if (req.status === 200) {
             this.buildingList = req.data
-
-            this.buildingDisabled = new Array(this.buildingList.length).fill(
-              true
-            )
-            buildingStatus = new Array(this.buildingList.length).fill(0)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取导航模块数据
+     */
+    initModule() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_BUDDHISM_HOME
+      })
+        .then(req => {
+          if (req.status === 200) {
+            console.log(req.data)
+            this.moduleList = req.data
           }
         })
         .catch(err => {

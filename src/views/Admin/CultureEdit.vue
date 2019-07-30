@@ -11,13 +11,14 @@
     <div id="culture_edit_right_menu">
       <ul>
         <!-- 首页 -->
-        <li @click="goAnchor('culture_edit_home')" class="select menu-title">佛国文化首页</li>
+        <li @click="goAnchor('culture_edit_home')" class="select menu-title">佛国文化首页介绍</li>
 
         <!-- 首页导航模块 -->
+        <li @click="goAnchor('culture_edit_navigation')" class="menu-title">佛国文化首页导航</li>
         <ul>
           <li
             :key="i"
-            @click="goAnchor('culture_edit_home_' + i)"
+            @click="goAnchor('culture_edit_navigation_' + i)"
             v-for="(module, i) in moduleList"
           >{{ module.title }}</li>
         </ul>
@@ -62,19 +63,23 @@
 
     <!-- 首页 -->
     <div class="culture-edit-box anchor-class" id="culture_edit_home">
-      <p class="title">佛国文化首页模块</p>
-      <p class="tips">该部分主要包括佛国馆藏、观音法界、非物质文化遗产模块</p>
+      <p class="title">佛国文化首页</p>
+      <p class="tips">关于这模块的介绍</p>
 
       <div>介绍</div>
+    </div>
+
+    <!-- 首页 -->
+    <div class="culture-edit-box anchor-class" id="culture_edit_navigation">
+      <p class="title">佛国文化首页导航</p>
+      <p class="tips">该部分主要包括佛国馆藏、观音法界、非物质文化遗产模块</p>
 
       <module-edit
         :anchor="'anchor-class'"
-        :disabled="moduleDisabled"
-        :idName="'culture_edit_home'"
+        :idName="'culture_edit_navigation'"
         :moduleList="moduleList"
         :showJumpModule="true"
         :showModuleName="true"
-        :status="moduleStatus"
       ></module-edit>
     </div>
 
@@ -84,14 +89,7 @@
       <p class="tips">博物馆模块页面，主要包括博物馆介绍及展品展示等。</p>
 
       <!-- 展品展示 -->
-      <image-edit
-        :anchor="'anchor-class'"
-        :disabled="imageDisabled"
-        :idName="'exhibit'"
-        :imageList="exhibitList"
-        :status="imageStatus"
-        :type="5"
-      ></image-edit>
+      <image-edit :anchor="'anchor-class'" :idName="'exhibit'" :imageList="exhibitList"></image-edit>
     </div>
 
     <!-- 观音法界页面轮播图编辑 -->
@@ -108,11 +106,9 @@
 
       <module-edit
         :anchor="'anchor-class'"
-        :disabled="gyDisabled"
         :idName="'culture_edit_gy_p'"
         :inputMaxRows="7"
         :moduleList="guanyinSingleProjectList"
-        :status="gyStatus"
       ></module-edit>
     </div>
 
@@ -151,21 +147,11 @@ export default {
       articleList: [],
       // 展品列表
       exhibitList: [],
-      // 图片可编辑列表
-      imageDisabled: [],
-      // 图片状态列表
-      imageStatus: [],
       // 观音轮播图列表
       guanyinList: [],
       // 观音法界单体项目列表
       guanyinSingleProjectList: [],
-      // 观音法界单体项目模块可编辑列表
-      gyDisabled: [],
-      // 观音法界单体项目模块状态列表
-      gyStatus: [],
-      moduleList: [],
-      moduleDisabled: [],
-      moduleStatus: []
+      moduleList: []
     }
   },
   created() {
@@ -234,9 +220,6 @@ export default {
         .then(req => {
           if (req.status === 200) {
             this.exhibitList = req.data
-
-            this.imageDisabled = new Array(this.exhibitList.length).fill(true)
-            this.imageStatus = new Array(this.exhibitList.length).fill(0)
           }
         })
         .catch(err => {
@@ -255,14 +238,6 @@ export default {
           if (req.status === 200) {
             this.guanyinList = req.data.carousel
             this.guanyinSingleProjectList = req.data.others
-
-            // 初始化编辑和状态数组
-            this.gyDisabled = new Array(
-              this.guanyinSingleProjectList.length
-            ).fill(true)
-            this.gyStatus = new Array(
-              this.guanyinSingleProjectList.length
-            ).fill(0)
           }
         })
         .catch(err => {
@@ -281,9 +256,6 @@ export default {
           if (req.status === 200) {
             console.log(req.data)
             this.moduleList = req.data
-
-            this.moduleDisabled = new Array(this.moduleList.length).fill(true)
-            this.moduleStatus = new Array(this.moduleList.length).fill(0)
           }
         })
         .catch(err => {

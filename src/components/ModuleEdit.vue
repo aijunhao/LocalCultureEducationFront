@@ -65,8 +65,6 @@ import config from '../config'
 export default {
   props: {
     moduleList: Array,
-    disabled: Array,
-    status: Array,
     showModuleName: {
       type: Boolean,
       default: false
@@ -81,6 +79,14 @@ export default {
     },
     anchor: String,
     idName: String
+  },
+  data() {
+    return {
+      // 是否可编辑
+      disabled: [],
+      // 状态
+      status: [],
+    }
   },
   methods: {
     uploadUrl() {
@@ -131,12 +137,14 @@ export default {
 
       this.$axios({
         method: 'post',
-        url: config.EXECUTE_POST_UPDATE_IMAGE_MESSAGE,
+        url: config.EXECUTE_POST_UPDATE_NAVIGATION_MESSAGE,
         data: {
           id: module.id,
           url: urlArr[urlArr.length - 1],
           title: module.title,
-          content: module.content
+          content: module.content,
+          target: module.target,
+          module_name: module.module_name
         }
       })
         .then(data => {
@@ -156,6 +164,11 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          this.$notify({
+            title: '数据保存',
+            message: '服务器异常，请稍后再试！',
+            type: 'error'
+          })
         })
     },
     /**
@@ -188,12 +201,22 @@ export default {
         })
       }
     }
+  },
+  watch: {
+    moduleList: function(newVal, oldVal) {
+      this.disabled = new Array(newVal.length).fill(true)
+      this.status = new Array(newVal.length).fill(0)
+    }
   }
 }
 </script>
 
 <style lang="stylus">
 #module_edit
+  .tips
+    font-size 0.9rem
+    color #909399
+
   .module-box
     display flex
     display -webkit-flex

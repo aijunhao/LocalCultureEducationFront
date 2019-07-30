@@ -79,27 +79,26 @@ export default {
   props: {
     // 数据列表
     imageList: {
-      type: Array
-    },
-    // 数据库存储表桥
-    type: {
-      type: Number
+      type: Array,
+      require: true
     },
     // 锚点定位类
     anchor: {
       type: String
     },
-    // 数据不可编辑
-    disabled: {
-      type: Array
-    },
-    // 数据状态
-    status: {
-      type: Array
-    },
     // id
     idName: {
       type: String
+    }
+  },
+  data() {
+    return {
+      // 是否可编辑
+      disabled: [],
+      // 状态
+      status: [],
+      // 数据库存储类型
+      type: ''
     }
   },
   methods: {
@@ -163,7 +162,7 @@ export default {
       this.$notify({
         title: '锁定模式',
         message:
-          '编辑模式已开启，当前文本不可编辑！点击编辑，可解锁为编辑模式。',
+          '锁定模式已开启，当前文本不可编辑！点击编辑，可解锁为编辑模式。',
         type: 'success'
       })
     },
@@ -192,19 +191,19 @@ export default {
           if (data.status === 200) {
             this.$set(this.status, index, 0)
             this.$notify({
-              title: '成功',
-              message: '模块信息更新成功，模块已锁定。',
+              title: '图片更新',
+              message: '图片信息更新成功，模块已锁定。',
               type: 'success'
-            })
-          } else {
-            this.$notify.error({
-              title: '错误',
-              message: '模块信息更新失败，请稍后再试'
             })
           }
         })
         .catch(err => {
           console.log(err)
+          this.$notify({
+            title: '图片更新',
+            message: '图片信息更新失败，请稍后再试',
+            type: 'error'
+          })
         })
     },
     /**
@@ -229,7 +228,7 @@ export default {
             // console.log(req)
             this.imageList.splice(index, 1)
             this.$notify({
-              title: '刪除',
+              title: '图片刪除',
               message: '图片已删除成功',
               type: 'success'
             })
@@ -238,7 +237,7 @@ export default {
         .catch(err => {
           console.log(err)
           this.$notify({
-            title: '刪除',
+            title: '图片刪除',
             message: '图片删除失败，已取消删除操作',
             type: 'success'
           })
@@ -254,7 +253,7 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            this.imageList.push(req.data[0])
+            this.imageList.push(req.data)
 
             this.disabled.push(true)
             this.status.push(0)
@@ -264,12 +263,23 @@ export default {
           console.log(err)
         })
     }
+  },
+  watch: {
+    imageList: function(newVal, oldVal) {
+      this.disabled = new Array(newVal.length).fill(true)
+      this.status = new Array(newVal.length).fill(0)
+      this.type = newVal[0].type
+    }
   }
 }
 </script>
 
 <style lang="stylus">
 #image_edit
+  .tips
+    font-size 0.9rem
+    color #909399
+
   .image-edit-new
     display flex
     display -webkit-flex

@@ -9,7 +9,7 @@
 
     <!-- 轮播图 -->
     <div class="home-edit-box">
-      <p class="title">轮播图</p>
+      <p class="title">首页轮播图</p>
       <p class="tips">轮播图组件，此模块建议采用 JPG 格式的图片。</p>
       <carousel-edit :imageList="homeCarouselList" :type="2"></carousel-edit>
     </div>
@@ -19,18 +19,12 @@
       <p class="title">首页导航模块</p>
       <p class="tips">导航模块，由预览图片、模块名称、模块标题、模块内容及跳转页面组成，是全局信息的简介部分。</p>
 
-      <module-edit
-        :disabled="moduleDisabled"
-        :moduleList="moduleList"
-        :showJumpModule="true"
-        :showModuleName="true"
-        :status="moduleStatus"
-      ></module-edit>
+      <module-edit :moduleList="moduleList" :showJumpModule="true" :showModuleName="true"></module-edit>
     </div>
 
     <!-- 首页展示图片 -->
     <div class="home-edit-box">
-      <p class="title">普陀美景模块</p>
+      <p class="title">首页普陀美景展示模块</p>
       <p class="tips">此模块最佳图片数量为 7 张，默认导航页面为 海天佛国 > 普陀山水</p>
 
       <carousel-edit :imageList="homeSceneryList" :type="7"></carousel-edit>
@@ -48,11 +42,9 @@ export default {
     return {
       // 轮播图片列表
       homeCarouselList: [],
-      // 
+      //
       homeSceneryList: [],
-      moduleList: [],
-      moduleDisabled: [],
-      moduleStatus: []
+      moduleList: []
     }
   },
   components: {
@@ -100,12 +92,9 @@ export default {
         method: 'get',
         url: config.EXECUTE_GET_HOME_COMTENT
       })
-        .then(data => {
-          if (data.status === 200) {
-            this.moduleList = data.data
-
-            this.moduleDisabled = new Array(this.moduleList.length).fill(true)
-            this.moduleStatus = new Array(this.moduleList.length).fill(0)
+        .then(req => {
+          if (req.status === 200) {
+            this.moduleList = req.data
           }
         })
         .catch(err => {
