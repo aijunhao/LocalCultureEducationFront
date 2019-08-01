@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       buildingList: '',
-      echartsHeight: '300',
+      echartsHeight: '300px',
       description: {
         title: '普陀山寺院概况',
         img: '',

@@ -11,44 +11,80 @@
       <!-- 地图 -->
       <div class="location-show-map">
         <el-radio-group @change="jumpTo" class="location-show-map-radio" v-model="radio">
-          <el-radio-button label="0">中国地图</el-radio-button>
-          <el-radio-button label="1">省份地图</el-radio-button>
-          <el-radio-button label="2">百度地图</el-radio-button>
+          <el-radio-button label="0">省级</el-radio-button>
+          <el-radio-button label="1">市级</el-radio-button>
+          <el-radio-button label="2">详细</el-radio-button>
         </el-radio-group>
         <router-view></router-view>
       </div>
 
       <!-- 描述 -->
       <div class="location-show-description">
-        <p class="title">{{ mapDescription[radio].title }}</p>
-        <p :key="i" class="indent" v-for="(item, i) in mapDescription[radio].content">{{item}}</p>
+        <template v-if="mapInfo.length != 0">
+          <p class="title" v-text="mapInfo[radio].title"></p>
+          <div class="indent" v-html="mapInfo[radio].content"></div>
+        </template>
+        <p class="tips" v-else>内容加载失败，请稍后再试</p>
       </div>
     </div>
 
     <!-- 地质地貌 -->
     <div class="location-content direction">
-      <div class="location-content-echarts">
-        <echarts :height="350" :index="1" :option="geologyOption" :width="350"></echarts>
-      </div>
-      <div class="location-content-main">
-        <p class="indent">{{ geologyOverView }}</p>
-        <p class="location-content-main-title" v-text="geologyAreaSelected.name">面积占比名称</p>
-        <p class="indent" v-text="geologyAreaSelected.content">点击左侧图表可在此处查看详细信息</p>
-        <p class="location-content-main-title" v-text="geologyLineSelected.name">海岸线占比名称</p>
-        <p class="indent" v-text="geologyLineSelected.content">点击左侧图表可在此处查看详细信息</p>
-      </div>
+      <template v-if="geologyInfo.length != 0">
+        <div class="location-content-echarts">
+          <echarts
+            :height="'350px'"
+            :index="1"
+            :option="geologyOption"
+            :width="'350px'"
+            @echartsSelect="geologySelect"
+          ></echarts>
+        </div>
+        <div class="location-content-main">
+          <p class="indent" v-text="geologyInfo.overview.content"></p>
+          <p
+            class="location-content-main-title"
+            v-text="geologyInfo.areaList[geologyAreaSelected].title"
+          >面积占比名称</p>
+          <p
+            class="indent"
+            v-text="geologyInfo.areaList[geologyAreaSelected].content"
+          >点击左侧图表可在此处查看详细信息</p>
+          <p
+            class="location-content-main-title"
+            v-text="geologyInfo.coastlineList[geologyCoastlineSelected].title"
+          >海岸线占比名称</p>
+          <p
+            class="indent"
+            v-text="geologyInfo.coastlineList[geologyCoastlineSelected].content"
+          >点击左侧图表可在此处查看详细信息</p>
+        </div>
+      </template>
+      <p class="tips" v-else>内容加载失败，请稍后再试</p>
     </div>
 
     <!-- 植被信息 -->
     <div class="location-content">
-      <div class="location-content-echarts">
-        <echarts :height="350" :index="2" :option="plantOption" :width="350"></echarts>
-      </div>
-      <div class="location-content-main">
-        <p class="indent">{{ plantOverView }}</p>
-        <p class="location-content-main-title" v-text="plantSelected.name">植物类别</p>
-        <p class="indent" v-text="plantSelected.content">点击左侧图表可在此处查看详细信息</p>
-      </div>
+      <template v-if="plantInfo.length != 0">
+        <div class="location-content-echarts">
+          <echarts
+            :height="'350px'"
+            :index="2"
+            :option="plantOption"
+            :width="'350px'"
+            @echartsSelect="plantSelect"
+          ></echarts>
+        </div>
+        <div class="location-content-main">
+          <p class="indent" v-text="plantInfo.overview.content"></p>
+          <p
+            class="location-content-main-title"
+            v-text="plantInfo.plantList[plantSelected].title"
+          >植物类别</p>
+          <p class="indent" v-text="plantInfo.plantList[plantSelected].content">点击左侧图表可在此处查看详细信息</p>
+        </div>
+      </template>
+      <p class="tips" v-else>内容加载失败，请稍后再试</p>
     </div>
   </div>
 </template>
@@ -63,20 +99,21 @@ export default {
     return {
       // 选择按钮
       radio: 0,
-      mapDescription: [
-        {
-          title: '',
-          content: ['']
-        }
-      ],
-      // 初始化数据
-      initMessage: {
-        // 地图描述
-      },
+      // 地图描述信息
+      mapInfo: [],
+      // 植被数据
+      plantInfo: [],
+      // 植被信息选中项
+      plantSelected: 0,
+      // 地质数据
+      geologyInfo: [],
+      geologyAreaSelected: 0,
+      geologyCoastlineSelected: 0,
+
       // 地质地貌 echarts 参数
       geologyOption: {
         title: {
-          text: '地质地貌统计图',
+          text: '',
           left: 'center'
         },
         tooltip: {
@@ -86,7 +123,7 @@ export default {
         legend: {
           left: 'left',
           bottom: 10,
-          data: ['山地', '海蚀海积阶地', '海积地', '砾石滩', '泥滩', '海蚀地']
+          data: []
         },
         series: [
           {
@@ -104,15 +141,10 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 22, name: '海积地', selected: true },
-              { value: 14, name: '砾石滩' },
-              { value: 20, name: '泥滩' },
-              { value: 44, name: '海蚀地' }
-            ]
+            data: []
           },
           {
-            name: '所占面积',
+            name: '面积比例',
             type: 'pie',
             selectedMode: 'single',
             radius: ['45%', '65%'],
@@ -126,18 +158,14 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 2, name: '山地' },
-              { value: 90, name: '海蚀海积阶地' },
-              { value: 8, name: '其他', selected: true }
-            ]
+            data: []
           }
         ]
       },
       // 植被信息 echarts 参数
       plantOption: {
         title: {
-          text: '植被统计图',
+          text: '',
           left: 'center'
         },
         tooltip: {
@@ -148,22 +176,11 @@ export default {
           orient: 'vertical',
           left: 'right',
           top: 30,
-          data: [
-            '沼生水生植被',
-            '木本栽培植被',
-            '草本栽培植被',
-            '盐生植被',
-            '沙生植被',
-            '针叶林',
-            '阔叶林',
-            '竹林',
-            '灌丛',
-            '草丛'
-          ]
+          data: []
         },
         series: [
           {
-            name: '普陀山植被统计',
+            name: '植被覆盖率',
             type: 'pie',
             selectedMode: 'single',
             radius: [0, '60%'],
@@ -175,18 +192,7 @@ export default {
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
             },
-            data: [
-              { value: 9816, name: '针叶林', selected: true },
-              { value: 1011, name: '阔叶林' },
-              { value: 180, name: '竹林' },
-              { value: 429, name: '灌丛' },
-              { value: 429, name: '草丛' },
-              { value: 13.5, name: '盐生植被' },
-              { value: 133.5, name: '沙生植被' },
-              { value: 67.5, name: '沼生水生植被' },
-              { value: 169.5, name: '木本栽培植被' },
-              { value: 723, name: '草本栽培植被' }
-            ]
+            data: []
           }
         ]
       }
@@ -194,48 +200,68 @@ export default {
   },
   methods: {
     /**
-     * 获取 location 初始化信息
+     * echarts 地质选中
      */
-    initLocation() {
+    geologySelect(params) {
+      if (params.componentIndex === 0)
+        for (var i = 0; i < this.geologyInfo.coastlineSeries.length; i++) {
+          if (params.name === this.geologyInfo.coastlineSeries[i].name) {
+            this.geologyCoastlineSelected = i
+            return
+          }
+        }
+      else
+        for (var i = 0; i < this.geologyInfo.areaSeries.length; i++) {
+          if (params.name === this.geologyInfo.areaSeries[i].name) {
+            this.geologyAreaSelected = i
+            return
+          }
+        }
+    },
+    /**
+     * echarts 植被选中
+     */
+    plantSelect(params) {
+      for (var i = 0; i < this.plantInfo.series.length; i++) {
+        if (params.name === this.plantInfo.series[i].name) {
+          this.plantSelected = i
+          return
+        }
+      }
+    },
+    /**
+     * 获取地图介绍信息
+     */
+    getLocationInfo() {
       this.$axios({
         method: 'get',
-        url: config.EXECUTE_GET_LOCATION_INIT
+        url: config.EXECUTE_GET_MAP_INFO
       })
-        .then(data => {
-          console.log(data.data)
-          this.mapDescription = data.data.mapDescription
-          this.dataCommit(data.data)
+        .then(req => {
+          if (req.status === 200) {
+            this.mapInfo = req.data.mapInfo
+
+            // 植被信息
+            this.plantInfo = req.data.plant
+            this.geologyInfo = req.data.geology
+
+            // 拼接植被图表数据
+            this.plantOption.series[0].data = req.data.plant.series
+            this.plantOption.legend.data = req.data.plant.legend
+            this.plantOption.title.text = req.data.plant.overview.title
+
+            // 拼接地质图表数据
+            this.geologyOption.series[0].data = req.data.geology.coastlineSeries
+            this.geologyOption.series[1].data = req.data.geology.areaSeries
+            this.geologyOption.legend.data = req.data.geology.legend
+            this.geologyOption.title.text = req.data.geology.overview.title
+
+            // console.log(req.data)
+          }
         })
         .catch(err => {
           console.log(err)
         })
-    },
-    /**
-     * 将数据存到 vuex 中
-     */
-    dataCommit(data) {
-      // 将 geology 存储到 vuex 中
-      this.$store.commit('SET_GEOLOGY', data.geology)
-      // 初始化 geology 选中项
-      this.$store.commit('SELECT_ECHARTS', {
-        index: 1,
-        name: '海积地',
-        componentIndex: 0
-      })
-      // 初始化 geology 选中项
-      this.$store.commit('SELECT_ECHARTS', {
-        index: 1,
-        name: '其他',
-        componentIndex: 1
-      })
-      // 将 geology 存储到 vuex 中
-      this.$store.commit('SET_PLANT', data.plant)
-      // 初始化 plant 选中项
-      this.$store.commit('SELECT_ECHARTS', {
-        index: 2,
-        name: '针叶林',
-        componentIndex: 1
-      })
     },
     /**
      * 路由跳转
@@ -255,16 +281,7 @@ export default {
   },
   created() {
     // 获取信息
-    this.initLocation()
-  },
-  computed: {
-    ...mapState({
-      geologyOverView: state => state.geology.overview,
-      geologyAreaSelected: state => state.geologyAreaSelected,
-      geologyLineSelected: state => state.geologyLineSelected,
-      plantOverView: state => state.plant.overview,
-      plantSelected: state => state.plantSelected
-    })
+    this.getLocationInfo()
   }
 }
 </script>
@@ -274,13 +291,18 @@ export default {
   .indent
     text-indent 2rem
 
+  .tips
+    font-size 0.9rem
+    color #909399
+    text-align center
+
   .location-show-description
     box-sizing border-box
     background #fff
     border-radius 5px
     padding 20px
 
-    p:first-child
+    .title
       font-size 1.5rem
       font-weight 600
       margin 0
@@ -310,11 +332,10 @@ export default {
 // pc
 @media screen and (min-width: 960px)
   #location
-    padding 20px
+    padding 0 15%
 
     .breadcrumb
       line-height 64px
-      padding 0 15%
 
     .direction
       flex-direction row-reverse
@@ -329,7 +350,7 @@ export default {
         width 20%
         min-width 300px
 
-        p:first-child
+        .title
           font-size 1.5rem
           font-weight 600
           margin 0
@@ -339,7 +360,7 @@ export default {
         min-width 600px
 
     .location-content
-      padding 50px 15%
+      padding 50px 0
       display flex
       display -webkit-flex
       justify-content space-between
@@ -354,11 +375,11 @@ export default {
 // mobile
 @media screen and (max-width: 960px)
   #location
-    padding 0 10px
+    padding 10px
+    font-size 0.8rem
 
     .breadcrumb
       line-height 64px
-      padding 0 10px
 
     .location-content
       margin 20px 0

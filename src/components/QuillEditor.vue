@@ -43,11 +43,9 @@ export default {
       type: String
     }
   },
-
   components: {
     quillEditor
   },
-
   data() {
     return {
       content: this.value,
@@ -144,11 +142,14 @@ export default {
     margin 20px 0
     text-align center
 
+  img
+    width 50%
+
   .editor
     text-align center
 
   .ql-editor
-    height 600px
+    height 700px
 
   .ql-snow .ql-tooltip[data-mode=link]::before
     content '请输入链接地址:'

@@ -1,5 +1,5 @@
 <template>
-  <echarts :option="option" :height="550"></echarts>
+  <echarts :option="option" :height="'550px'"></echarts>
 </template>
 
 <script>

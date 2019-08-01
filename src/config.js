@@ -37,6 +37,9 @@ export default {
   // 获取普陀十二景
   EXECUTE_GET_TWELVE_SCENERIES: `${BASE_URL}/nature/twelve-sceneries`,
 
+  // 地理
+  EXECUTE_GET_MAP_INFO: `${BASE_URL}/location/mapInfo`,
+
   // 文化首页
   EXECUTE_GET_CULTURE_HOME: `${BASE_URL}/buddhism/getCultureHomeContent`,
   // 获取博物馆文章
