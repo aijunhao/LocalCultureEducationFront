@@ -53,7 +53,10 @@ export default {
 
   // 佛国编年史首页
   EXECUTE_GET_HISTORY_HOME: `${BASE_URL}/buddhism/getHistoryHomeContent`,
+  // 佛国编年史僧侣信息
   EXECUTE_GET_BUDDHISM_MONK: `${BASE_URL}/buddhism/getMonk`,
+  // 佛国编年史文章信息
+  EXECUTE_GET_HISTORY_ARTICLE: `${BASE_URL}/buddhism/historyArticle`,
 
   // 管理员页面
   // 更新页面导航信息

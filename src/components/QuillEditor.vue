@@ -22,9 +22,9 @@
 
     <!-- 提交按钮 -->
     <div class="button">
-      <el-button round type="success" @click="$emit('save', content)">保存</el-button>
-      <el-button round type="warning" @click="$emit('cancel')">取消</el-button>
-      <el-button type="danger" round @click="$emit('delete')">删除按钮</el-button>
+      <el-button @click="$emit('save', content)" round type="success">保存</el-button>
+      <el-button @click="$emit('cancel')" round type="warning">取消</el-button>
+      <el-button @click="$emit('delete')" round type="danger">删除按钮</el-button>
     </div>
   </div>
 </template>
@@ -143,11 +143,12 @@ export default {
   .button
     margin 20px 0
     text-align center
+
   .editor
     text-align center
 
   .ql-editor
-    height 800px
+    height 600px
 
   .ql-snow .ql-tooltip[data-mode=link]::before
     content '请输入链接地址:'

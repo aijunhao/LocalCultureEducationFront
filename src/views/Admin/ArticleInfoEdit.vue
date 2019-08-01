@@ -15,11 +15,28 @@
       <el-form-item label="文章副标题">
         <el-input v-model="article.subtitle"></el-input>
       </el-form-item>
-      <el-form-item label="作者">
-        <el-input v-model="article.author"></el-input>
-      </el-form-item>
-      <el-form-item label="发布时间">
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="发布者">
+            <el-input v-model="article.author"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="来源">
+            <el-input v-model="article.source"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <!-- <el-form-item label="发布时间">
         <el-input disabled placeholder="now" v-model="article.time"></el-input>
+      </el-form-item>-->
+      <el-form-item label="发布时间">
+        <el-date-picker
+          disabled
+          format="yyyy-MM-dd HH:mm:ss"
+          type="date"
+          v-model="article.time === '' ? defaultTime : article.time"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item label="文章总览">
         <el-input
@@ -54,6 +71,11 @@ export default {
   },
   components: {
     'quill-editor': QuillEditor
+  },
+  data() {
+    return {
+      defaultTime: new Date()
+    }
   },
   methods: {
     /**
@@ -180,3 +202,8 @@ export default {
 }
 </script>
 
+<style lang="stylus">
+#article_info_edit
+  .el-date-editor.el-input, .el-date-editor.el-input__inner
+    width 100%
+</style>

@@ -1,34 +1,59 @@
 <template>
   <div id="text_edit">
-    <div :key="i" class="text-edit-box" v-for="(item, i) in textList">
+    <div
+      :class="['text-edit-box', anchor]"
+      :id="idName + '_' + i"
+      :key="i"
+      v-for="(item, i) in textList"
+    >
       <div class="text-edit-title">
         <p v-text="item.title"></p>
       </div>
 
       <div class="text-edit-message">
         <el-form label-width="80px">
-          <el-form-item label="姓名">
-            <el-input :disabled="disabled[i]" v-model="item.title"></el-input>
-          </el-form-item>
-          <el-form-item label="朝代">
-            <el-select :disabled="disabled[i]" placeholder="请选择" v-model="item.subtitle">
-              <el-option
-                :key="option.value"
-                :label="option.label"
-                :value="option.value"
-                v-for="option in options"
-              ></el-option>
-            </el-select>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="姓名">
+                <el-input :disabled="disabled[i]" v-model="item.title"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="朝代">
+                <el-select :disabled="disabled[i]" placeholder="请选择" v-model="item.subtitle">
+                  <el-option
+                    :key="i"
+                    :label="option"
+                    :value="option"
+                    v-for="(option, i) in options"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="发布者">
+                <el-input :disabled="disabled[i]" v-model="item.author"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="来源">
+                <el-input :disabled="disabled[i]" v-model="item.source"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
           <el-form-item label="发布时间">
-            <el-input :disabled="disabled[i]" v-model="item.time"></el-input>
+            <el-date-picker
+              disabled
+              format="yyyy-MM-dd HH:mm:ss"
+              type="date"
+              v-model="item.time"
+            ></el-date-picker>
           </el-form-item>
-          <el-form-item label="发布者">
-            <el-input :disabled="disabled[i]" v-model="item.author"></el-input>
-          </el-form-item>
-          <el-form-item label="来源">
-            <el-input :disabled="disabled[i]" v-model="item.source"></el-input>
-          </el-form-item>
+
           <el-form-item label="介绍">
             <el-input
               :autosize="{ minRows: 2, maxRows: 5}"
@@ -65,47 +90,28 @@ import config from '../config'
 
 export default {
   props: {
+    // 内容数组
     textList: {
       type: Array,
       require: true
-    }
+    },
+    // 锚点类名
+    anchor: String,
+    // id
+    idName: String
   },
   data() {
     return {
-      // 选择器
+      // 年代选择器
       options: [
-        {
-          value: '不详',
-          label: '不详'
-        },
-        {
-          value: '南宋',
-          label: '南宋'
-        },
-        {
-          value: '元代',
-          label: '元代'
-        },
-        {
-          value: '明代',
-          label: '明代'
-        },
-        {
-          value: '清代',
-          label: '清代'
-        },
-        {
-          value: '晚唐及民国',
-          label: '晚唐及民国'
-        },
-        {
-          value: '游山',
-          label: '游山'
-        },
-        {
-          value: '当代',
-          label: '当代'
-        }
+        '不详',
+        '南宋',
+        '元代',
+        '明代',
+        '清代',
+        '晚唐及民国',
+        '游山',
+        '当代'
       ],
       status: [''],
       disabled: [''],
@@ -270,6 +276,9 @@ export default {
     .el-select
       display block
 
+    .el-date-editor.el-input, .el-date-editor.el-input__inner
+      width 100%
+
     .text-edit-title
       width 100px
 
@@ -277,14 +286,13 @@ export default {
         text-align center
         font-size 40px
         writing-mode vertical-rl
-        height 330px
+        height 280px
 
     .text-edit-message
       width calc(100% - 260px)
 
     .text-edit-setting
       width 60px
-      padding-top 30px
 
       button
         margin 10px

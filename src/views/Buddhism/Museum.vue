@@ -17,30 +17,30 @@
       </div>
     </div>
 
-    <p class="subtitle">部分展品</p>
-    <!-- 水平滚动图片 -->
-    <horizontal-image-list :height="150" :imageList="exhibitList" :width="200"></horizontal-image-list>
+    <!-- 展品 -->
+    <div class="museum-box">
+      <p class="subtitle">部分展品</p>
+      <!-- 水平滚动图片 -->
+      <horizontal-image-list :height="150" :imageList="exhibitList" :width="200"></horizontal-image-list>
+    </div>
 
     <!-- 文章 -->
-    <div class="museum-article">
+    <div class="museum-box">
       <p class="subtitle">文章描述</p>
-      <p class="museum-article-title">{{ museumArticle.title }}</p>
-      <p class="museum-article-subtitle">
-        <span>转载：{{ museumArticle.subtitle }}</span>
-        <span>作者：{{ museumArticle.author }}</span>
-      </p>
-      <div class="indent" v-html="museumArticle.content"></div>
+      <article-box :articleList="museumArticleList"></article-box>
     </div>
   </div>
 </template>
 
 <script>
 import HorizontalImageList from '../../components/HorizontalImageList'
+import ArticleBox from '../../components/ArticleBox'
 import config from '../../config'
 
 export default {
   components: {
-    'horizontal-image-list': HorizontalImageList
+    'horizontal-image-list': HorizontalImageList,
+    'article-box': ArticleBox
   },
   data() {
     return {
@@ -52,7 +52,8 @@ export default {
           content: '数据丢失了，请稍后再试！'
         }
       ],
-      museumArticle: '',
+      // 文章列表
+      museumArticleList: [],
       // 选中展品项序号
       index: 0
     }
@@ -72,8 +73,7 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            this.museumArticle = req.data
-            console.log(req.data)
+            this.museumArticleList = req.data
           }
         })
         .catch(err => {
@@ -88,9 +88,8 @@ export default {
         method: 'get',
         url: config.EXECUTE_GET_EXHIBITS
       })
-        .then(data => {
-          // console.log(data.data)
-          if (data.data) this.exhibitList = data.data
+        .then(req => {
+          if (req.status === 200) this.exhibitList = req.data
         })
         .catch(err => {
           console.log(err)
@@ -142,7 +141,6 @@ export default {
 
     .subtitle
       font-size 1.2rem
-      margin 5px 0
 
     .museum
       margin-bottom 40px
@@ -159,12 +157,6 @@ export default {
         img
           width 50%
 
-    .museum-article
-      margin-top 40px
-
-      .museum-article-title
-        font-size 2rem
-
 @media screen and (max-width: 960px)
   #museum
     padding 10px
@@ -176,20 +168,10 @@ export default {
 
     .subtitle
       font-size 1rem
-      margin 5px 0
 
     .museum
       margin-bottom 20px
 
       img
         width 100%
-
-    .museum-article
-      margin-top 20px
-
-      .museum-article-title
-        font-size 1.5rem
-
-      img
-        width calc(100% - 4rem)
 </style>

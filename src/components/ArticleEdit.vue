@@ -17,8 +17,12 @@
         </p>
         <p class="article-author-and-time">
           <span>
-            <span class="article-edit-title">作者：</span>
+            <span class="article-edit-title">发布者：</span>
             {{ article.author }}
+          </span>
+          <span>
+            <span class="article-edit-title">来源：</span>
+            {{ article.source }}
           </span>
           <span>
             <span class="article-edit-title">发布时间：</span>

@@ -34,8 +34,8 @@
           <el-form-item label="发布者">
             <el-input :disabled="disabled[i]" placeholder v-model="image.author"></el-input>
           </el-form-item>
-          <el-form-item label="时间">
-            <el-input disabled v-model="image.time"></el-input>
+          <el-form-item label="发布时间">
+            <el-date-picker disabled format="yyyy-MM-dd HH:mm:ss" type="date" v-model="image.time"></el-date-picker>
           </el-form-item>
           <el-form-item label="来源">
             <el-input :disabled="disabled[i]" placeholder v-model="image.source"></el-input>
@@ -299,6 +299,9 @@ export default {
 
     .el-form-item
       margin-bottom 10px !important
+
+    .el-date-editor.el-input, .el-date-editor.el-input__inner
+      width 100%
 
     .avatar-uploader .el-upload
       width 178px

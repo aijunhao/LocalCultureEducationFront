@@ -1,10 +1,9 @@
  <template>
   <div id="module_edit">
     <div
-      :class="anchor"
+      :class="[anchor, 'module-box']"
       :id="idName + '_' + i"
       :key="i"
-      class="module-box"
       v-for="(module, i) in moduleList"
     >
       <!-- 上传 -->
@@ -54,6 +53,7 @@
         <el-button @click="editModule(i)" circle icon="el-icon-edit" type="success"></el-button>
         <el-button @click="lockModule(i)" circle icon="el-icon-lock" type="warning"></el-button>
         <el-button @click="updateModule(module, i)" circle icon="el-icon-upload" type="primary"></el-button>
+        <el-button type="danger" icon="el-icon-delete" circle disabled></el-button>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ export default {
       // 是否可编辑
       disabled: [],
       // 状态
-      status: [],
+      status: []
     }
   },
   methods: {

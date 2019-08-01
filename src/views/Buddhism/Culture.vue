@@ -1,14 +1,13 @@
-// 佛教文化节
 <template>
   <div id="culture">
     <!-- 右侧导航 -->
     <div id="culture_right_menu">
       <ul>
-        <li class="select" @click="goAnchor('culture_overview')">总览</li>
+        <li @click="goAnchor('culture_overview')" class="select">总览</li>
         <li
           :key="i"
-          @click="goAnchor('culture_content_' + i)"
-          v-for="(item, i) in culture"
+          @click="goAnchor('culture_article_' + i)"
+          v-for="(item, i) in cultureArticleList"
         >{{ item.title }}</li>
       </ul>
     </div>
@@ -32,43 +31,28 @@
     </div>
 
     <!-- 文章模块 -->
-    <div
-      :id="'culture_content_' + i"
-      :key="i"
-      class="culture-content anchor-class"
-      v-for="(item, i) in culture"
-    >
-      <div class="culture-content-header">
-        <p v-text="item.title">标题</p>
-        <p v-text="item.subtitle">时间</p>
-      </div>
-      <div class="culture-content-body" v-html="item.content">内容</div>
-
-      <!-- 分割线 -->
-      <el-divider>
-        <i :class="setClass(i)"></i>
-      </el-divider>
+    <div v-if="cultureArticleList.length != 0">
+      <p class="subtitle">文章描述</p>
+      <article-box
+        :anchor="'anchor-class'"
+        :articleList="cultureArticleList"
+        :idName="'culture_article'"
+      ></article-box>
     </div>
   </div>
 </template>
 
 <script>
 import config from '../../config'
+import ArticleBox from '../../components/ArticleBox'
 
 export default {
+  components: {
+    'article-box': ArticleBox
+  },
   data() {
     return {
-      // 类名
-      type: ['iconfojing', 'iconfoshou', 'iconfo', 'iconfozhu'],
-      culture: [
-        {
-          title: '',
-          time: '',
-          content: ''
-        }
-      ],
-      // 当前位置标签
-      index: 0
+      cultureArticleList: []
     }
   },
   methods: {
@@ -80,19 +64,12 @@ export default {
         method: 'get',
         url: config.EXECUTE_GET_CULTURE
       })
-        .then(data => {
-          console.log(data.data)
-          if (data.data) this.culture = data.data
+        .then(req => {
+          if (req.data) this.cultureArticleList = req.data
         })
         .catch(err => {
           console.log(err)
         })
-    },
-    /**
-     * 动态设置类
-     */
-    setClass(index) {
-      return ['myicons', this.type[index % this.type.length]]
     },
     // 平滑滚动
     goAnchor(id) {
@@ -136,30 +113,6 @@ export default {
 
 
 <style lang="stylus">
-#culture
-  .el-divider__text
-    background-color #f2f2f2
-
-  .myicons
-    font-size 2rem
-
-  .culture-content
-    margin-bottom 50px
-
-  .culture-content-header
-    p
-      margin 0
-
-      &:nth-child(1)
-        font-weight 600
-
-  .culture-content-body
-    text-align center
-
-    p
-      text-align left
-      text-indent 2rem
-
 @media screen and (min-width: 960px)
   #culture_right_menu
     width 200px
@@ -199,48 +152,15 @@ export default {
       div
         width calc(100% - 300px)
 
-    .culture-content
-      p
-        font-size 1rem
-
-      .culture-content-header
-        display flex
-        display -webkit-flex
-        justify-content space-between
-        align-items center
-
-        p
-          &:nth-child(1)
-            font-size 1.5rem
-
-      .culture-content-body
-        img
-          width 60%
-
-        // 标签
-        .label
-          font-size 0.8rem
-          text-align center
-
 @media screen and (max-width: 960px)
+  #culture_right_menu
+    display none
+
   #culture
     padding 10px
+    font-size 0.8rem
 
-    .culture-content
-      p
-        font-size 0.8rem
-
-      .culture-content-header
-        p
-          &:nth-child(1)
-            font-size 1.2rem
-
-      .culture-content-body
-        img
-          width 100%
-
-        // 标签
-        .label
-          font-size 0.6rem
-          text-align center
+    .culture-overview
+      img
+        width 100%
 </style>
