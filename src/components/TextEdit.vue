@@ -284,7 +284,7 @@ export default {
 
       p
         text-align center
-        font-size 40px
+        font-size 2.5rem
         writing-mode vertical-rl
         height 280px
 

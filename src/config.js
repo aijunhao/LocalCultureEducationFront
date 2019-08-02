@@ -38,7 +38,10 @@ export default {
   EXECUTE_GET_TWELVE_SCENERIES: `${BASE_URL}/nature/twelve-sceneries`,
 
   // 地理
+  // 地图信息
   EXECUTE_GET_MAP_INFO: `${BASE_URL}/location/mapInfo`,
+  // 图表数据信息
+  EXECUTE_GET_LOCATION_Chart_DATA_INFO: `${BASE_URL}/location/chartData`,
 
   // 文化首页
   EXECUTE_GET_CULTURE_HOME: `${BASE_URL}/buddhism/getCultureHomeContent`,
@@ -81,5 +84,11 @@ export default {
   // 创建文本
   EXECUTE_GET_NEW_TEXT: `${BASE_URL}/user/newText`,
   // 删除文章
-  EXECUTE_GET_DELETE_TEXT: `${BASE_URL}/user/deleteText`
+  EXECUTE_GET_DELETE_TEXT: `${BASE_URL}/user/deleteText`,
+  // 创建图表数据
+  EXECUTE_GET_NEW_CHART_DATA: `${BASE_URL}/user/newChartData`,
+  // 删除图表数据
+  EXECUTE_GET_DELETE_CHART_DATA: `${BASE_URL}/user/deleteChartData`,
+  // 更新图表数据
+  EXECUTE_POST_UPDATE_CHART_DATA: `${BASE_URL}/user/updateChartData`
 };

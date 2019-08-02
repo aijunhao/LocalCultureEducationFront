@@ -20,7 +20,7 @@
 
       <!-- 描述 -->
       <div class="location-show-description">
-        <template v-if="mapInfo.length != 0">
+        <template v-if="mapInfo && mapInfo.length != 0">
           <p class="title" v-text="mapInfo[radio].title"></p>
           <div class="indent" v-html="mapInfo[radio].content"></div>
         </template>
@@ -30,11 +30,10 @@
 
     <!-- 地质地貌 -->
     <div class="location-content direction">
-      <template v-if="geologyInfo.length != 0">
+      <template v-if="geologyInfo && geologyInfo.length != 0">
         <div class="location-content-echarts">
           <echarts
             :height="'350px'"
-            :index="1"
             :option="geologyOption"
             :width="'350px'"
             @echartsSelect="geologySelect"
@@ -65,11 +64,10 @@
 
     <!-- 植被信息 -->
     <div class="location-content">
-      <template v-if="plantInfo.length != 0">
+      <template v-if="plantInfo && plantInfo.length != 0">
         <div class="location-content-echarts">
           <echarts
             :height="'350px'"
-            :index="2"
             :option="plantOption"
             :width="'350px'"
             @echartsSelect="plantSelect"
@@ -203,6 +201,7 @@ export default {
      * echarts 地质选中
      */
     geologySelect(params) {
+      console.log(params.name, params.color)
       if (params.componentIndex === 0)
         for (var i = 0; i < this.geologyInfo.coastlineSeries.length; i++) {
           if (params.name === this.geologyInfo.coastlineSeries[i].name) {
@@ -222,6 +221,7 @@ export default {
      * echarts 植被选中
      */
     plantSelect(params) {
+      console.log(params.name, params.color)
       for (var i = 0; i < this.plantInfo.series.length; i++) {
         if (params.name === this.plantInfo.series[i].name) {
           this.plantSelected = i
@@ -239,24 +239,28 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            this.mapInfo = req.data.mapInfo
+            this.mapInfo = req.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取图表信息
+     */
+    getLocationChartData() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_LOCATION_Chart_DATA_INFO
+      })
+        .then(req => {
+          if (req.status === 200) {
+            console.log(req.data)
 
             // 植被信息
             this.plantInfo = req.data.plant
             this.geologyInfo = req.data.geology
-
-            // 拼接植被图表数据
-            this.plantOption.series[0].data = req.data.plant.series
-            this.plantOption.legend.data = req.data.plant.legend
-            this.plantOption.title.text = req.data.plant.overview.title
-
-            // 拼接地质图表数据
-            this.geologyOption.series[0].data = req.data.geology.coastlineSeries
-            this.geologyOption.series[1].data = req.data.geology.areaSeries
-            this.geologyOption.legend.data = req.data.geology.legend
-            this.geologyOption.title.text = req.data.geology.overview.title
-
-            // console.log(req.data)
           }
         })
         .catch(err => {
@@ -282,6 +286,71 @@ export default {
   created() {
     // 获取信息
     this.getLocationInfo()
+    this.getLocationChartData()
+  },
+  watch: {
+    geologyInfo: {
+      handler(newVal, oldVal) {
+        let coastlineSeries = []
+        let areaSeries = []
+        let legend = []
+
+        newVal.coastlineList.forEach(element => {
+          coastlineSeries.push({
+            value: element.data,
+            name: element.title,
+            itemStyle: {
+              color: element.color
+            }
+          })
+
+          legend.push(element.title)
+        })
+
+        newVal.areaList.forEach(element => {
+          areaSeries.push({
+            value: element.data,
+            name: element.title,
+            itemStyle: {
+              color: element.color
+            }
+          })
+
+          legend.push(element.title)
+        })
+
+        // 拼接地质图表数据
+        this.geologyOption.series[0].data = coastlineSeries
+        this.geologyOption.series[1].data = areaSeries
+        this.geologyOption.legend.data = legend
+        this.geologyOption.title.text = newVal.overview.title
+      },
+      deep: true
+    },
+    plantInfo: {
+      handler(newVal, oldVal) {
+        let plantSeries = []
+        let legend = []
+
+        newVal.plantList.forEach(element => {
+          plantSeries.push({
+            value: element.data,
+            name: element.title,
+            itemStyle: {
+              color: element.color
+            }
+          })
+
+          legend.push(element.title)
+        })
+
+        // 拼接植被图表数据
+        this.plantOption.series[0].data = plantSeries
+        this.plantOption.legend.data = legend
+        this.plantOption.title.text = newVal.overview.title
+      },
+      deep: true
+    }
   }
 }
 </script>
