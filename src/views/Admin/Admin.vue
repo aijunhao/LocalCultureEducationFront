@@ -21,8 +21,8 @@
             <!-- 总览 -->
             <el-submenu index="1">
               <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">总览</span>
+                <i class="myicons iconzonglan"></i>
+                <span slot="title" class="title">总览</span>
               </template>
               <el-menu-item-group>
                 <span slot="title">分组一</span>
@@ -34,8 +34,8 @@
             <!-- 页面设置 -->
             <el-submenu index="2">
               <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span slot="title">模块</span>
+                <i class="myicons icontubiao_kuaizhuangpailie"></i>
+                <span slot="title" class="title">模块</span>
               </template>
               <el-menu-item @click="$router.push({name: 'HomeEdit'})" index="2-1">首页</el-menu-item>
               <el-menu-item @click="$router.push({name: 'LocationEdit'})" index="2-2">地理环境</el-menu-item>
@@ -47,8 +47,8 @@
             <!-- 用户 -->
             <el-submenu index="3">
               <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span slot="title">用户</span>
+                <i class="myicons iconyonghu"></i>
+                <span slot="title" class="title">用户</span>
               </template>
               <el-menu-item index="3-1">用户管理</el-menu-item>
             </el-submenu>
@@ -56,8 +56,8 @@
             <!-- 社区 -->
             <el-submenu index="4">
               <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span slot="title">社区</span>
+                <i class="myicons iconshequ"></i>
+                <span slot="title" class="title">社区</span>
               </template>
               <el-menu-item index="4-1">社区管理</el-menu-item>
             </el-submenu>
@@ -125,6 +125,12 @@ export default {
   .el-menu-vertical-demo:not(.el-menu--collapse)
     width 200px
 
+  .myicons
+    font-size 24px
+
+  .title 
+    margin-left 10px
+    
   .aside-button
     width 64px
     height 64px

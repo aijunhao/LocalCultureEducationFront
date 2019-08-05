@@ -94,13 +94,19 @@ export default {
 
 @media screen and (min-width: 960px)
   #article_box
+    padding 0 20px
+
     .article-box-title
       font-size 2rem
       margin 20px 0
+    
+    .article-box-content
+      padding 0 20px
 
 @media screen and (max-width: 960px)
   #article_box
     font-size 0.8rem
+    padding 0 10px
 
     .article-box-title
       font-size 1.5rem

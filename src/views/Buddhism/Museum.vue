@@ -7,40 +7,36 @@
       <el-breadcrumb-item>佛学馆藏</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div class="museum">
-      <p class="title">普陀山佛教博物馆</p>
+    <divider :icon="'iconbowuguan'" :title="'普陀山佛教博物馆'"></divider>
+    <div class="museum" v-if="museumInfo && museumInfo.length != 0">
+      <!-- <p class="title" v-text="museumInfo[0].title">普陀山佛教博物馆</p> -->
       <div>
-        <img alt src="http://120.79.254.54:3004/public/images/museum.jpg" />
-        <p
-          class="content indent"
-        >普陀山佛教博物馆是迄今为止我国宗教界自办的首个宗教博物馆，前身是设在普济寺的文物陈列室。是一所以收藏、保护、展示和研究普陀山佛教文物为主要内容的专题性博物馆。佛教博物馆位于普陀山香华街36-6号原昙花庵遗址，与国家的文保单位元代多宝塔、省级文保单位普济禅寺、市级文保单位百子堂相毗邻，外观为仿宋风格，建筑面积3643平方米，占地面积3400平方米，总高度19.68米；分上下两层，7个展厅，馆内珍藏佛教文物1700余件，主要为佛教圣物、圣旨、钦赐袈裟、字画、瓷器、铜器佛像和玉器杂件等，其中国家一级文物5件、二级文物22件、三级文物349件。</p>
+        <img :src="museumInfo[0].url" alt />
+        <p class="content indent" v-text="museumInfo[0].content"></p>
       </div>
     </div>
 
     <!-- 展品 -->
-    <div class="museum-box">
-      <p class="subtitle">部分展品</p>
-      <!-- 水平滚动图片 -->
-      <horizontal-image-list :height="150" :imageList="exhibitList" :width="200"></horizontal-image-list>
-    </div>
+    <divider :icon="'iconzhuantituji'" :title="'部分展品'"></divider>
+    <horizontal-image-list :height="150" :imageList="exhibitList" :width="200"></horizontal-image-list>
 
     <!-- 文章 -->
-    <div class="museum-box">
-      <p class="subtitle">文章描述</p>
-      <article-box :articleList="museumArticleList"></article-box>
-    </div>
+    <divider :icon="'iconwenzhang'" :title="'文章描述'"></divider>
+    <article-box :articleList="museumArticleList"></article-box>
   </div>
 </template>
 
 <script>
 import HorizontalImageList from '../../components/HorizontalImageList'
 import ArticleBox from '../../components/ArticleBox'
+import divider from '../../components/Divider'
 import config from '../../config'
 
 export default {
   components: {
     'horizontal-image-list': HorizontalImageList,
-    'article-box': ArticleBox
+    'article-box': ArticleBox,
+    divider
   },
   data() {
     return {
@@ -52,6 +48,8 @@ export default {
           content: '数据丢失了，请稍后再试！'
         }
       ],
+      // 博物馆信息
+      museumInfo: [],
       // 文章列表
       museumArticleList: [],
       // 选中展品项序号
@@ -61,6 +59,7 @@ export default {
   created() {
     this.getExhibits()
     this.getMuseumArticle()
+    this.getMuseumInfo()
   },
   methods: {
     /**
@@ -74,6 +73,24 @@ export default {
         .then(req => {
           if (req.status === 200) {
             this.museumArticleList = req.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取博物馆文章
+     */
+    getMuseumInfo() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_BUILDING_MUSEUM_INFO
+      })
+        .then(req => {
+          if (req.status === 200) {
+            console.log(req.data)
+            this.museumInfo = req.data
           }
         })
         .catch(err => {

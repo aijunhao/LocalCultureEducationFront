@@ -6,6 +6,8 @@
       <el-breadcrumb-item>地理环境</el-breadcrumb-item>
     </el-breadcrumb>
 
+    <divider :title="'地图'" :icon="'iconchinamap-chart'"></divider>
+
     <!-- 地图及描述 -->
     <div class="location-show">
       <!-- 地图 -->
@@ -27,6 +29,8 @@
         <p class="tips" v-else>内容加载失败，请稍后再试</p>
       </div>
     </div>
+
+    <divider :title="'地质地貌'" :icon="'icondizhihuanjing-'"></divider>
 
     <!-- 地质地貌 -->
     <div class="location-content direction">
@@ -62,6 +66,8 @@
       <p class="tips" v-else>内容加载失败，请稍后再试</p>
     </div>
 
+    <divider :title="'植被信息'" :icon="'iconzhiwu'"></divider>
+
     <!-- 植被信息 -->
     <div class="location-content">
       <template v-if="plantInfo && plantInfo.length != 0">
@@ -91,6 +97,7 @@
 import echarts from '../components/Echarts'
 import config from '../config'
 import { mapGetters, mapState } from 'vuex'
+import divider from '../components/Divider'
 
 export default {
   data() {
@@ -107,6 +114,11 @@ export default {
       geologyInfo: [],
       geologyAreaSelected: 0,
       geologyCoastlineSelected: 0,
+      coastlineSeries: [],
+      areaSeries: [],
+      geologyLegend: [],
+      plantSeries: [],
+      plantLegend: [],
 
       // 地质地貌 echarts 参数
       geologyOption: {
@@ -201,17 +213,17 @@ export default {
      * echarts 地质选中
      */
     geologySelect(params) {
-      console.log(params.name, params.color)
+      // console.log(params.name, params.color)
       if (params.componentIndex === 0)
-        for (var i = 0; i < this.geologyInfo.coastlineSeries.length; i++) {
-          if (params.name === this.geologyInfo.coastlineSeries[i].name) {
+        for (var i = 0; i < this.coastlineSeries.length; i++) {
+          if (params.name === this.coastlineSeries[i].name) {
             this.geologyCoastlineSelected = i
             return
           }
         }
       else
-        for (var i = 0; i < this.geologyInfo.areaSeries.length; i++) {
-          if (params.name === this.geologyInfo.areaSeries[i].name) {
+        for (var i = 0; i < this.areaSeries.length; i++) {
+          if (params.name === this.areaSeries[i].name) {
             this.geologyAreaSelected = i
             return
           }
@@ -221,9 +233,9 @@ export default {
      * echarts 植被选中
      */
     plantSelect(params) {
-      console.log(params.name, params.color)
-      for (var i = 0; i < this.plantInfo.series.length; i++) {
-        if (params.name === this.plantInfo.series[i].name) {
+      // console.log(params.name, params.color)
+      for (var i = 0; i < this.plantSeries.length; i++) {
+        if (params.name === this.plantSeries[i].name) {
           this.plantSelected = i
           return
         }
@@ -281,7 +293,7 @@ export default {
     }
   },
   components: {
-    echarts
+    echarts, divider
   },
   created() {
     // 获取信息
@@ -291,12 +303,8 @@ export default {
   watch: {
     geologyInfo: {
       handler(newVal, oldVal) {
-        let coastlineSeries = []
-        let areaSeries = []
-        let legend = []
-
         newVal.coastlineList.forEach(element => {
-          coastlineSeries.push({
+          this.coastlineSeries.push({
             value: element.data,
             name: element.title,
             itemStyle: {
@@ -304,11 +312,11 @@ export default {
             }
           })
 
-          legend.push(element.title)
+          this.geologyLegend.push(element.title)
         })
 
         newVal.areaList.forEach(element => {
-          areaSeries.push({
+          this.areaSeries.push({
             value: element.data,
             name: element.title,
             itemStyle: {
@@ -316,24 +324,21 @@ export default {
             }
           })
 
-          legend.push(element.title)
+          this.geologyLegend.push(element.title)
         })
 
         // 拼接地质图表数据
-        this.geologyOption.series[0].data = coastlineSeries
-        this.geologyOption.series[1].data = areaSeries
-        this.geologyOption.legend.data = legend
+        this.geologyOption.series[0].data = this.coastlineSeries
+        this.geologyOption.series[1].data = this.areaSeries
+        this.geologyOption.legend.data = this.geologyLegend
         this.geologyOption.title.text = newVal.overview.title
       },
       deep: true
     },
     plantInfo: {
       handler(newVal, oldVal) {
-        let plantSeries = []
-        let legend = []
-
         newVal.plantList.forEach(element => {
-          plantSeries.push({
+          this.plantSeries.push({
             value: element.data,
             name: element.title,
             itemStyle: {
@@ -341,12 +346,12 @@ export default {
             }
           })
 
-          legend.push(element.title)
+          this.plantLegend.push(element.title)
         })
 
         // 拼接植被图表数据
-        this.plantOption.series[0].data = plantSeries
-        this.plantOption.legend.data = legend
+        this.plantOption.series[0].data = this.plantSeries
+        this.plantOption.legend.data = this.plantLegend
         this.plantOption.title.text = newVal.overview.title
       },
       deep: true
@@ -429,7 +434,6 @@ export default {
         min-width 600px
 
     .location-content
-      padding 50px 0
       display flex
       display -webkit-flex
       justify-content space-between

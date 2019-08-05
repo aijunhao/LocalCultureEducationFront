@@ -7,6 +7,7 @@
       <el-breadcrumb-item>普陀佛史</el-breadcrumb-item>
     </el-breadcrumb>
 
+    <divider :title="'文章描述'" :icon="'iconwenzhang'"></divider>
     <article-box :articleList="articleList"></article-box>
   </div>
 </template>
@@ -14,6 +15,7 @@
 <script>
 import config from '../../config'
 import ArticleBox from '../../components/ArticleBox'
+import divider from '../../components/Divider'
 
 export default {
   data() {
@@ -22,7 +24,8 @@ export default {
     }
   },
   components: {
-    'article-box': ArticleBox
+    'article-box': ArticleBox,
+    divider
   },
   created() {
     this.getHistoryArticle()

@@ -20,6 +20,7 @@
     </el-breadcrumb>
 
     <!-- 总览 -->
+    <divider :icon="'iconyichanjicheng'" :title="'非物质文化遗产'"></divider>
     <div class="culture-overview anchor-class" id="culture_overview">
       <img alt src="../../assets/非物质文化遗产.jpg" />
       <div>
@@ -31,8 +32,8 @@
     </div>
 
     <!-- 文章模块 -->
+    <divider :icon="'iconwenzhang'" :title="'文章描述'"></divider>
     <div v-if="cultureArticleList.length != 0">
-      <p class="subtitle">文章描述</p>
       <article-box
         :anchor="'anchor-class'"
         :articleList="cultureArticleList"
@@ -45,10 +46,12 @@
 <script>
 import config from '../../config'
 import ArticleBox from '../../components/ArticleBox'
+import divider from '../../components/Divider'
 
 export default {
   components: {
-    'article-box': ArticleBox
+    'article-box': ArticleBox,
+    divider
   },
   data() {
     return {

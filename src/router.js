@@ -30,6 +30,11 @@ import BuddhismEdit from "./views/Admin/BuddhismEdit.vue";
 import HistoryEdit from "./views/Admin/HistoryEdit.vue";
 import LocationEdit from "./views/Admin/LocationEdit.vue";
 
+// 用户
+import User from "./views/User/User.vue";
+import Login from "./views/User/Login.vue";
+import Register from "./views/User/Register.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -65,6 +70,24 @@ export default new Router({
           path: "baidumap",
           component: BaiduMap,
           name: "baidumap"
+        }
+      ]
+    },
+    {
+      path: "/user",
+      component: User,
+      name: "User",
+      redirect: "/user/login",
+      children: [
+        {
+          path: "login",
+          component: Login,
+          name: "Login"
+        },
+        {
+          path: "register",
+          component: Register,
+          name: "Register"
         }
       ]
     },

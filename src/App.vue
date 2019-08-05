@@ -71,13 +71,37 @@
       </div>
     </div>
 
-    <!-- 管理员 -->
-    <el-button
-      @click="$router.push({ name: 'admin'})"
-      circle
-      class="myicons iconguanliyuan"
-      id="admin_link"
-    ></el-button>
+    <!-- 用户 -->
+    <div id="link_button">
+      <!-- 未登录 -->
+      <div v-show="!isLogin">
+        <el-dropdown @command="handleCommand">
+          <div class="user">
+            <i class="myicons iconuser"></i>
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item disabled>当前未登录</el-dropdown-item>
+            <el-dropdown-item command="login" divided>登录</el-dropdown-item>
+            <el-dropdown-item command="register">注册</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+      <div v-show="isLogin">
+        <!-- 已登录 -->
+        <el-dropdown @command="handleCommand">
+          <div class="user">
+            <img :src="user.portrait" />
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item disabled>用户名：{{ user.nickname }}</el-dropdown-item>
+            <el-dropdown-item disabled>用户权限：{{ user.powername }}</el-dropdown-item>
+            <el-dropdown-item command divided>用户中心</el-dropdown-item>
+            <el-dropdown-item command="admin" v-show="user.power > 5">控制台</el-dropdown-item>
+            <el-dropdown-item command="logout" divided icon="el-icon-circle-check">登出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+    </div>
 
     <!-- 主体 -->
     <router-view class="app-main"></router-view>
@@ -121,6 +145,35 @@
   </div>
 </template>
 
+<script>
+import { mapState, mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState(['user']),
+    ...mapGetters(['isLogin'])
+  },
+  methods: {
+    handleCommand(command) {
+      if (command === 'logout') {
+        this.$store.dispatch('logout')
+        this.$message({
+          message: '您已安全退出!',
+          type: 'success'
+        })
+      } else if (command === 'login') {
+        this.$router.push({ name: 'Login' })
+      } else if (command === 'register') {
+        this.$router.push({ name: 'Register' })
+      } else if (command === 'admin') {
+        this.$router.push({ name: 'admin' })
+      }
+    }
+  }
+}
+</script>
+
+
 <style lang="stylus">
 // 布局
 flex($h = flex-start, $v = flex-start, $w = nowrap)
@@ -133,11 +186,28 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 #menu-checkbox
   display none
 
-#admin_link
+#link_button
   position fixed
-  top 150px
+  top 130px
   right 50px
   z-index 50
+
+  .user
+    width 48px
+    height 48px
+    border-radius 50%
+    overflow hidden
+    background #fff
+    text-align center
+    box-shadow 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04)
+
+    img
+      width 100%
+      height 100%
+
+    .myicons
+      font-size 24px
+      line-height 48px
 
 #app
   .app-header

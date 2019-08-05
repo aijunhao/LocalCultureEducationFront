@@ -11,19 +11,19 @@
     <div class="imageinfo-show">
       <p class="imageinfo-show-title" v-text="imageInfo.title"></p>
       <p class="imageinfo-show-author-source">
-        <span>作者：普陀山佛教协会</span>
-        <span>来源：普陀山佛教网</span>
+        <span>发布者：{{ imageInfo.author }}</span>
+        <span>来源：{{ imageInfo.source }}</span>
       </p>
       <img :src="imageInfo.url" alt="图片"/>
       <p v-text="imageInfo.content" class="imageinfo-show-content"></p>
       <div class="imageinfo-show-icon">
         <span>
           <i class="el-icon-view"></i>
-          {{ imageInfo.lookedNumber }}
+          {{ imageInfo.looked_number }}
         </span>
         <span>
           <i class="el-icon-chat-dot-round"></i>
-          {{ imageInfo.commentNumber }}
+          {{ imageInfo.comment_number }}
         </span>
       </div>
     </div>
@@ -65,7 +65,7 @@ export default {
         url: config.EXECUTE_GET_IMAGE_INFO + `/${this.imageInfoId}`
       })
         .then(data => {
-          // console.log(data.data)
+          console.log(data.data)
           this.imageInfo = data.data
         })
         .catch(err => {

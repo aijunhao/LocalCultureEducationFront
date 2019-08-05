@@ -9,11 +9,11 @@
           <div>
             <span>
               <i class="el-icon-view"></i>
-              {{ item.lookedNumber }}
+              {{ item.looked_number }}
             </span>
             <span>
               <i class="el-icon-chat-dot-round"></i>
-              {{ item.commentNumber }}
+              {{ item.comment_number }}
             </span>
           </div>
         </div>

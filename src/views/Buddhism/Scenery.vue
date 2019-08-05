@@ -8,15 +8,18 @@
     </el-breadcrumb>
 
     <!-- 普陀十二景 -->
-    <image-list :imageList="twelveScenery" :title="'普陀十二景'"></image-list>
+    <divider :title="'普陀十二景'" :icon="'iconzhuantituji'"></divider>
+    <image-list :imageList="twelveScenery"></image-list>
 
     <!-- 其他图片 -->
-    <image-list :imageList="otherScenery"  :title="'更多风光'"></image-list>
+    <divider :title="'更多风光'" :icon="'iconzhuantituji'"></divider>
+    <image-list :imageList="otherScenery"></image-list>
   </div>
 </template>
 
 <script>
 import ImageList from '../../components/ImageList'
+import divider from '../../components/Divider'
 import config from '../../config'
 
 export default {
@@ -27,7 +30,8 @@ export default {
     }
   },
   components: {
-    'image-list': ImageList
+    'image-list': ImageList,
+    divider
   },
   created() {
     this.getTwelveScenery()

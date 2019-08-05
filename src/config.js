@@ -24,8 +24,7 @@ export default {
   EXECUTE_GET_HOME_NATURE_IMAGES: `${BASE_URL}/getHomeNatureImages`,
   // 获取 nature 初始化数据
   EXECUTE_GET_NATURE_INIT: `${BASE_URL}/nature`,
-  // 获取 nature 初始化数据
-  EXECUTE_GET_BUDDHISM_INIT: `${BASE_URL}/buddhism`,
+
   // 获取评论初始化数据
   EXECUTE_GET_COMMENTS: `${BASE_URL}/nature/comments`,
   // 添加评论初始化数据
@@ -53,6 +52,16 @@ export default {
   EXECUTE_GET_BUILDING: `${BASE_URL}/buddhism/building`,
   // 获取文化节数据
   EXECUTE_GET_CULTURE: `${BASE_URL}/buddhism/culture`,
+  // 获取观音法界轮播图数据
+  EXECUTE_GET_GUANYIN_CAROUSEL: `${BASE_URL}/buddhism/carousel`,
+  // 获取观音法界单体项目数据
+  EXECUTE_GET_GUANYIN_PROJECT: `${BASE_URL}/buddhism/project`,
+  // 获取观音法界文章
+  EXECUTE_GET_GUANYIN_ARTICLE: `${BASE_URL}/buddhism/article`,
+  // 获取普陀寺庙庵堂
+  EXECUTE_GET_BUILDING_ARTICLE: `${BASE_URL}/buddhism/buildingArticle`,
+  // 获取普陀寺庙庵堂
+  EXECUTE_GET_BUILDING_MUSEUM_INFO: `${BASE_URL}/buddhism/museumInfo`,
 
   // 海天佛国首页
   EXECUTE_GET_BUDDHISM_HOME: `${BASE_URL}/buddhism/getBuddhismHomeContent`,
@@ -90,5 +99,13 @@ export default {
   // 删除图表数据
   EXECUTE_GET_DELETE_CHART_DATA: `${BASE_URL}/user/deleteChartData`,
   // 更新图表数据
-  EXECUTE_POST_UPDATE_CHART_DATA: `${BASE_URL}/user/updateChartData`
+  EXECUTE_POST_UPDATE_CHART_DATA: `${BASE_URL}/user/updateChartData`,
+
+  // 用户登录
+  // 用户名校验
+  EXECUTE_POST_USERNAME_CHECK: `${BASE_URL}/user/usernameCheck`,
+  // 登录
+  EXECUTE_POST_LOGIN: `${BASE_URL}/user/login`,
+  // 用户名注册
+  EXECUTE_POST_REGISTER: `${BASE_URL}/user/register`
 };

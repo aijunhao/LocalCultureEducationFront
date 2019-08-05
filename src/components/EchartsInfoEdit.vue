@@ -12,9 +12,22 @@
 
       <div class="info-edit-message">
         <el-form label-width="80px">
-          <el-form-item label="名称">
-            <el-input :disabled="disabled[i] === null ? true : disabled[i]" v-model="info.title"></el-input>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="名称">
+                <el-input
+                  :disabled="disabled[i] === null ? true : disabled[i]"
+                  v-model="info.title"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12">
+              <el-form-item label="颜色">
+                <el-color-picker :disabled="disabled[i]" v-model="info.color"></el-color-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
           <el-row>
             <el-col :span="12">
@@ -34,28 +47,13 @@
             </el-col>
           </el-row>
 
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="发布时间">
-                <el-date-picker
-                  disabled
-                  format="yyyy-MM-dd HH:mm:ss"
-                  type="date"
-                  v-model="info.time"
-                ></el-date-picker>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="12">
-              <el-form-item label="颜色">
-                <el-color-picker :disabled="disabled[i]" v-model="info.color"></el-color-picker>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <el-form-item label="发布时间">
+            <el-date-picker disabled format="yyyy-MM-dd HH:mm:ss" type="date" v-model="info.time"></el-date-picker>
+          </el-form-item>
 
           <el-form-item label="内容">
             <el-input
-              :autosize="{ minRows: 2, maxRows: 5}"
+              :autosize="{ minRows: 3, maxRows: 5}"
               :disabled="disabled[i]"
               placeholder="请输入内容"
               type="textarea"

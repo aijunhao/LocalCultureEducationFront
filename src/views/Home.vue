@@ -3,39 +3,48 @@
     <!-- 轮播图 -->
     <carousel :imgList="imgList"></carousel>
 
-    <!-- 首页导航 -->
-    <div :key="i" class="home-content" v-for="(item, i) in initMessage">
-      <p class="home-content-title">{{ item.module_name }}</p>
-      <div class="home-content-message">
-        <div class="home-content-message-img">
-          <img :src="item.url" />
+    <div class="home-main">
+      <!-- 首页导航 -->
+      <template v-for="(item, i) in initMessage">
+        <div class="home-content">
+          <p class="home-content-title">{{ item.module_name }}</p>
+          <div class="home-content-message">
+            <div class="home-content-message-img">
+              <img :src="item.url" />
+            </div>
+            <div class="home-content-message-main">
+              <p>{{ item.title }}</p>
+              <p>{{ item.content }}</p>
+              <el-button @click="$router.push({name: item.target})" type="danger">更多</el-button>
+            </div>
+          </div>
         </div>
-        <div class="home-content-message-main">
-          <p>{{ item.title }}</p>
-          <p>{{ item.content }}</p>
-          <el-button @click="$router.push({name: item.target})" type="danger">更多</el-button>
-        </div>
+        <divider
+          :icon="'iconlianhuachan'"
+          :position="'center'"
+          :preTitle="i % 2 === 0 ? '普' : '佛'"
+          :title="i % 2 === 0 ? '陀' : '缘'"
+        ></divider>
+      </template>
+
+      <!-- 图片列表 -->
+      <div class="home-content">
+        <p class="home-content-title">普陀美景</p>
+        <ul id="home_nature_image_list">
+          <li :key="i" v-for="(item, i) in natureImages">
+            <el-popover placement="top" trigger="hover" width="600">
+              <!-- 弹出框大图 -->
+              <el-image :src="item.url" fit="fill"></el-image>
+              <!-- 缩略图 -->
+              <el-image :src="item.url" fit="fill" slot="reference"></el-image>
+            </el-popover>
+          </li>
+          <li @click="$router.push({name: 'Scenery'})">
+            <i class="myicons iconmore"></i>
+            <p>查看更多</p>
+          </li>
+        </ul>
       </div>
-    </div>
-
-    <!-- 图片列表 -->
-    <div class="home-content">
-      <p class="home-content-title">普陀美景</p>
-      <ul id="home_nature_image_list">
-        <li :key="i" v-for="(item, i) in natureImages">
-          <el-popover placement="top" trigger="hover" width="600">
-            <!-- 弹出框大图 -->
-            <el-image :src="item.url" fit="fill"></el-image>
-            <!-- 缩略图 -->
-            <el-image :src="item.url" fit="fill" slot="reference"></el-image>
-          </el-popover>
-        </li>
-        <li @click="$router.push({name: 'Scenery'})">
-
-          <i class="myicons iconmore"></i>
-          <p>查看更多</p>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
@@ -43,6 +52,7 @@
 <script>
 import config from '../config'
 import carousel from '../components/Carousel'
+import divider from '../components/Divider'
 
 export default {
   data() {
@@ -112,7 +122,8 @@ export default {
     this.getHomeNatureImages()
   },
   components: {
-    carousel
+    carousel,
+    divider
   }
 }
 </script>
@@ -156,31 +167,37 @@ export default {
 
 @media screen and (max-width: 960px)
   #home
-    .home-content
+    .home-main
       padding 10px
 
-      img
-        width 100%
+      .home-content
+        padding 10px 0
 
-      .home-content-title
-        font-size 1.5rem
-        margin 10px 0
+        img
+          width 100%
 
-      .home-content-message
-        p:nth-child(1)
-          font-size 1.2rem
+        .home-content-title
+          font-size 1.5rem
+          margin 0 0 10px 0
 
-        p:nth-child(2)
-          font-size 0.8rem
+        .home-content-message
+          p:nth-child(1)
+            font-size 1.2rem
+
+          p:nth-child(2)
+            font-size 0.8rem
 
 @media screen and (min-width: 960px)
   #home
+    .home-main
+      padding 0 15%
+
     .home-content
-      padding 50px 15%
+      padding 30px 0
 
       .home-content-title
         font-size 2.5rem
-        margin 30px 0
+        margin 0 0 20px 0
 
       .home-content-message
         display flex

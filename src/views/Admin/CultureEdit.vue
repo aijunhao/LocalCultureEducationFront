@@ -36,7 +36,7 @@
         </ul>
 
         <li @click="goAnchor('culture_edit_guanyin')" class="menu-title">观音法界轮播图模块</li>
-
+        <li @click="goAnchor('culture_edit_guanyin_main')" class="menu-title">观音法界总体规划</li>
         <li @click="goAnchor('culture_edit_guanyin_project')" class="menu-title">观音法界单体项目模块</li>
 
         <!-- 观音法界单体项目 -->
@@ -99,10 +99,21 @@
       <carousel-edit :imageList="guanyinList" :type="2"></carousel-edit>
     </div>
 
+    <!-- 观音法界总体规划 -->
+    <div class="culture-edit-box anchor-class" id="culture_edit_guanyin_main">
+      <p class="title">观音法界总体规划</p>
+      <p class="tips">关于这模块的介绍</p>
+
+      <div v-for="(item, i) in guanyinArticleList" :key="i">
+        <p>标题：{{ item.title }}</p>
+        <p>内容：{{ item.content }}</p>
+      </div>
+    </div>
+
     <!-- 观音法界页面单体项目编辑 -->
     <div class="culture-edit-box anchor-class" id="culture_edit_guanyin_project">
       <p class="title">观音法界单体项目模块</p>
-      <p class="tips">该模块</p>
+      <p class="tips">该模块主要介绍观音法界的五个单体项目，分别为居士学院、正法讲寺暨中国佛学院普陀山学院女众部、观音圣坛、普隐精舍、中国佛学院普陀山学院男众部及扩建工程。</p>
 
       <module-edit
         :anchor="'anchor-class'"
@@ -151,6 +162,9 @@ export default {
       guanyinList: [],
       // 观音法界单体项目列表
       guanyinSingleProjectList: [],
+      // 观音法界文章数据
+      guanyinArticleList: [],
+      // 首页模块数据
       moduleList: []
     }
   },
@@ -159,6 +173,8 @@ export default {
     this.getExhibits()
     this.getCarousel()
     this.getCultureModule()
+    this.getProject()
+    this.getArticle()
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
@@ -195,7 +211,7 @@ export default {
       $('html,body').animate({ scrollTop: $('#' + id).offset().top - 80 }, 500)
     },
     /**
-     * 获取文章
+     * 获取非物质文化遗产文章
      */
     getCulture() {
       this.$axios({
@@ -232,12 +248,12 @@ export default {
     getCarousel() {
       this.$axios({
         method: 'get',
-        url: config.EXECUTE_GET_BUDDHISM_INIT
+        url: config.EXECUTE_GET_GUANYIN_CAROUSEL
       })
         .then(req => {
-          if (req.status === 200) {
-            this.guanyinList = req.data.carousel
-            this.guanyinSingleProjectList = req.data.others
+          if (req.data) {
+            console.log(req.data)
+            this.guanyinList = req.data
           }
         })
         .catch(err => {
@@ -245,7 +261,43 @@ export default {
         })
     },
     /**
-     * 获取初始化页面数据
+     * 获取观音法界单体项目数据
+     */
+    getProject() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_GUANYIN_PROJECT
+      })
+        .then(req => {
+          if (req.data) {
+            // console.log(req.data)
+            this.guanyinSingleProjectList = req.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取观音法界文章
+     */
+    getArticle() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_GUANYIN_ARTICLE
+      })
+        .then(req => {
+          if (req.data) {
+            // console.log(req.data)
+            this.guanyinArticleList = req.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    /**
+     * 获取文化首页模块数据
      */
     getCultureModule() {
       this.$axios({
@@ -254,7 +306,7 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            console.log(req.data)
+            // console.log(req.data)
             this.moduleList = req.data
           }
         })
