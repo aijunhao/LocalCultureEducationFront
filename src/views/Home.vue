@@ -29,7 +29,7 @@
 
       <!-- 图片列表 -->
       <div class="home-content">
-        <p class="home-content-title">普陀美景</p>
+        <p class="home-content-title">普陀山水</p>
         <ul id="home_nature_image_list">
           <li :key="i" v-for="(item, i) in natureImages">
             <el-popover placement="top" trigger="hover" width="600">

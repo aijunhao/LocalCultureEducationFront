@@ -36,15 +36,18 @@
     <!-- 评论列表 -->
     <ul class="comments-list">
       <li :key="i" v-for="(item, i) in comments">
-        <p>第 {{ i+1 }} 楼</p>
-        <p>{{ item.content }}</p>
-        <p>
-          <span>{{ item.time | dataFormat() }}</span>
-          <span @click="addThumbs(item.id)">
-            <i class="myicons iconthumbsoup"></i>
-            {{ item.thumbs }}
-          </span>
-        </p>
+        <img :src="item.portrait" alt />
+        <div class="comments-box">
+          <p class="name" v-text="item.nickname"></p>
+          <p class="content" v-text="item.content"></p>
+          <p class="time-and-thumb">
+            <span>{{ item.time | dataFormat() }}</span>
+            <span @click="addThumbs(item.id)">
+              <i class="myicons iconthumbsoup"></i>
+              {{ item.thumbs }}
+            </span>
+          </p>
+        </div>
       </li>
     </ul>
 
@@ -103,11 +106,12 @@ export default {
       this.$axios({
         method: 'get',
         url:
-          config.EXECUTE_GET_COMMENTS + `/${this.id}/${this.pages}/${this.sortType}`
+          config.EXECUTE_GET_COMMENTS +
+          `/${this.id}/${this.pages}/${this.sortType}`
       })
         .then(req => {
           if (req.status === 200) {
-            console.log(req.data)
+            // console.log(req.data)
             this.comments = req.data
           }
         })
@@ -140,17 +144,20 @@ export default {
      * 提交评论
      */
     submitComment() {
-      if (this.myComment != '') {
+      if (!this.$store.getters.isLogin) {
+        this.$message.error('您尚未登录，请先登录后再发表哦！')
+      } else if (this.myComment != '') {
         this.$axios({
           method: 'post',
           url: config.EXECUTE_POST_COMMENTS,
           data: {
             image_id: this.id,
-            content: this.myComment
+            content: this.myComment,
+            user_id: this.$store.state.user.id
           }
         })
           .then(req => {
-            console.log(req)
+            // console.log(req)
             if (req.status === 200) {
               this.$message('评论成功')
               // 重新加载数据
@@ -162,9 +169,8 @@ export default {
             }
           })
           .catch(err => {
-            console.log('请求错误')
+            this.$message.error('服务器繁忙，请稍后再试。')
           })
-
         this.myComment = ''
       } else {
         this.$message.error('输入内容不能为空！')
@@ -236,22 +242,33 @@ export default {
       margin 5px 0
       min-height 50px
       padding 10px
-      border-radius 5px
-      border 1px solid #000
+      border-bottom 1px solid #000
+      display -webkit-flex
+      display flex
+      justify-content space-between
 
-      p:first-child
-        font-weight 600
-        margin 0
+      img
+        width 50px
+        height 50px
+        margin 10px 20px
+        border-radius 50%
 
-      p:nth-child(2)
-        margin 10px 0
+      .comments-box
+        width calc(100% - 90px)
 
-      p:nth-child(3)
-        margin 0
-        line-height 16px
+        .name
+          font-weight 600
+          margin 0
 
-        span:first-child
-          margin-right 30px
+        .content
+          margin 15px 0
+
+        .time-and-thumb
+          margin 0
+          font-size 0.8rem
+
+          span:first-child
+            margin-right 30px
 
   .comments-end-tip
     text-align center

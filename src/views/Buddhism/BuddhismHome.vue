@@ -48,9 +48,12 @@
           <i class="myicons icondouble-up"></i>
         </p>
       </div>
-      <div>
-        图片吧
-      </div>
+      <ul class="buddhismhome_image_list">
+        <li :key="i" v-for="(item, i) in natureImages">
+          <!-- 缩略图 -->
+          <el-image :src="item.url" fit="fill"></el-image>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -63,6 +66,8 @@ export default {
   data() {
     return {
       buddhismHomeContent: [],
+      // 展示图片数据
+      natureImages: [],
       // 播放器
       playerOptions: {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
@@ -110,12 +115,30 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    /**
+     * 获取展示图片数据
+     */
+    getHomeNatureImages() {
+      this.$axios({
+        method: 'get',
+        url: config.EXECUTE_GET_HOME_NATURE_IMAGES
+      })
+        .then(req => {
+          if (req.status === 200) {
+            for (var i = 0; i < 4; i++) this.natureImages.push(req.data[i])
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   components: {
     module
   },
   created() {
+    this.getHomeNatureImages()
     this.getBuddhismHomeContent()
   }
 }
@@ -177,6 +200,20 @@ export default {
   .html-content > p
     margin 5px 0
 
+  .buddhismhome_image_list
+    list-style none
+    padding 0
+    margin 0
+
+    li
+      text-align center
+      padding 0
+      margin 0
+
+      .el-image
+        width 100%
+        height 100%
+
 @media screen and (min-width: 960px)
   #buddhismhome
     padding 20px 15%
@@ -202,6 +239,16 @@ export default {
 
       img
         width 45%
+
+    .buddhismhome_image_list
+      display flex
+      display -webkit-flex
+      justify-content flex-start
+      flex-wrap wrap
+
+      li
+        width 25%
+        height 150px
 
 @media screen and (max-width: 960px)
   #buddhismhome
