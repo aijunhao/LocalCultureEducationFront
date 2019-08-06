@@ -107,5 +107,11 @@ export default {
   // 登录
   EXECUTE_POST_LOGIN: `${BASE_URL}/user/login`,
   // 用户名注册
-  EXECUTE_POST_REGISTER: `${BASE_URL}/user/register`
+  EXECUTE_POST_REGISTER: `${BASE_URL}/user/register`,
+  // 用户登录信息
+  EXECUTE_GET_LONGIN_AND_REGISTER_OVERVIEW: `${BASE_URL}/user/getUserLoginStatistics`,
+  // 用户信息统计
+  EXECUTE_GET_USER_OVERVIEW: `${BASE_URL}/user/getUserOverview`,
+  // 获取用户数量信息
+  EXECUTE_GET_USER_ALL: `${BASE_URL}/user/getUserAll`
 };

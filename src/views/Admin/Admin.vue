@@ -4,8 +4,8 @@
       <!-- 头部 -->
       <el-header id="admin_header">
         <!-- 头像 -->
-        <div class="portrait"></div>
-        <div>普陀山佛学文化教育 管理员页面</div>
+        <div></div>
+        <div>佛缘普陀 管理员控制台</div>
         <div @click="$router.push('/home')">返回网页</div>
       </el-header>
 
@@ -22,12 +22,10 @@
             <el-submenu index="1">
               <template slot="title">
                 <i class="myicons iconzonglan"></i>
-                <span slot="title" class="title">总览</span>
+                <span class="title" slot="title">总览</span>
               </template>
               <el-menu-item-group>
-                <span slot="title">分组一</span>
                 <el-menu-item @click="$router.push({name: 'Overview'})" index="1-1">总览</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 
@@ -35,7 +33,7 @@
             <el-submenu index="2">
               <template slot="title">
                 <i class="myicons icontubiao_kuaizhuangpailie"></i>
-                <span slot="title" class="title">模块</span>
+                <span class="title" slot="title">模块</span>
               </template>
               <el-menu-item @click="$router.push({name: 'HomeEdit'})" index="2-1">首页</el-menu-item>
               <el-menu-item @click="$router.push({name: 'LocationEdit'})" index="2-2">地理环境</el-menu-item>
@@ -48,16 +46,16 @@
             <el-submenu index="3">
               <template slot="title">
                 <i class="myicons iconyonghu"></i>
-                <span slot="title" class="title">用户</span>
+                <span class="title" slot="title">用户</span>
               </template>
-              <el-menu-item index="3-1">用户管理</el-menu-item>
+              <el-menu-item index="3-1" @click="$router.push({name: 'UserEdit'})">用户管理</el-menu-item>
             </el-submenu>
 
             <!-- 社区 -->
             <el-submenu index="4">
               <template slot="title">
                 <i class="myicons iconshequ"></i>
-                <span slot="title" class="title">社区</span>
+                <span class="title" slot="title">社区</span>
               </template>
               <el-menu-item index="4-1">社区管理</el-menu-item>
             </el-submenu>
@@ -68,7 +66,7 @@
         <div class="admin-main">
           <router-view></router-view>
           <!-- <div id="link-slot">
-          </div> -->
+          </div>-->
         </div>
       </el-container>
     </el-container>
@@ -128,9 +126,9 @@ export default {
   .myicons
     font-size 24px
 
-  .title 
+  .title
     margin-left 10px
-    
+
   .aside-button
     width 64px
     height 64px
@@ -143,5 +141,4 @@ export default {
     margin-left 30px
     margin-right 220px
     width 100%
-
 </style>

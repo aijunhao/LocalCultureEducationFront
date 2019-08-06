@@ -29,6 +29,7 @@ import ArticleInfoEdit from "./views/Admin/ArticleInfoEdit.vue";
 import BuddhismEdit from "./views/Admin/BuddhismEdit.vue";
 import HistoryEdit from "./views/Admin/HistoryEdit.vue";
 import LocationEdit from "./views/Admin/LocationEdit.vue";
+import UserEdit from "./views/Admin/UserEdit.vue";
 
 // 用户
 import User from "./views/User/User.vue";
@@ -103,35 +104,40 @@ export default new Router({
           name: "Overview"
         },
         {
-          path: "/homeedit",
+          path: "homeedit",
           component: HomeEdit,
           name: "HomeEdit"
         },
         {
-          path: "/cultureedit",
+          path: "cultureedit",
           component: CultureEdit,
           name: "CultureEdit"
         },
         {
-          path: "/articleinfoedit",
+          path: "articleinfoedit",
           component: ArticleInfoEdit,
           name: "ArticleInfoEdit",
           props: true
         },
         {
-          path: "/buddhismedit",
+          path: "buddhismedit",
           component: BuddhismEdit,
           name: "BuddhismEdit"
         },
         {
-          path: "/HistoryEdit",
+          path: "HistoryEdit",
           component: HistoryEdit,
           name: "HistoryEdit"
         },
         {
-          path: "/LocationEdit",
+          path: "LocationEdit",
           component: LocationEdit,
           name: "LocationEdit"
+        },
+        {
+          path: "UserEdit",
+          component: UserEdit,
+          name: "UserEdit"
         }
       ]
     },
