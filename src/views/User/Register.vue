@@ -129,6 +129,11 @@ export default {
     },
     // 登录
     register(username, password) {
+      this.$message({
+        message: '&nbsp&nbsp注册中……',
+        iconClass: 'el-icon-loading',
+        dangerouslyUseHTMLString: true
+      })
       this.$axios({
         method: 'post',
         url: config.EXECUTE_POST_REGISTER,

@@ -81,8 +81,8 @@
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item disabled>当前未登录</el-dropdown-item>
-            <el-dropdown-item command="login" divided>登录</el-dropdown-item>
-            <el-dropdown-item command="register">注册</el-dropdown-item>
+            <el-dropdown-item command="Login" divided>登录</el-dropdown-item>
+            <el-dropdown-item command="Register">注册</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -95,7 +95,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item disabled>用户名：{{ user.nickname }}</el-dropdown-item>
             <el-dropdown-item disabled>用户权限：{{ user.powername }}</el-dropdown-item>
-            <el-dropdown-item command divided>用户中心</el-dropdown-item>
+            <el-dropdown-item command="UserHome" divided>用户中心</el-dropdown-item>
             <el-dropdown-item command="admin" v-show="user.power > 5">控制台</el-dropdown-item>
             <el-dropdown-item command="logout" divided icon="el-icon-circle-check">登出</el-dropdown-item>
           </el-dropdown-menu>
@@ -161,12 +161,8 @@ export default {
           message: '您已安全退出!',
           type: 'success'
         })
-      } else if (command === 'login') {
-        this.$router.push({ name: 'Login' })
-      } else if (command === 'register') {
-        this.$router.push({ name: 'Register' })
-      } else if (command === 'admin') {
-        this.$router.push({ name: 'admin' })
+      } else {
+        this.$router.push({ name: command })
       }
     }
   }
@@ -305,6 +301,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
     .app-main
       margin-top $header-height
+      min-height 650px
 
     .footer
       ul

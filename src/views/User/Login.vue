@@ -88,6 +88,11 @@ export default {
     },
     // 登录
     login(username, password) {
+      this.$message({
+        message: '&nbsp&nbsp登录中……',
+        iconClass: 'el-icon-loading',
+        dangerouslyUseHTMLString: true
+      })
       this.$axios({
         method: 'post',
         url: config.EXECUTE_POST_LOGIN,
@@ -106,7 +111,7 @@ export default {
             // 存储到 vuex
             this.$store.dispatch('userStore', req.data)
             // 跳转页面
-            this.$router.push({name: 'home'})
+            this.$router.push({ name: 'home' })
           } else {
             this.$message.error('用户名或密码错误，请重试！')
           }

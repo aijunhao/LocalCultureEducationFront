@@ -113,5 +113,9 @@ export default {
   // 用户信息统计
   EXECUTE_GET_USER_OVERVIEW: `${BASE_URL}/user/getUserOverview`,
   // 获取用户数量信息
-  EXECUTE_GET_USER_ALL: `${BASE_URL}/user/getUserAll`
+  EXECUTE_GET_USER_ALL: `${BASE_URL}/user/getUserAll`,
+  // 修改用户信息
+  EXECUTE_POST_USER_INFO: `${BASE_URL}/user/updateUserInfo`,
+  // 修改用户信息
+  EXECUTE_GET_DELETE_USER: `${BASE_URL}/user/deleteUser`
 };

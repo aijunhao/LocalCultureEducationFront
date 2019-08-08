@@ -35,6 +35,7 @@ import UserEdit from "./views/Admin/UserEdit.vue";
 import User from "./views/User/User.vue";
 import Login from "./views/User/Login.vue";
 import Register from "./views/User/Register.vue";
+import UserHome from "./views/User/UserHome.vue";
 
 Vue.use(Router);
 
@@ -91,6 +92,11 @@ export default new Router({
           name: "Register"
         }
       ]
+    },
+    {
+      path: "/UserHome",
+      component: UserHome,
+      name: "UserHome"
     },
     {
       path: "/admin",

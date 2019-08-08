@@ -51,7 +51,11 @@
             width="130"
           >
             <template slot-scope="scope">
-              <el-tag :type="tagColor(scope.row.power)" disable-transitions>{{scope.row.powername}}</el-tag>
+              <el-tag
+                :type="tagColor(scope.row.power)"
+                disable-transitions
+                effect="dark"
+              >{{ getPowername(scope.row.power) }}</el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -75,7 +79,13 @@ export default {
       // 时间过滤器
       dateFilter: [],
       // 用户过滤器
-      userFilter: [],
+      userFilter: [
+        { text: '普通用户', value: '普通用户' },
+        { text: '被警告的用户', value: '被警告的用户' },
+        { text: '账户被冻结的用户', value: '账户被冻结的用户' },
+        { text: '管理员', value: '管理员' },
+        { text: '超级管理员', value: '超级管理员' }
+      ],
       // 登录统计 option
       loginStatisticsOption: {
         title: {
@@ -176,13 +186,7 @@ export default {
           console.log(err)
         })
     },
-    tagColor(type) {
-      if (type === 10) return 'success'
-      else if (type === 9) return 'primary'
-      else if (type === 6) return 'danger'
-      else if (type === 5) return 'warning'
-      else return 'info'
-    },
+
     /**
      * 时间过滤器
      */
@@ -194,7 +198,51 @@ export default {
      * 用户过滤器
      */
     filterUser(value, row) {
-      return row.powername === value
+      return this.getPowername(row.power) === value
+    }
+  },
+  computed: {
+    /**
+     * 权限名称
+     */
+    getPowername() {
+      return index => {
+        let powername = [
+          '普通用户',
+          '普通用户',
+          '普通用户',
+          '普通用户',
+          '普通用户',
+          '被警告的用户',
+          '账户被冻结的用户',
+          '管理员',
+          '管理员',
+          '管理员',
+          '超级管理员'
+        ]
+        return powername[index]
+      }
+    },
+    /**
+     * 标签颜色
+     */
+    tagColor() {
+      return type => {
+        let color = [
+          'info',
+          'info',
+          'info',
+          'info',
+          'info',
+          'warning',
+          'danger',
+          'primary',
+          'primary',
+          'primary',
+          'success'
+        ]
+        return color[type]
+      }
     }
   },
   created() {
@@ -216,10 +264,10 @@ export default {
 
         // 数组去重
         let dateFilter = new Set()
-        let userFilter = new Set()
+        // let userFilter = new Set()
         newVal.data.forEach(element => {
           dateFilter.add(element.time)
-          userFilter.add(element.powername)
+          // userFilter.add(element.powername)
         })
         // 合成数据
         dateFilter.forEach(element => {
@@ -228,12 +276,12 @@ export default {
             value: element
           })
         })
-        userFilter.forEach(element => {
-          this.userFilter.push({
-            text: element,
-            value: element
-          })
-        })
+        // userFilter.forEach(element => {
+        //   this.userFilter.push({
+        //     text: element,
+        //     value: element
+        //   })
+        // })
       },
       deep: true
     }

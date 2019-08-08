@@ -15,7 +15,9 @@ export default new Vuex.Store({
       username: "",
       power: "",
       powername: "",
-      portrait: ""
+      portrait: "",
+      gender: "",
+      info: ""
     },
     // 是否登录
     isLogin: false
@@ -63,6 +65,23 @@ export default new Vuex.Store({
     // 用户信息存储
     userStore({ commit }, value) {
       // console.log(JSON.stringify(value));
+      // 数据格式化
+      if (value.gender === 0) value.gender = "男";
+      else value.gender = "女";
+      let powername = [
+        "普通用户",
+        "普通用户",
+        "普通用户",
+        "普通用户",
+        "普通用户",
+        "被警告的用户",
+        "账户被冻结的用户",
+        "管理员",
+        "管理员",
+        "管理员",
+        "超级管理员"
+      ];
+      value.powername = powername[value.power];
       // 保存到 session
       sessionStorage.setItem("user", JSON.stringify(value));
       commit("USER_STORE", value);
