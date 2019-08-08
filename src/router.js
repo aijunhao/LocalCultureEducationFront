@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from "./store";
 import Home from "./views/Home.vue";
 import Location from "./views/Location.vue";
 import Nature from "./views/Nature.vue";
@@ -39,7 +40,7 @@ import UserHome from "./views/User/UserHome.vue";
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -96,58 +97,87 @@ export default new Router({
     {
       path: "/UserHome",
       component: UserHome,
-      name: "UserHome"
+      name: "UserHome",
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: "/admin",
       component: Admin,
       name: "admin",
       redirect: "/admin/overview",
+      meta: {
+        requireAuth: true
+      },
       children: [
         {
           path: "overview",
           component: Overview,
-          name: "Overview"
+          name: "Overview",
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "homeedit",
           component: HomeEdit,
-          name: "HomeEdit"
+          name: "HomeEdit",
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "cultureedit",
           component: CultureEdit,
-          name: "CultureEdit"
+          name: "CultureEdit",
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "articleinfoedit",
           component: ArticleInfoEdit,
           name: "ArticleInfoEdit",
-          props: true
+          props: true,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "buddhismedit",
           component: BuddhismEdit,
-          name: "BuddhismEdit"
+          name: "BuddhismEdit",
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "HistoryEdit",
           component: HistoryEdit,
-          name: "HistoryEdit"
+          name: "HistoryEdit",
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "LocationEdit",
           component: LocationEdit,
-          name: "LocationEdit"
+          name: "LocationEdit",
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "UserEdit",
           component: UserEdit,
-          name: "UserEdit"
+          name: "UserEdit",
+          meta: {
+            requireAuth: true
+          }
         }
       ]
     },
-
     {
       path: "/nature",
       component: Nature,
@@ -219,3 +249,22 @@ export default new Router({
     }
   }
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    // 需要登录权限
+    if (store.state.isLogin) {
+      // 通过vuex state获取登录信息
+      next();
+    } else {
+      next({
+        path: "/user/login",
+        // 将跳转的路由path作为参数，登录成功后跳转到该路由，这里只是参数，跳转需要在登录页面实现
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else {
+    next();
+  }
+});
+export default router;

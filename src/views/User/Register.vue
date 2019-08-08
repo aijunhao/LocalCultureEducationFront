@@ -151,8 +151,9 @@ export default {
             })
             // 存储到 vuex
             this.$store.dispatch('userStore', req.data)
-            // 跳转页面
-            this.$router.push({name: 'home'})
+            // 获取路由携带的路径
+            let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+            this.$router.push({ path: redirect })
           } else {
             this.$message.error('注册失败，请重试！')
           }
