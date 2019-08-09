@@ -26,7 +26,7 @@
       </el-form-item>
     </el-form>
     <div class="login-button">
-      <el-button @click="checkForm('loginRuleForm')" type="success">登录</el-button>
+      <el-button :loading="loading" @click="checkForm('loginRuleForm')" type="success">{{loading?'登录中': '登录'}}</el-button>
       <el-button @click="resetForm('loginRuleForm')">重置</el-button>
     </div>
   </div>
@@ -64,6 +64,8 @@ export default {
         username: '',
         pass: ''
       },
+      // 登录加载
+      loading: false,
       // 表单验证规则
       rules: {
         username: [
@@ -88,11 +90,7 @@ export default {
     },
     // 登录
     login(username, password) {
-      this.$message({
-        message: '&nbsp&nbsp登录中……',
-        iconClass: 'el-icon-loading',
-        dangerouslyUseHTMLString: true
-      })
+      this.loading = true
       this.$axios({
         method: 'post',
         url: config.EXECUTE_POST_LOGIN,
@@ -104,13 +102,14 @@ export default {
         .then(req => {
           if (req.status === 200) {
             // console.log(req.data)
+            this.loading = false
             this.$message({
               message: `登录成功，欢迎您：${req.data.username}`,
               type: 'success'
             })
             // 存储到 vuex
             this.$store.dispatch('userStore', req.data)
-            // 获取路由携带的路径
+            // 获取路由携带的路径并跳转
             let redirect = decodeURIComponent(this.$route.query.redirect || '/')
             this.$router.push({ path: redirect })
           } else {

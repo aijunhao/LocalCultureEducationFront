@@ -117,5 +117,7 @@ export default {
   // 修改用户信息
   EXECUTE_POST_USER_INFO: `${BASE_URL}/user/updateUserInfo`,
   // 修改用户信息
-  EXECUTE_GET_DELETE_USER: `${BASE_URL}/user/deleteUser`
+  EXECUTE_GET_DELETE_USER: `${BASE_URL}/user/deleteUser`,
+  // 修改用户权限
+  EXECUTE_POST_UPADTE_USER_POWER: `${BASE_URL}/user/updateUserPower`
 };

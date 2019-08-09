@@ -116,7 +116,7 @@ let router = new Router({
           component: Overview,
           name: "Overview",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -124,7 +124,7 @@ let router = new Router({
           component: HomeEdit,
           name: "HomeEdit",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -132,7 +132,7 @@ let router = new Router({
           component: CultureEdit,
           name: "CultureEdit",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -141,7 +141,7 @@ let router = new Router({
           name: "ArticleInfoEdit",
           props: true,
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -149,7 +149,7 @@ let router = new Router({
           component: BuddhismEdit,
           name: "BuddhismEdit",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -157,7 +157,7 @@ let router = new Router({
           component: HistoryEdit,
           name: "HistoryEdit",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -165,7 +165,7 @@ let router = new Router({
           component: LocationEdit,
           name: "LocationEdit",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         },
         {
@@ -173,7 +173,7 @@ let router = new Router({
           component: UserEdit,
           name: "UserEdit",
           meta: {
-            requireAuth: true
+            requireAdmin: true
           }
         }
       ]
@@ -252,10 +252,26 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
-    // 需要登录权限
-    if (store.state.isLogin) {
+    // 需要普通用户登录权限
+    if (store.getters.isLogin) {
       // 通过vuex state获取登录信息
       next();
+    } else {
+      next({
+        path: "/user/login",
+        // 将跳转的路由path作为参数，登录成功后跳转到该路由，这里只是参数，跳转需要在登录页面实现
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else if (to.meta.requireAdmin) {
+    // 需要管理员登录权限
+    if (store.getters.isLogin) {
+      // 通过vuex state获取登录信息
+      if (store.state.user.power && store.state.user.power >= 8) next();
+      else
+        next({
+          path: "/"
+        });
     } else {
       next({
         path: "/user/login",

@@ -161,6 +161,7 @@ export default {
           message: '您已安全退出!',
           type: 'success'
         })
+        this.$router.push({ name: 'home' })
       } else {
         this.$router.push({ name: command })
       }

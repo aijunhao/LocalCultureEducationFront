@@ -19,8 +19,8 @@
         <el-input
           autocomplete="off"
           placeholder="长度在 8 到 16 个字符之内"
-          type="password"
           show-password
+          type="password"
           v-model="registerRuleForm.pass"
         ></el-input>
       </el-form-item>
@@ -35,7 +35,7 @@
       </el-form-item>
     </el-form>
     <div class="register-button">
-      <el-button @click="checkForm('registerRuleForm')" type="success">注册</el-button>
+      <el-button :loading="loading" @click="checkForm('registerRuleForm')" type="success">{{loading?'注册中': '注册'}}</el-button>
       <el-button @click="resetForm('registerRuleForm')">重置</el-button>
     </div>
   </div>
@@ -84,6 +84,8 @@ export default {
         pass: '',
         checkPass: ''
       },
+      // 加载
+      loading: false,
       // 表单验证规则
       rules: {
         username: [
@@ -129,11 +131,7 @@ export default {
     },
     // 登录
     register(username, password) {
-      this.$message({
-        message: '&nbsp&nbsp注册中……',
-        iconClass: 'el-icon-loading',
-        dangerouslyUseHTMLString: true
-      })
+      this.loading = true
       this.$axios({
         method: 'post',
         url: config.EXECUTE_POST_REGISTER,
@@ -149,6 +147,7 @@ export default {
               message: `注册成功，欢迎您：${req.data.username}`,
               type: 'success'
             })
+            this.loading = false
             // 存储到 vuex
             this.$store.dispatch('userStore', req.data)
             // 获取路由携带的路径
