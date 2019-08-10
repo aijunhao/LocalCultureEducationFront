@@ -91,7 +91,7 @@ export default {
         url: config.EXECUTE_GET_HOME_CAROUSEL
       })
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           if (data.data) this.imgList = data.data
         })
         .catch(err => {

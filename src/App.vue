@@ -10,69 +10,67 @@
         src="./assets/putuoshan.png"
       />
 
-      <!-- 列表按钮，是否显示 -->
-      <label for="menu-checkbox">
-        <i class="myicons iconcaidan app-menu-button"></i>
-      </label>
-      <input checked id="menu-checkbox" type="checkbox" />
-
       <!-- 菜单 -->
       <div class="app-menu">
-        <router-link tag="li" to="/home">首页</router-link>
-        <router-link tag="li" to="/location">地理环境</router-link>
-        <div class="drapdown">
-          <router-link class="dropbtn" tag="a" to="/buddhism/buddhismhome">
-            海天佛国
-            <i class="el-icon-arrow-down"></i>
-          </router-link>
-          <div class="dropdown-content">
-            <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">
-              <i class="myicons iconVRquanjingtu"></i>&nbspVR全景逛普陀
-            </a>
-            <router-link tag="a" to="/buddhism/building">
-              <i class="myicons iconsimiao"></i>&nbsp寺庙庵堂
+        <i class="myicons iconcaidan app-menu-button"></i>
+
+        <div class="app-menu-list">
+          <router-link tag="li" to="/home">首页</router-link>
+          <router-link tag="li" to="/location">地理环境</router-link>
+          <div class="drapdown">
+            <router-link class="dropbtn" tag="a" to="/buddhism/buddhismhome">
+              海天佛国
+              <i class="el-icon-arrow-down"></i>
             </router-link>
-            <router-link tag="a" to="/buddhism/scenery">
-              <i class="myicons iconshanshui"></i>&nbsp普陀山水
-            </router-link>
+            <div class="dropdown-content">
+              <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">
+                <i class="myicons iconVRquanjingtu"></i>&nbspVR全景逛普陀
+              </a>
+              <router-link tag="a" to="/buddhism/building">
+                <i class="myicons iconsimiao"></i>&nbsp寺庙庵堂
+              </router-link>
+              <router-link tag="a" to="/buddhism/scenery">
+                <i class="myicons iconshanshui"></i>&nbsp普陀山水
+              </router-link>
+            </div>
           </div>
-        </div>
-        <div class="drapdown">
-          <router-link class="dropbtn" tag="a" to="/buddhism/culturehome">
-            佛学文化
-            <i class="el-icon-arrow-down"></i>
-          </router-link>
-          <div class="dropdown-content">
-            <router-link tag="a" to="/buddhism/museum">
-              <i class="myicons iconbowuguan"></i>&nbsp佛国馆藏
+          <div class="drapdown">
+            <router-link class="dropbtn" tag="a" to="/buddhism/culturehome">
+              佛学文化
+              <i class="el-icon-arrow-down"></i>
             </router-link>
-            <router-link tag="a" to="/buddhism/guanyin">
-              <i class="myicons iconlianhuachan"></i>&nbsp观音法界
-            </router-link>
-            <router-link tag="a" to="/buddhism/culture">
-              <i class="myicons iconyichanjicheng"></i>&nbsp非物质文化遗产
-            </router-link>
+            <div class="dropdown-content">
+              <router-link tag="a" to="/buddhism/museum">
+                <i class="myicons iconbowuguan"></i>&nbsp佛国馆藏
+              </router-link>
+              <router-link tag="a" to="/buddhism/guanyin">
+                <i class="myicons iconlianhuachan"></i>&nbsp观音法界
+              </router-link>
+              <router-link tag="a" to="/buddhism/culture">
+                <i class="myicons iconyichanjicheng"></i>&nbsp非物质文化遗产
+              </router-link>
+            </div>
           </div>
-        </div>
-        <div class="drapdown">
-          <router-link class="dropbtn" tag="a" to="/buddhism/HistoryHome">
-            佛国编年史
-            <i class="el-icon-arrow-down"></i>
-          </router-link>
-          <div class="dropdown-content">
-            <router-link tag="a" to="/buddhism/history">
-              <i class="myicons iconhistory"></i>&nbsp普陀佛史
+          <div class="drapdown">
+            <router-link class="dropbtn" tag="a" to="/buddhism/HistoryHome">
+              佛国编年史
+              <i class="el-icon-arrow-down"></i>
             </router-link>
-            <router-link tag="a" to="/buddhism/monk">
-              <i class="myicons iconchancha"></i>&nbsp历代高僧
-            </router-link>
+            <div class="dropdown-content">
+              <router-link tag="a" to="/buddhism/history">
+                <i class="myicons iconhistory"></i>&nbsp普陀佛史
+              </router-link>
+              <router-link tag="a" to="/buddhism/monk">
+                <i class="myicons iconchancha"></i>&nbsp历代高僧
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 用户 -->
-    <div id="link_button">
+    <div id="link_button" v-drag>
       <!-- 未登录 -->
       <div v-show="!isLogin">
         <el-dropdown @command="handleCommand">
@@ -88,9 +86,9 @@
       </div>
       <div v-show="isLogin">
         <!-- 已登录 -->
-        <el-dropdown @command="handleCommand">
+        <el-dropdown @command="handleCommand" trigger="click">
           <div class="user">
-            <img :src="user.portrait" />
+            <img :src="user.portrait" draggable="false" />
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item disabled>用户名：{{ user.nickname }}</el-dropdown-item>
@@ -166,6 +164,22 @@ export default {
         this.$router.push({ name: command })
       }
     }
+  },
+  directives: {
+    drag(el, bindings) {
+      el.onmousedown = function(e) {
+        // 鼠标到选中项的距离
+        var disx = e.pageX - el.offsetLeft
+        var disy = e.pageY - el.offsetTop
+        document.onmousemove = function(e) {
+          el.style.left = e.pageX - disx + 'px'
+          el.style.top = e.pageY - disy + 'px'
+        }
+        document.onmouseup = function() {
+          document.onmousemove = document.onmouseup = null
+        }
+      }
+    }
   }
 }
 </script>
@@ -180,14 +194,11 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
   flex-wrap $w
   justify-content $h
 
-#menu-checkbox
-  display none
-
 #link_button
   position fixed
   top 130px
   right 50px
-  z-index 50
+  z-index 100
 
   .user
     width 48px
@@ -215,14 +226,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
     top 0
     z-index 100
 
-    // 菜单按钮
-    .app-menu-button
-      float right
-      margin-right 10px
-      font-size 3rem !important
-      line-height 70px
-
-    .app-menu
+    .app-menu-list
       li
         list-style none
 
@@ -276,29 +280,29 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
         height $header-height - 10px
         margin-left 50px
 
-      // 菜单按钮
-      .app-menu-button
-        display none
-
       .app-menu
-        flex()
-        margin-right 50px
-
-        li, .dropbtn
-          text-align center
-          line-height $header-height
-          width 130px
-
-        .dropdown-content
-          position absolute
-          background rgba(255, 255, 255, 0.8)
+        .app-menu-button
           display none
 
-          a
-            box-sizing border-box
-            text-align left
-            padding 12px 16px
-            min-width 170px
+        .app-menu-list
+          flex()
+          margin-right 50px
+
+          li, .dropbtn
+            text-align center
+            line-height $header-height
+            width 130px
+
+          .dropdown-content
+            position absolute
+            background rgba(255, 255, 255, 0.8)
+            display none
+
+            a
+              box-sizing border-box
+              text-align left
+              padding 12px 16px
+              min-width 170px
 
     .app-main
       margin-top $header-height
@@ -315,9 +319,6 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 @media screen and (max-width: 960px)
   $header-height = 70px
 
-  #menu-checkbox:checked ~ .app-menu
-    display none
-
   #app
     .app-header
       height $header-height
@@ -327,18 +328,30 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
         margin 5px 10px
 
       .app-menu
-        background #fff
+        &:hover .app-menu-list
+          display block
 
-        li, .drapdown
-          border 1px solid #000
-          border-radius 5px
-          padding 5px 10px
-          margin-bottom 5px
+        .app-menu-button
+          font-size 3rem !important
+          line-height 70px
+          position absolute
+          right 10px
+          top 0
 
-        .dropdown-content
-          a
-            padding-left 30px
-            line-height 35px
+        .app-menu-list
+          display none
+          background #fff
+
+          li, .drapdown
+            border 1px solid #000
+            border-radius 5px
+            padding 5px 10px
+            margin-bottom 5px
+
+          .dropdown-content
+            a
+              padding-left 30px
+              line-height 35px
 
     .app-main
       margin-top $header-height
