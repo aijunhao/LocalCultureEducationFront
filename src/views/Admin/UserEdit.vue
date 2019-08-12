@@ -98,8 +98,8 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            console.log(req.data.data)
-            this.userList = req.data.data
+            // console.log(req.data)
+            this.userList = req.data
           }
         })
         .catch(err => {

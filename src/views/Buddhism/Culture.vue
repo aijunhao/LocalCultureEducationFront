@@ -23,11 +23,7 @@
     <divider :icon="'iconyichanjicheng'" :title="'非物质文化遗产'"></divider>
     <div class="culture-overview anchor-class" id="culture_overview">
       <img alt src="../../assets/非物质文化遗产.jpg" />
-      <div>
-        <p>一是国家级非遗“观音传说”，不仅包含了丰富感人的观音民间故事，还有观音造像艺术、自然景观造型传说以及观音文化节庆活动；</p>
-        <p>二是省级非遗“观音香会”。每逢二月十九观音圣诞日、六月十九观音得道日、九月十九观音出家日，来自全国各地及海外许多地方的游客与信士云集到普陀山朝山进香，参观访问，参加各种法事活动和寺庙盛典。</p>
-        <p>三是省级非遗“普陀山佛茶茶道”。它是普陀山僧人在斋戒沐浴、虔心颂佛后，经过一整套严谨而神圣的茶道仪式来泡制茶的全过程，是佛教禅文化和传统茶文化的有机结合。经普查，普陀山还有包括方言、制造技艺、民间故事等很多其他非物质文化遗产，成为浙江省非物文化遗产生态保护区和省级文化旅游景区。</p>
-        <p>此外，还有众多未被列入非遗名单的内容，也十足珍贵。</p>
+      <div v-html="info.content">
       </div>
     </div>
 
@@ -55,7 +51,8 @@ export default {
   },
   data() {
     return {
-      cultureArticleList: []
+      cultureArticleList: [],
+      info: {}
     }
   },
   methods: {
@@ -68,7 +65,10 @@ export default {
         url: config.EXECUTE_GET_CULTURE
       })
         .then(req => {
-          if (req.data) this.cultureArticleList = req.data
+          if (req.data) {
+            this.cultureArticleList = req.data.articleList
+            this.info = req.data.info
+          }
         })
         .catch(err => {
           console.log(err)
@@ -146,6 +146,7 @@ export default {
       display flex
       display -webkit-flex
       justify-content space-between
+      align-items center
       margin-bottom 20px
 
       img
@@ -154,6 +155,7 @@ export default {
 
       div
         width calc(100% - 300px)
+        text-indent 2rem
 
 @media screen and (max-width: 960px)
   #culture_right_menu

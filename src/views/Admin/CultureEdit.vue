@@ -104,7 +104,7 @@
       <p class="title">观音法界总体规划</p>
       <p class="tips">关于这模块的介绍</p>
 
-      <div v-for="(item, i) in guanyinArticleList" :key="i">
+      <div :key="i" v-for="(item, i) in guanyinArticleList">
         <p>标题：{{ item.title }}</p>
         <p>内容：{{ item.content }}</p>
       </div>
@@ -154,7 +154,7 @@ export default {
   },
   data() {
     return {
-      // 文章列表
+      // 非物质文化遗产文章列表
       articleList: [],
       // 展品列表
       exhibitList: [],
@@ -169,12 +169,12 @@ export default {
     }
   },
   created() {
-    this.getCulture()
+    this.getCultureArticle()
     this.getExhibits()
-    this.getCarousel()
+    this.getGuanYinCarousel()
     this.getCultureModule()
-    this.getProject()
-    this.getArticle()
+    this.getGuanYinProject()
+    this.getGuanYinArticle()
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
@@ -213,13 +213,16 @@ export default {
     /**
      * 获取非物质文化遗产文章
      */
-    getCulture() {
+    getCultureArticle() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_CULTURE
       })
         .then(req => {
-          if (req.status === 200) this.articleList = req.data
+          if (req.status === 200) {
+            this.articleList = req.data.articleList
+            // this.info = req.data.info
+          }
         })
         .catch(err => {
           console.log(err)
@@ -245,14 +248,14 @@ export default {
     /**
      * 获取观音法界轮播图数据
      */
-    getCarousel() {
+    getGuanYinCarousel() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_GUANYIN_CAROUSEL
       })
         .then(req => {
           if (req.data) {
-            console.log(req.data)
+            // console.log(req.data)
             this.guanyinList = req.data
           }
         })
@@ -263,7 +266,7 @@ export default {
     /**
      * 获取观音法界单体项目数据
      */
-    getProject() {
+    getGuanYinProject() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_GUANYIN_PROJECT
@@ -281,7 +284,7 @@ export default {
     /**
      * 获取观音法界文章
      */
-    getArticle() {
+    getGuanYinArticle() {
       this.$axios({
         method: 'get',
         url: config.EXECUTE_GET_GUANYIN_ARTICLE

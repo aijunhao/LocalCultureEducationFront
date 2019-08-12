@@ -175,8 +175,10 @@ export default {
       display flex
       display -webkit-flex
       justify-content space-between
-      margin 20px 0
-      max-height 350px
+      margin 30px 0
+      max-height 380px
+      overflow hidden
+      
 
       &:nth-child(even)
         flex-direction row-reverse
@@ -184,6 +186,7 @@ export default {
       div
         width 50%
         padding 20px
+        overflow-y auto 
 
       img
         width 45%

@@ -7,7 +7,7 @@
     </el-breadcrumb>
 
     <!-- 介绍文字 -->
-    <div class="culturehome-overview">这里预计需要一段全局介绍</div>
+    <div class="culturehome-overview">曾经有这样的诗句用来形容普陀山，"海上有仙山，山在虚无缥缈间"，普陀山以其神奇、神圣、神秘，成为驰誉中外的旅游胜地。有普陀山佛教博物馆，是迄今为止我国宗教界自办的首个宗教博物馆；有观音传说、观音文化节、佛茶等非物质文化遗产举世瞩目；更有观音法界，实乃中国佛教第一圣地。</div>
 
     <module
       :direction="i % 2 ? true : false"
@@ -58,9 +58,8 @@ export default {
 <style lang="stylus">
 #culturehome
   .culturehome-overview
-    height 300px
-    background #ffffff
     margin-bottom 20px
+    text-indent 2rem
 
 @media screen and (min-width: 960px)
   #culturehome
