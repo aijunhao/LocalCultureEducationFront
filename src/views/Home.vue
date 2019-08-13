@@ -65,6 +65,17 @@ export default {
       natureImages: []
     }
   },
+  mounted() {
+    // 处理普通用户进入管理员权限页面的提示
+    let hasPower = this.$route.query.hasPower
+    if (hasPower == false) {
+      this.$message({
+        message: '很抱歉，您无权限访问管理员页面',
+        type: 'error',
+        offset: 70
+      })
+    }
+  },
   methods: {
     /**
      * 获取初始化页面数据

@@ -270,7 +270,8 @@ router.beforeEach((to, from, next) => {
       if (store.state.user.power && store.state.user.power >= 8) next();
       else
         next({
-          path: "/"
+          path: "/",
+          query: { hasPower: false }
         });
     } else {
       next({
