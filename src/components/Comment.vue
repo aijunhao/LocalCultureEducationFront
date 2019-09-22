@@ -132,6 +132,10 @@ export default {
           if (data.status === 200) {
             // 重新加载数据
             this.getComments()
+            this.$message({
+              message: `点赞成功！`,
+              type: 'success'
+            })
           } else {
             this.$message.error('很抱歉，点赞失败，请稍后再试')
           }

@@ -31,6 +31,7 @@ import BuddhismEdit from "./views/Admin/BuddhismEdit.vue";
 import HistoryEdit from "./views/Admin/HistoryEdit.vue";
 import LocationEdit from "./views/Admin/LocationEdit.vue";
 import UserEdit from "./views/Admin/UserEdit.vue";
+import CommentsEdit from "./views/Admin/CommentsEdit.vue";
 
 // 用户
 import User from "./views/User/User.vue";
@@ -175,6 +176,14 @@ let router = new Router({
           meta: {
             requireAdmin: true
           }
+        },
+        {
+          path: "CommentsEdit",
+          component: CommentsEdit,
+          name: "CommentsEdit",
+          meta: {
+            requireAdmin: true
+          }
         }
       ]
     },
@@ -217,7 +226,7 @@ let router = new Router({
     {
       path: "/buddhism/building",
       component: Building,
-      name: "building"
+      name: "Building"
     },
     {
       path: "/buddhism/guanyin",

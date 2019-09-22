@@ -93,9 +93,9 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item disabled>用户名：{{ user.nickname }}</el-dropdown-item>
             <el-dropdown-item disabled>用户权限：{{ user.powername }}</el-dropdown-item>
-            <el-dropdown-item command="UserHome" divided>用户中心</el-dropdown-item>
-            <el-dropdown-item command="admin" v-show="user.power > 5">控制台</el-dropdown-item>
-            <el-dropdown-item command="logout" divided icon="el-icon-circle-check">登出</el-dropdown-item>
+            <el-dropdown-item command="UserHome" divided icon="myicons iconyonghu1">个人中心</el-dropdown-item>
+            <el-dropdown-item command="admin" v-show="user.power > 5" icon="myicons iconnormal">控制台</el-dropdown-item>
+            <el-dropdown-item command="logout" divided icon="myicons iconquxiao">登出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -115,7 +115,7 @@
           <p>联系我们</p>
           <p class="footer-subtitle">地址</p>
           <p>浙江省绍兴市柯桥区越州大道958号</p>
-          <p class="footer-subtitle">联系方式</p>
+          <p class="footer-subtitle">联系网站负责人</p>
           <p>电话：182-4860-2820</p>
           <p>邮箱：1172949809@qq.com</p>
         </li>
@@ -246,7 +246,6 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
   .footer
     background #000
-    margin-top 50px
     color #fff
     padding 20px 0
 
@@ -305,8 +304,9 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
               min-width 170px
 
     .app-main
-      margin-top $header-height
-      min-height 650px
+      margin $header-height 0
+
+      min-height 750px
 
     .footer
       ul
@@ -354,7 +354,7 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
               line-height 35px
 
     .app-main
-      margin-top $header-height
+      margin $header-height 0
 
     .footer
       >p:last-child

@@ -113,11 +113,21 @@ export default {
   // 用户信息统计
   EXECUTE_GET_USER_OVERVIEW: `${BASE_URL}/user/getUserOverview`,
   // 获取用户数量信息
-  EXECUTE_GET_USER_ALL: `${BASE_URL}/user/getUserAll`,
+  EXECUTE_GET_USER: `${BASE_URL}/user/getUser`,
+  // 获取用户数量信息
+  EXECUTE_GET_USER_NUMBER: `${BASE_URL}/user/getUserNumber`,
   // 修改用户信息
   EXECUTE_POST_USER_INFO: `${BASE_URL}/user/updateUserInfo`,
   // 修改用户信息
   EXECUTE_GET_DELETE_USER: `${BASE_URL}/user/deleteUser`,
   // 修改用户权限
-  EXECUTE_POST_UPADTE_USER_POWER: `${BASE_URL}/user/updateUserPower`
+  EXECUTE_POST_UPADTE_USER_POWER: `${BASE_URL}/user/updateUserPower`,
+  // 获取评论，进行验证
+  EXECUTE_GET_COMMENTS_EXAMINE: `${BASE_URL}/user/examine`,
+  // 修改评论
+  EXECUTE_POST_UPADTE_COMMENTS: `${BASE_URL}/user/updateComments`,
+  // 删除评论
+  EXECUTE_GET_DELETE_COMMENTS: `${BASE_URL}/user/deleteComments`,
+  // 获取评论总数
+  EXECUTE_GET_COMMENTS_NUMMBER: `${BASE_URL}/user/getCommentsNumber`
 };

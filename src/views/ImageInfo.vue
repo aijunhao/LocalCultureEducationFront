@@ -5,6 +5,7 @@
       <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
       <el-breadcrumb-item>图片详情</el-breadcrumb-item>
       <el-breadcrumb-item>{{ imageInfo.title }}</el-breadcrumb-item>
+      <el-breadcrumb-item><strong @click="$router.go(-1)">返回上一级</strong></el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 图片对象显示 -->
@@ -33,7 +34,7 @@
 
     <!-- 评论 -->
     <div class="imageinfo-comment">
-      <comment :commentNumber="imageInfo.commentNumber" :id="imageInfoId" @reInit="initInfo"></comment>
+      <comment :commentNumber="imageInfo.comment_number" :id="imageInfoId" @reInit="initInfo"></comment>
     </div>
   </div>
 </template>

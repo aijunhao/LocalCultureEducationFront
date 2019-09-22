@@ -20,7 +20,35 @@ export default new Vuex.Store({
       info: ""
     },
     // 是否登录
-    isLogin: false
+    isLogin: false,
+    // 用户权限等级
+    powername: [
+      "普通用户",
+      "普通用户",
+      "普通用户",
+      "普通用户",
+      "普通用户",
+      "已警告",
+      "已冻结",
+      "管理员",
+      "管理员",
+      "管理员",
+      "超级管理员"
+    ],
+    // 权限等级颜色
+    powerColor: [
+      "info",
+      "info",
+      "info",
+      "info",
+      "info",
+      "warning",
+      "danger",
+      "primary",
+      "primary",
+      "primary",
+      "success"
+    ]
   },
   getters: {
     // isLogin: state => state.isLogin

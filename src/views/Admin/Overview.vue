@@ -268,7 +268,10 @@ export default {
     getUserAll() {
       this.$axios({
         method: 'get',
-        url: config.EXECUTE_GET_USER_ALL
+        url: config.EXECUTE_GET_USER,
+        params: {
+          pages: 0
+        }
       })
         .then(req => {
           if (req.status === 200) {

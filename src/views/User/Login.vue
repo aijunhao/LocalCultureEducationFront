@@ -26,7 +26,11 @@
       </el-form-item>
     </el-form>
     <div class="login-button">
-      <el-button :loading="loading" @click="checkForm('loginRuleForm')" type="success">{{loading?'登录中': '登录'}}</el-button>
+      <el-button
+        :loading="loading"
+        @click="checkForm('loginRuleForm')"
+        type="success"
+      >{{loading?'登录中': '登录'}}</el-button>
       <el-button @click="resetForm('loginRuleForm')">重置</el-button>
     </div>
   </div>
@@ -112,11 +116,11 @@ export default {
             // 获取路由携带的路径并跳转
             let redirect = this.$route.query.redirect || '/'
             this.$router.push({ path: redirect })
-          } else {
-            this.$message.error('用户名或密码错误，请重试！')
           }
         })
         .catch(err => {
+          this.loading = false
+          this.$message.error('用户名或密码错误，请重试！')
           console.log(err)
         })
     },

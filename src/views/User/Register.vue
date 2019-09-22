@@ -142,7 +142,7 @@ export default {
       })
         .then(req => {
           if (req.status === 200) {
-            console.log(req)
+            // console.log(req)
             this.$message({
               message: `注册成功，欢迎您：${req.data.username}`,
               type: 'success'
@@ -158,7 +158,8 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err)
+          this.loading = false
+          // console.log(err)
           this.$message.error('注册失败，请重试！')
         })
     },

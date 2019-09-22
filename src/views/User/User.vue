@@ -13,22 +13,11 @@
   </div>
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scope>
 #user
-  min-height 700px
   background url('../../assets/bgc.jpg')
   background-repeat no-repeat
   background-size cover
-
-  .user-login
-    width 400px
-    height 500px
-    background rgba(255, 255, 255, 0.8)
-    float right
-    margin 100px
-    padding 20px 50px
-    box-sizing border-box
-    border-radius 20px
 
   .header
     text-align center
@@ -56,4 +45,30 @@
 
   .router-link-active
     background #409EFF !important
+
+
+
+@media screen and (min-width: 960px)
+  #user
+    min-height 700px
+
+    .user-login
+      width 400px
+      height 500px
+      background rgba(255, 255, 255, 0.8)
+      float right
+      margin 100px
+      padding 20px 50px
+      box-sizing border-box
+      border-radius 20px
+
+@media screen and (max-width: 960px)
+  #user
+    padding 5px
+
+    .user-login
+      height 500px
+      background rgba(255, 255, 255, 0.8)
+      padding 20px 50px
+      border-radius 5px
 </style>

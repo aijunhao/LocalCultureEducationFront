@@ -48,7 +48,7 @@
                 <i class="myicons iconyonghu"></i>
                 <span class="title" slot="title">用户</span>
               </template>
-              <el-menu-item index="3-1" @click="$router.push({name: 'UserEdit'})">用户管理</el-menu-item>
+              <el-menu-item @click="$router.push({name: 'UserEdit'})" index="3-1">用户管理</el-menu-item>
             </el-submenu>
 
             <!-- 社区 -->
@@ -57,7 +57,7 @@
                 <i class="myicons iconshequ"></i>
                 <span class="title" slot="title">社区</span>
               </template>
-              <el-menu-item index="4-1">社区管理</el-menu-item>
+              <el-menu-item @click="$router.push({name: 'CommentsEdit'})" index="4-1">评论管理</el-menu-item>
             </el-submenu>
           </el-menu>
         </div>
