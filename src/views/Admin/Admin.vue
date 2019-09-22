@@ -4,29 +4,29 @@
       <!-- 头部 -->
       <el-header id="admin_header">
         <!-- 头像 -->
-        <div></div>
-        <div>佛缘普陀 管理员控制台</div>
-        <div @click="$router.push('/home')">返回网页</div>
+        <div>佛缘普陀</div>
+        <div>
+          <p class="title">管理员控制台</p>
+        </div>
+        <div @click="$router.push('/home')" class="btn-text">用户页面</div>
       </el-header>
 
       <!-- 主体 -->
-      <el-container id="admin_container">
+      <el-container id="admin_container" v-if="isShow">
         <!-- 左侧导航 -->
-        <div>
-          <div @click="changeAside()" class="aside-button">
-            <i class="el-icon-arrow-right" v-if="isCollapse"></i>
+        <div id="admin_menu">
+          <div @click="changeAside()" class="open-button">
+            <i class="el-icon-arrow-right" v-if="isOpen"></i>
             <i class="el-icon-arrow-left" v-else></i>
           </div>
-          <el-menu :collapse="isCollapse" class="el-menu-vertical-demo" default-active="1">
+          <el-menu :collapse="isOpen" class="el-menu-vertical-demo" default-active="1">
             <!-- 总览 -->
             <el-submenu index="1">
               <template slot="title">
                 <i class="myicons iconzonglan"></i>
                 <span class="title" slot="title">总览</span>
               </template>
-              <el-menu-item-group>
-                <el-menu-item @click="$router.push({name: 'Overview'})" index="1-1">总览</el-menu-item>
-              </el-menu-item-group>
+              <el-menu-item @click="$router.push({name: 'Overview'})" index="1-1">总览</el-menu-item>
             </el-submenu>
 
             <!-- 页面设置 -->
@@ -65,10 +65,10 @@
         <!-- 右侧内容 -->
         <div class="admin-main">
           <router-view></router-view>
-          <!-- <div id="link-slot">
-          </div>-->
         </div>
       </el-container>
+
+      <div id="admin_small" v-else v-text="tig"></div>
     </el-container>
   </div>
 </template>
@@ -78,7 +78,13 @@ export default {
   data() {
     return {
       // 展开收起状态
-      isCollapse: true
+      isOpen: true,
+      // 屏幕大小监测，是否正常显示
+      isShow: false,
+      // 屏幕过小的提醒文本
+      tig: '',
+      // 需要的屏幕大小
+      needWidth: 960
     }
   },
   mounted() {
@@ -88,9 +94,29 @@ export default {
     document.getElementById('header').style.display = 'flex'
   },
   methods: {
+    /**
+     * 修改侧边栏收缩展开
+     */
     changeAside() {
-      this.isCollapse = !this.isCollapse
+      this.isOpen = !this.isOpen
+    },
+    /**
+     * 管理员页面是否显示判定
+     */
+    adminIsShow() {
+      let width = document.body.clientWidth
+      if (width >= this.needWidth) this.isShow = true
+      else this.isShow = false
+      // 提示文本
+      this.tig = `当前屏幕过小，建议使用宽度 ${this.needWidth}px 以上设备或尝试使用横屏访问管理员页面。`
+      // console.log(width)
     }
+  },
+  created() {
+    this.adminIsShow()
+    window.addEventListener('resize', () => {
+      this.adminIsShow()
+    })
   }
 }
 </script>
@@ -110,18 +136,34 @@ export default {
   position fixed
   width 100%
   z-index 100
+  user-select none
 
-  .portrait
-    width 50px
-    height 50px
-    background #fff
-    border-radius 50%
+  .btn-text:hover
+    color #409EFF
+    font-weight 600
+    cursor pointer
+
+  .title
+    font-size 25px
+    font-family '华文行楷'
 
 #admin_container
-  margin 110px 30px
+  margin 100px 20px
+
+  .admin-main
+    margin-left 170px
+    margin-right 130px
+    width calc(100% - 340px)
+
+#admin_menu
+  position fixed
+  z-index 100
 
   .el-menu-vertical-demo:not(.el-menu--collapse)
-    width 200px
+    width 150px
+
+  .el-submenu .el-menu-item
+    min-width 150px
 
   .myicons
     font-size 24px
@@ -129,7 +171,7 @@ export default {
   .title
     margin-left 10px
 
-  .aside-button
+  .open-button
     width 64px
     height 64px
     line-height 64px
@@ -137,8 +179,12 @@ export default {
     text-align center
     margin-bottom 5px
 
-  .admin-main
-    margin-left 30px
-    margin-right 220px
-    width 100%
+#admin_small
+  min-height 500px
+  display flex
+  display -webkit-flex
+  justify-content center
+  align-items center
+  padding 30px
+  text-align center
 </style>

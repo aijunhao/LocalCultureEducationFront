@@ -223,14 +223,15 @@ export default {
 
 <style lang="stylus">
 #history_edit_right_menu
-  width 200px
-  max-height 600px
+  width 150px
+  max-height 500px
   overflow-y auto
   position fixed
   right 20px
-  top 110px
+  top 100px
   color #909399
   font-size 0.8rem
+  z-index 100
 
   .menu-title
     padding 10px 0 10px 15px

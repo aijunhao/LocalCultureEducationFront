@@ -24,8 +24,10 @@
         <i :class="['myicons', 'icons-big', buddhismHomeContent[0].icon]"></i>
         <span v-text="buddhismHomeContent[0].module_name"></span>
         <p>
-          <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">更多</a>
-          <i class="myicons icondouble-up"></i>
+          <a href="https://i.svrvr.com/?a=wapview&id=s62806" target="_blank">
+            更多
+            <i class="myicons icondouble-up"></i>
+          </a>
         </p>
       </div>
       <div class="buddhismhome-box">
@@ -44,8 +46,10 @@
         <i :class="['myicons', 'icons-big', buddhismHomeContent[2].icon]"></i>
         <span v-text="buddhismHomeContent[2].module_name"></span>
         <p @click="$router.push({name: buddhismHomeContent[2].target})">
-          更多
-          <i class="myicons icondouble-up"></i>
+          <span class="btn-text">
+            更多
+            <i class="myicons icondouble-up"></i>
+          </span>
         </p>
       </div>
       <ul class="buddhismhome_image_list">
@@ -157,10 +161,10 @@ export default {
 #buddhismhome
   padding 20px 15%
 
-  a
-    color black
-    text-decoration none
-    margin-right 3px
+  .btn-text:hover
+    color #409EFF
+    font-weight 600
+    cursor pointer
 
   .buddhismhome-overview
     margin-bottom 20px
@@ -182,6 +186,14 @@ export default {
 
     .icons-big
       font-size 32px
+
+    a
+      text-decoration none
+      margin-right 3px
+
+      &:hover
+        color #409EFF
+        font-weight 600
 
   .buddhismhome-box
     margin-top 10px

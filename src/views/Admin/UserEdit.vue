@@ -19,10 +19,10 @@
     >
       <el-table-column fixed type="index"></el-table-column>
       <el-table-column fixed label="ID" min-width="100" prop="id" sortable></el-table-column>
-      <el-table-column label="注册日期" min-width="140" prop="time" sortable></el-table-column>
+      <el-table-column label="注册日期" width="100" prop="time" sortable></el-table-column>
       <el-table-column label="用户名" min-width="100" prop="username"></el-table-column>
       <el-table-column label="昵称" min-width="100" prop="nickname"></el-table-column>
-      <el-table-column label="性别">
+      <el-table-column label="性别" width="50">
         <template slot-scope="scope">{{ scope.row.gender === 0 ? '男' : '女' }}</template>
       </el-table-column>
 
@@ -127,7 +127,7 @@ export default {
         params: {
           pages: this.pages,
           pageSize: this.pageSize
-        } 
+        }
       })
         .then(req => {
           if (req.status === 200) {

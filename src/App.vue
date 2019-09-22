@@ -70,7 +70,7 @@
     </div>
 
     <!-- 用户 -->
-    <div id="link_button" v-drag>
+    <div id="user_button" v-drag>
       <!-- 未登录 -->
       <div v-show="!isLogin">
         <el-dropdown @command="handleCommand">
@@ -94,7 +94,7 @@
             <el-dropdown-item disabled>用户名：{{ user.nickname }}</el-dropdown-item>
             <el-dropdown-item disabled>用户权限：{{ user.powername }}</el-dropdown-item>
             <el-dropdown-item command="UserHome" divided icon="myicons iconyonghu1">个人中心</el-dropdown-item>
-            <el-dropdown-item command="admin" v-show="user.power > 5" icon="myicons iconnormal">控制台</el-dropdown-item>
+            <el-dropdown-item command="admin" icon="myicons iconnormal" v-show="user.power > 5">控制台</el-dropdown-item>
             <el-dropdown-item command="logout" divided icon="myicons iconquxiao">登出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -121,12 +121,12 @@
         </li>
         <li>
           <p>相关连接</p>
-          <router-link tag="p" to="/home">首页</router-link>
-          <router-link tag="p" to="/location">地理环境</router-link>
-          <router-link tag="p" to="/buddhism/buddhismhome">海天佛国</router-link>
-          <router-link tag="p" to="/buddhism/culturehome">佛学文化</router-link>
-          <router-link tag="p" to="/buddhism/history">佛国编年史</router-link>
-          <router-link tag="p" to="/admin">管理员页面</router-link>
+          <router-link class="btn-text" tag="p" to="/home">首页</router-link>
+          <router-link class="btn-text" tag="p" to="/location">地理环境</router-link>
+          <router-link class="btn-text" tag="p" to="/buddhism/buddhismhome">海天佛国</router-link>
+          <router-link class="btn-text" tag="p" to="/buddhism/culturehome">佛学文化</router-link>
+          <router-link class="btn-text" tag="p" to="/buddhism/history">佛国编年史</router-link>
+          <router-link class="btn-text" tag="p" to="/admin">管理员页面</router-link>
           <p>团队成员</p>
         </li>
         <li>
@@ -134,7 +134,7 @@
           <p>此项目参加2019年多媒体设计竞赛，资源及内容来自互联网，如有侵权，联系删除。</p>
         </li>
       </ul>
-      <p>
+      <p class="ICP">
         <span>Design by: 艾俊豪</span>
         <span>&nbsp&nbsp</span>
         <span>备案号：浙ICP备18031478号-1</span>
@@ -194,11 +194,11 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
   flex-wrap $w
   justify-content $h
 
-#link_button
+#user_button
   position fixed
   top 130px
   right 50px
-  z-index 100
+  z-index 101
 
   .user
     width 48px
@@ -218,6 +218,9 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
       line-height 48px
 
 #app
+  .router-link-active
+    background #DCDFE6 !important
+
   .app-header
     width 100%
     background rgba(255, 255, 255, 0.8)
@@ -240,6 +243,8 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
         &:hover
           background #DCDFE6
+          cursor pointer
+          color #409EFF
 
       .drapdown:hover .dropdown-content
         display block
@@ -248,8 +253,13 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
     background #000
     color #fff
     padding 20px 0
+    user-select none
 
-    >p
+    .btn-text:hover
+      cursor pointer
+      color #409EFF
+
+    .ICP
       text-align center
 
     ul
@@ -305,7 +315,6 @@ flex($h = flex-start, $v = flex-start, $w = nowrap)
 
     .app-main
       margin $header-height 0
-
       min-height 750px
 
     .footer

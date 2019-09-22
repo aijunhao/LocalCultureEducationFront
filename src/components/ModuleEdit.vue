@@ -7,7 +7,7 @@
       v-for="(module, i) in moduleList"
     >
       <!-- 上传 -->
-      <div>
+      <div class="module-edit-upload">
         <el-upload
           :action="uploadUrl()"
           :on-success="(response, file, fileList) => handleModuleSuccess(response, file, fileList, i)"
@@ -53,7 +53,7 @@
         <el-button @click="editModule(i)" circle icon="el-icon-edit" type="success"></el-button>
         <el-button @click="lockModule(i)" circle icon="el-icon-lock" type="warning"></el-button>
         <el-button @click="updateModule(module, i)" circle icon="el-icon-upload" type="primary"></el-button>
-        <el-button type="danger" icon="el-icon-delete" circle disabled></el-button>
+        <el-button circle disabled icon="el-icon-delete" type="danger"></el-button>
       </div>
     </div>
   </div>
@@ -228,36 +228,41 @@ export default {
       margin-bottom 10px !important
 
     .module-edit-message
-      margin 0 50px
+      margin 0 30px
       width 100%
 
     .module-edit-button
+      width 60px
+
       button
         margin 10px
         display block
 
-    .avatar-uploader .el-upload
-      width 178px
-      height 178px
-      border 1px dashed #d9d9d9
-      border-radius 6px
-      cursor pointer
-      position relative
-      overflow hidden
+    .module-edit-upload
+      width 180px
 
-    .avatar-uploader .el-upload:hover
-      border-color #409EFF
+      .avatar-uploader .el-upload
+        width 178px
+        height 178px
+        border 1px dashed #d9d9d9
+        border-radius 6px
+        cursor pointer
+        position relative
+        overflow hidden
 
-    .avatar-uploader-icon
-      font-size 28px
-      color #8c939d
-      width 178px
-      height 178px
-      line-height 178px
-      text-align center
+      .avatar-uploader .el-upload:hover
+        border-color #409EFF
 
-    .avatar
-      width 178px
-      height 178px
-      display block
+      .avatar-uploader-icon
+        font-size 28px
+        color #8c939d
+        width 178px
+        height 178px
+        line-height 178px
+        text-align center
+
+      .avatar
+        width 178px
+        height 178px
+        display block
 </style>

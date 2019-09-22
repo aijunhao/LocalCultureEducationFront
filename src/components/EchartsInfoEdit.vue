@@ -6,11 +6,11 @@
       :key="i"
       v-for="(info, i) in infoList"
     >
-      <div class="info-edit-title">
+      <div class="echarts-info-edit-title">
         <p v-text="info.title"></p>
       </div>
 
-      <div class="info-edit-message">
+      <div class="echarts-info-edit-message">
         <el-form label-width="80px">
           <el-row>
             <el-col :span="12">
@@ -63,7 +63,7 @@
         </el-form>
       </div>
 
-      <div class="info-edit-setting">
+      <div class="echarts-info-edit-button">
         <!-- 状态 -->
         <p class="tips" v-text="status[i] ? status[i] : '已锁定...'"></p>
         <!-- 按钮 -->
@@ -75,7 +75,7 @@
     </div>
 
     <!-- 创建 -->
-    <div class="info-edit-new">
+    <div class="echarts-info-edit-new">
       <p class="tips">添加</p>
       <el-button @click="newData()" circle icon="el-icon-plus" type="success"></el-button>
     </div>
@@ -285,24 +285,25 @@ export default {
       padding 0 !important
       height 40px
 
-    .info-edit-title
-      width 100px
+    .echarts-info-edit-title
+      width 180px
 
       p
         text-align center
         font-size 1.5rem
 
-    .info-edit-message
-      width calc(100% - 260px)
+    .echarts-info-edit-message
+      margin 0 30px
+      width 100%
 
-    .info-edit-setting
+    .echarts-info-edit-button
       width 60px
 
       button
         margin 10px
         display block
 
-  .info-edit-new
+  .echarts-info-edit-new
     display flex
     display -webkit-flex
     justify-content flex-end

@@ -377,7 +377,6 @@ export default {
     padding 20px
 
     .title
-      font-size 1.5rem
       font-weight 600
       margin 0
 
@@ -421,17 +420,18 @@ export default {
       padding-bottom 20px
 
       .location-show-description
-        width 20%
-        min-width 300px
+        width 30%
+        min-width 200px
+        max-height 550px
+        overflow auto
 
         .title
-          font-size 1.5rem
+          font-size 1.2rem
           font-weight 600
           margin 0
 
       .location-show-map
-        width 80%
-        min-width 600px
+        width 70%
 
     .location-content
       display flex

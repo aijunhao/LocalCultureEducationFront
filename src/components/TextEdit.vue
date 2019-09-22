@@ -66,7 +66,7 @@
         </el-form>
       </div>
 
-      <div class="text-edit-setting">
+      <div class="text-edit-button">
         <!-- 状态 -->
         <p class="tips" v-text="status[i]"></p>
         <!-- 按钮 -->
@@ -289,9 +289,10 @@ export default {
         height 280px
 
     .text-edit-message
-      width calc(100% - 260px)
+      margin 0 30px
+      width 100%
 
-    .text-edit-setting
+    .text-edit-button
       width 60px
 
       button

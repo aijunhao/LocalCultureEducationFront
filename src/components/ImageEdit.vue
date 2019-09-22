@@ -8,7 +8,9 @@
       class="image-edit-box"
       v-for="(image, i) in imageList"
     >
-      <div>
+
+      <!-- 图片上传框 -->
+      <div class="image-edit-upload">
         <p class="list-number">列表顺序：{{ i + 1 }}</p>
 
         <el-upload
@@ -303,42 +305,45 @@ export default {
     .el-date-editor.el-input, .el-date-editor.el-input__inner
       width 100%
 
-    .avatar-uploader .el-upload
-      width 178px
-      height 178px
-      border 1px dashed #d9d9d9
-      border-radius 6px
-      cursor pointer
-      position relative
-      overflow hidden
+    .image-edit-upload
+      width 170px
 
-    .avatar-uploader .el-upload:hover
-      border-color #409EFF
+      .avatar-uploader .el-upload
+        width 178px
+        height 178px
+        border 1px dashed #d9d9d9
+        border-radius 6px
+        cursor pointer
+        position relative
+        overflow hidden
 
-    .avatar-uploader-icon
-      font-size 28px
-      color #8c939d
-      width 178px
-      height 178px
-      line-height 178px
-      text-align center
+      .avatar-uploader .el-upload:hover
+        border-color #409EFF
 
-    .avatar
-      width 178px
-      height 178px
-      display block
+      .avatar-uploader-icon
+        font-size 28px
+        color #8c939d
+        width 178px
+        height 178px
+        line-height 178px
+        text-align center
+
+      .avatar
+        width 178px
+        height 178px
+        display block
+
+      .list-number
+        margin-top 0
+        font-weight 600
+        padding-left 5px
+
+    .image-edit-message
+      margin 0 30px
+      width 100%
 
     .module-edit-button
       button
         margin 10px
         display block
-
-    .list-number
-      margin-top 0
-      font-weight 600
-      padding-left 5px
-
-    .image-edit-message
-      margin 0 50px
-      width 100%
 </style>

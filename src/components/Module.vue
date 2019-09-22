@@ -4,8 +4,10 @@
       <i :class="['myicons', 'icons-big', module.icon ? module.icon : '']"></i>
       <span v-text="module.module_name"></span>
       <p @click="$router.push({name: module.target})">
-        更多
-        <i class="myicons icondouble-up"></i>
+        <span class="btn-text">
+          更多
+          <i class="myicons icondouble-up"></i>
+        </span>
       </p>
     </div>
     <div :class="['module-box', direction ? 'direction' : '']">
@@ -28,7 +30,7 @@ export default {
     },
     // 是否反向
     direction: {
-        type: Boolean
+      type: Boolean
     }
   }
 }
@@ -36,6 +38,11 @@ export default {
 
 <style lang="stylus">
 #module
+  .btn-text:hover
+    color #409EFF
+    font-weight 600
+    cursor pointer
+
   .module-link
     display flex
     display -webkit-flex
@@ -68,7 +75,7 @@ export default {
       overflow hidden
       -webkit-box-orient vertical
 
-      p 
+      p
         margin 0
 
 @media screen and (min-width: 960px)

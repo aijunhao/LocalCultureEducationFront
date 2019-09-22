@@ -15,8 +15,8 @@
       :data="commentList.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) || data.id.includes(search) || data.time.includes(search))"
       style="width: 100%"
     >
-      <el-table-column type="index"></el-table-column>
-      <el-table-column label="评论 ID" min-width="100" prop="id"></el-table-column>
+      <el-table-column fixed type="index"></el-table-column>
+      <el-table-column fixed label="评论 ID" min-width="100" prop="id"></el-table-column>
       <el-table-column label="发布者用户名" min-width="130" prop="username" sortable></el-table-column>
       <el-table-column label="发布时间" min-width="170" prop="time" sortable></el-table-column>
       <el-table-column label="评论内容" prop="content" width="300"></el-table-column>
@@ -66,12 +66,17 @@
                 type="success"
               >更新评论</el-button>
               <el-button
-                @click="waringUser()"
+                @click="handleCommand(5, props)"
                 icon="el-icon-warning-outline"
                 size="small"
                 type="warning"
               >警告用户</el-button>
-              <el-button @click="lockUser()" icon="el-icon-lock" size="small" type="danger">冻结用户</el-button>
+              <el-button
+                @click="handleCommand(6, props)"
+                icon="el-icon-lock"
+                size="small"
+                type="danger"
+              >冻结用户</el-button>
             </el-form-item>
           </el-form>
           <div class="comments-edit-button"></div>
@@ -161,16 +166,55 @@ export default {
       return row[property] === value
     },
     /**
-     * 冻结用户
+     * 修改用户权限
      */
-    lockUser() {
-      console.log('冻结')
-    },
-    /**
-     * 警告用户
-     */
-    waringUser() {
-      console.log('警告')
+    handleCommand(command, scope) {
+      console.log('冻结', scope)
+      if (this.$store.state.user.id === scope.row.id) {
+        // 不能修改自身等级
+        this.$notify.error({
+          title: '权限修改',
+          message: '抱歉，您无法修改自身权限等级！'
+        })
+      } else if (scope.row.power >= 9 && this.$store.state.user.power != 10) {
+        // 超级管理员可以设置管理员以上用户权限
+        this.$notify.error({
+          title: '权限修改',
+          message: '抱歉，此用户权限过高，您无权修改！'
+        })
+      } else if (command > this.$store.state.user.power) {
+        // 不能设置权限等级超过自身权限等级
+        this.$notify.error({
+          title: '权限修改',
+          message: '抱歉，您无法设置用户权限等级超过自身权限等级！'
+        })
+      } else {
+        // 正常情况下，设置权限
+        this.$axios({
+          method: 'post',
+          url: config.EXECUTE_POST_UPADTE_USER_POWER,
+          data: {
+            id: scope.row.id,
+            power: command
+          }
+        })
+          .then(req => {
+            if (req.status === 200) {
+              // console.log(req)
+              scope.row.power = command
+              this.$notify({
+                title: '权限修改',
+                message: `您已成功将 “${scope.row.id}” 号用户权限设置为 “${
+                  this.$store.state.powername[scope.row.power]
+                }” `,
+                type: 'success'
+              })
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
     /**
      * 删除评论
