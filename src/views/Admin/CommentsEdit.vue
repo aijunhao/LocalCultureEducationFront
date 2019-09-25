@@ -12,7 +12,7 @@
     </div>
 
     <el-table
-      :data="commentList.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) || data.id.includes(search) || data.time.includes(search))"
+      :data="commentList.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()) || data.id.includes(search) || data.time.includes(search) || data.content.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
       <el-table-column fixed type="index"></el-table-column>

@@ -5,7 +5,7 @@
       <el-breadcrumb-item :to="{ path: '/' }">佛缘普陀</el-breadcrumb-item>
       <el-breadcrumb-item>图片详情</el-breadcrumb-item>
       <el-breadcrumb-item>{{ imageInfo.title }}</el-breadcrumb-item>
-      <el-breadcrumb-item><strong @click="$router.go(-1)">返回上一级</strong></el-breadcrumb-item>
+      <el-breadcrumb-item><strong @click="$router.go(-1)" class="btn-text">返回上一级</strong></el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 图片对象显示 -->
@@ -110,6 +110,11 @@ export default {
     .imageinfo-show-content
       text-align left 
       text-indent 2rem
+    
+    .btn-text:hover
+      color #409EFF
+      font-weight 600
+      cursor pointer
 
 // pc
 @media screen and (min-width: 960px)

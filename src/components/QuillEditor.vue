@@ -92,7 +92,7 @@ export default {
   methods: {
     onEditorBlur() {
       //失去焦点事件
-      // console.log(this.content)
+      console.log(this.content)
     },
     onEditorFocus() {
       //获得焦点事件

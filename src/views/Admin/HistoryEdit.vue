@@ -79,6 +79,7 @@
       <article-edit
         :anchor="'anchor-class'"
         :articleList="articleList"
+        :type="2"
         :idName="'history_edit_article'"
       ></article-edit>
     </div>

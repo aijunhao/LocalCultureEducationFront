@@ -38,7 +38,7 @@
       <!-- 按钮 -->
       <div class="edit-button">
         <el-button
-          @click="$router.push({name: 'ArticleInfoEdit', params: {article: article}})"
+          @click="$router.push({name: 'ArticleInfoEdit', params: {value: article}})"
           circle
           icon="el-icon-edit"
           type="success"
@@ -50,7 +50,7 @@
     <div class="article-edit-new">
       <p class="tips">创建文章</p>
       <!-- 创建按钮 -->
-      <el-button @click="newArticle()" circle icon="el-icon-plus" type="success"></el-button>
+      <el-button @click="$router.push({name: 'ArticleInfoEdit', params: { value: newArticle, type: type}})" circle icon="el-icon-plus" type="success"></el-button>
     </div>
   </div>
 </template>
@@ -64,12 +64,14 @@ export default {
       type: Array
     },
     anchor: String,
-    idName: String
+    idName: String,
+    // 文章发布类型
+    type: Number
   },
   data() {
     return {
       // 文章列表
-      article: {
+      newArticle: {
         id: '',
         title: '',
         subtitle: '',
@@ -118,15 +120,6 @@ export default {
             type: 'success'
           })
         })
-    },
-    /**
-     * 创建文章
-     */
-    newArticle() {
-      this.$router.push({
-        name: 'ArticleInfoEdit',
-        params: { article: this.article }
-      })
     }
   }
 }

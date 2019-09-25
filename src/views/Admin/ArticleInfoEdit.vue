@@ -5,9 +5,11 @@
       <el-breadcrumb-item :to="{ path: '/admin' }">管理员首页</el-breadcrumb-item>
       <el-breadcrumb-item>模块</el-breadcrumb-item>
       <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
+      <el-breadcrumb-item><strong @click="$router.go(-1)" class="btn-text">返回上一级</strong></el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 表单 -->
+
     <el-form label-width="100px">
       <el-form-item label="文章标题">
         <el-input v-model="article.title"></el-input>
@@ -64,9 +66,13 @@ import QuillEditor from '../../components/QuillEditor'
 
 export default {
   props: {
-    article: {
+    value: {
       type: Object,
       require: true
+    },
+    type: {
+      type: Number,
+      default: 1
     }
   },
   components: {
@@ -75,6 +81,14 @@ export default {
   data() {
     return {
       defaultTime: new Date()
+    }
+  },
+  computed: {
+    article: function() {
+      if (this.value) {
+        sessionStorage.setItem('article', JSON.stringify(this.value))
+        return this.value
+      } else return JSON.parse(sessionStorage.getItem('article'))
     }
   },
   methods: {
@@ -125,7 +139,8 @@ export default {
             subtitle: this.article.subtitle,
             author: this.article.author,
             content: content,
-            overview: this.article.overview
+            overview: this.article.overview,
+            type: this.type
           }
         })
           .then(req => {
@@ -206,4 +221,9 @@ export default {
 #article_info_edit
   .el-date-editor.el-input, .el-date-editor.el-input__inner
     width 100%
+
+  .btn-text:hover
+    color #409EFF
+    font-weight 600
+    cursor pointer
 </style>
